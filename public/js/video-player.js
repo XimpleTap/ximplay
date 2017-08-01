@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	
 	$('#to-movies').click(function(){
-		window.location.href = "../public/videolist";
+		window.location.href = "../public/";
 	});
 
 	$('.card-image-holder').click(function(){

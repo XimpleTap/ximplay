@@ -11,5 +11,5 @@
 |
 */
 
-Route::get('videolist', array('uses'=>'VideoController@getVideos'));
+Route::get('/', array('uses'=>'VideoController@getVideos'));
 Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
