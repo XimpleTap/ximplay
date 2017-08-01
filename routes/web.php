@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('videolist', array('uses'=>'VideoController@getVideos'));
+Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
