@@ -21,16 +21,16 @@
     </head>
     <body>
 
-        <div class="container">
+        <div class="index-container">
         <!-- Page Content goes here -->
             <br>
             <div class="row">
-              <div class="col s6">
+              <div class="col s6 nav-col">
                 <button id="to-music" class="nav-btn btn waves-effect waves-light blue darken-4"><i class="fa fa-music"></i> Music
                     
                 </button>
               </div>
-              <div class="col s6">
+              <div class="col s6 nav-col">
                 <button id="to-movies" class="nav-btn btn waves-effect waves-light blue darken-4">Movies <i class="fa fa-tv"></i>
                     
                 </button>

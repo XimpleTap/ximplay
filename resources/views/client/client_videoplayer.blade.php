@@ -1,11 +1,11 @@
 @extends('client.client_index')
 @section('content')
 
-<div class="container">
+<div class="index-container">
 
+	<img id="ad-banner" class="responsive-img" src="{{ asset('/ads/Ads.jpg') }}">
 	@if(!empty($video))
-
-	<video controls>
+	<video controls poster>
 		<source src="{{ asset('/videos/'.$video[0]->title.'.mp4') }}" type="video/mp4">
 	</video>
 	@else

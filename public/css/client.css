@@ -1,5 +1,15 @@
+.index-container{
+	width: 95% !important;
+	margin: 0 auto;
+}
+
 .nav-btn{
 	width: 100% !important;
+	
+}
+
+.nav-col{
+	padding: 0 !important;
 }
 
 .card-image{
@@ -8,12 +18,7 @@
     overflow:hidden !important;
 }
 
-.card-image-holder{
-	position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-.card-image-holder:before {
+/*.card-image-holder:before {
     content: "";
     position: absolute;
     width: 100%;
@@ -23,20 +28,22 @@
     background-size: 30%;
     opacity: .5;
 }
+*/
 
-.img-holder img {
-  width:100%;
-  height:auto;
-}
 
-@media screen and (min-width: 1280px){
+/*@media screen and (min-width: 1280px){
 	.card-image-holder:before {
 	    background-size: 20%;
 	}
-}
+}*/
 
 video {
   width: 100%    !important;
   height: auto   !important;
 }
 
+#ad-banner{
+  width: 100%    !important;
+  height: 150px   !important;
+  margin-bottom: 10px !important;
+}

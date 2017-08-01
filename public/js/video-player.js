@@ -4,7 +4,7 @@ $(document).ready(function(){
 		window.location.href = "../public/";
 	});
 
-	$('.card-image-holder').click(function(){
+	$('.card-image').click(function(){
 
 		var videoAttr = $(this).data("video-attr");
 		window.location.href = "../public/watchvideo?video_id="+videoAttr['id'];
