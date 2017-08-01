@@ -13,3 +13,4 @@
 
 Route::get('/', array('uses'=>'VideoController@getVideos'));
 Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
+Route::get('music',array('uses'=>'MusicController@index'));

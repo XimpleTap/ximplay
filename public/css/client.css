@@ -8,14 +8,11 @@
 	
 }
 
-.nav-col{
-	padding: 0 !important;
-}
 
-.card-image{
-	width:100% !important;
-    height: 250px !important;
-    overflow:hidden !important;
+.card-image img{
+	width: 100% !important;
+	height: 250px !important;
+	object-fit: cover;
 }
 
 /*.card-image-holder:before {
@@ -31,19 +28,65 @@
 */
 
 
-/*@media screen and (min-width: 1280px){
-	.card-image-holder:before {
-	    background-size: 20%;
+@media screen and (min-width: 240px) and (max-width: 480px){
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
 	}
-}*/
 
-video {
-  width: 100%    !important;
-  height: auto   !important;
+	video {
+	  width: 100%    !important;
+	  height: 280px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+}
+
+@media screen and (min-width: 500px) and (max-width: 960px){
+	.video-container{
+		margin: 0 auto;
+		height: 400px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 400px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+}
+
+@media screen and (min-width: 970px) and (max-width: 1024px){
+	.video-container{
+		margin: 0 auto;
+		height: 550px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 500px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+}
+
+@media screen and (min-width: 1030px) and (max-width: 1366px){
+	.video-container{
+		margin: 0 auto;
+		height: 650px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 550px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
 }
 
 #ad-banner{
   width: 100%    !important;
   height: 150px   !important;
   margin-bottom: 10px !important;
+  object-fit: fill;
 }

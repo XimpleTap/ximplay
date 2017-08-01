@@ -8,9 +8,7 @@
 			<div class="col s12 m6 l4">
               <div class="card hoverable">
                 <div class="card-image" data-video-attr="{{ json_encode($video) }}">
-                	
                   	<img src="{{ asset(''.$video->poster_path) }}" class="responsive-img">
-
                 </div>
                 <div class="card-content white">
                   <h5 class="center-align">{{ $video->title }}</h5>

@@ -15,6 +15,7 @@
         <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/font-icon.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/client.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/animate.css') }}" rel="stylesheet" type="text/css">
         @yield('css')
 
 
