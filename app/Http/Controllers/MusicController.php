@@ -12,12 +12,12 @@ class MusicController extends Controller
 
 		$files = \File::allFiles(public_path('audio'));
 
-		$musicPlaylist = array();
+		$musicList = array();
 		foreach ($files as $file)
 		{
 		    $remotefilename = public_path('audio/'.basename($file));
-			//$getID3 = new \getID3;
-			$ThisFileInfo = id3_get_tag($remotefilename);
+			$getID3 = new \getID3;
+			$ThisFileInfo = $getID3->analyze($remotefilename);
 			
 
 			$picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
@@ -34,14 +34,18 @@ class MusicController extends Controller
 					"music_duration" => $ThisFileInfo['playtime_string'],
 					"album_art" => $albumArt
 				];
-				array_push($musicPlaylist,$fileMeta);
+				array_push($musicList,$fileMeta);
 			}
 
 
 			
 		}
-		dd($musicPlaylist);
-		return response()->json($musicPlaylist);
+		$randomkeys=array_rand($musicList,6);
+		$randomMusic = array();
 
+		for($i=0; $i<sizeof($randomkeys); $i++){
+			array_push($randomMusic,$musicList[$i]);
+		}
+		return view('client.client_musiclist')->with('music_list',$randomMusic);
     }
 }
