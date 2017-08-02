@@ -33,6 +33,48 @@
 	margin-bottom: 30px !important;
 }
 
+.audio-title{
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: 	ellipsis;
+}
+.audio-artist{
+	margin-top: -10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: 	ellipsis;
+	width: 100%;
+}
+
+.audio-controls{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 0 !important;
+	text-align: center !important;
+}
+
+#progressbar{
+	height: 9px;
+    width: 180px;
+    float: left;
+    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+    margin: 11px 10px 10px 0;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+#progress {
+    height: 6px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    margin: 1px;
+    width: 60%;
+    background: transparent url(../images/player-elapsed.png) repeat-x 0 0 scroll;
+}
+
+
 @media screen and (min-width: 240px) and (max-width: 320px){
 	.video-container{
 		margin: 0 auto;
@@ -58,8 +100,42 @@
 		width: 100% !important;
 		height: 100px !important;
 	}
-}
 
+	.audio-title{
+		font-size: 16px;
+	}
+	.audio-artist{
+		font-size: 10px;
+	}
+	#elapsed-time{
+		font-size: 10px;
+	}
+	#duration{
+		font-size: 10px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 180px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: -10px 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
+	#progress {
+	    height: 6px;
+	    border-radius: 3px;
+	    -moz-border-radius: 3px;
+	    -webkit-border-radius: 3px;
+	    margin: 1px;
+	    width: 60%;
+	    background: transparent url(../images/player-elapsed.png) repeat-x 0 0 scroll;
+	}
+	.audio-controls btn{
+		width: 25%;
+	}
+}
 
 @media screen and (min-width: 321px) and (max-width: 359px){
 
@@ -111,6 +187,101 @@
 		width: 100% !important;
 		height: 100px !important;
 	}
+
+	.audio-controls .btn{
+		width: 20%;
+	}
+	.audio-title{
+		font-size: 16px;
+	}
+	.audio-artist{
+		font-size: 10px;
+	}
+	#elapsed-time{
+		font-size: 10px;
+	}
+	#duration{
+		font-size: 10px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 215px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
+	#progress {
+	    height: 6px;
+	    border-radius: 3px;
+	    -moz-border-radius: 3px;
+	    -webkit-border-radius: 3px;
+	    margin: 1px;
+	    width: 60%;
+	    background: transparent url(../images/player-elapsed.png) repeat-x 0 0 scroll;
+	}
+}
+
+@media screen and (min-width:375px){
+	#elapsed-time{
+		margin-top: 13px;
+	}
+	#duration{
+		margin-top: 13px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 215px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: -2px 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
+}
+@media screen and (min-width:414px){
+	#elapsed-time{
+		margin-top: 19px;
+	}
+	#duration{
+		margin-top: 19px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 240px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
+}
+@media screen and (min-width:480px){
+	.audio-artist{
+		font-size: 16px;
+	}
+	#elapsed-time{
+		font-size: 12px;
+		margin-top: 30px;
+	}
+	#duration{
+		font-size: 12px;
+		margin-top: 30px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 280px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
 }
 
 
@@ -134,6 +305,135 @@
 		width: 100% !important;
 		height: 200px !important;
 	}
+
+	.audio-title{
+		font-size: 26px;
+	}
+	.audio-artist{
+		font-size: 20px;	
+	}
+	#elapsed-time{
+		font-size: 15px;
+		margin-top: 95px;
+	}
+	#duration{
+		font-size: 15px;
+		margin-top: 95px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 480px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
+}
+@media screen and (min-width: 600px){
+	.audio-title{
+		font-size: 26px;
+	}
+	.audio-artist{
+		font-size: 20px;	
+	}
+	#elapsed-time{
+		font-size: 15px;
+		margin-top: 40px;
+	}
+	#duration{
+		font-size: 15px;
+		margin-top: 40px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 355px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
+}
+@media screen and (min-width: 768px){
+	.audio-title{
+		font-size: 26px;
+	}
+	.audio-artist{
+		font-size: 20px;	
+	}
+	#elapsed-time{
+		font-size: 15px;
+		margin-top: 40px;
+	}
+	#duration{
+		font-size: 15px;
+		margin-top: 40px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 475px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
+}
+@media screen and (min-width: 800px){
+	.audio-title{
+		font-size: 26px;
+	}
+	.audio-artist{
+		font-size: 20px;	
+	}
+	#elapsed-time{
+		font-size: 15px;
+		margin-top: 95px;
+	}
+	#duration{
+		font-size: 15px;
+		margin-top: 95px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 475px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
+}
+@media screen and (min-width: 960px){
+	.audio-title{
+		font-size: 26px;
+	}
+	.audio-artist{
+		font-size: 20px;	
+	}
+	#elapsed-time{
+		font-size: 15px;
+		margin-top: 150px;
+	}
+	#duration{
+		font-size: 15px;
+		margin-top: 150px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 580px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
 }
 
 @media screen and (min-width: 970px) and (max-width: 1024px){
@@ -156,6 +456,31 @@
 		width: 100% !important;
 		height: 300px !important;
 	}
+
+	.audio-title{
+		font-size: 32px;
+	}
+	.audio-artist{
+		font-size: 20px;	
+	}
+	#elapsed-time{
+		font-size: 15px;
+		margin-top: 165px;
+	}
+	#duration{
+		font-size: 15px;
+		margin-top: 165px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 620px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
+	}
 }
 
 @media screen and (min-width: 1030px) and (max-width: 1366px){
@@ -177,6 +502,31 @@
 	.music-album-art img{
 		width: 100% !important;
 		height: 300px !important;
+	}
+
+	.audio-title{
+		font-size: 36px;
+	}
+	.audio-artist{
+		font-size: 20px;	
+	}
+	#elapsed-time{
+		font-size: 15px;
+		margin-top: 260px;
+	}
+	#duration{
+		font-size: 15px;
+		margin-top: 260px;
+	}
+	#progressbar{
+		height: 9px;
+	    width: 835px;
+	    float: left;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    margin: 0 10px 10px 0;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    -webkit-border-radius: 4px;
 	}
 }
 
