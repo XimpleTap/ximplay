@@ -1,0 +1,82 @@
+#surveyModal{
+	height: 500px;
+	width:	450px;
+}
+
+#surveyModal label{
+	font-size: 12px !important;
+}
+
+#surveyModal div.error {
+    position: relative;
+    top: -1rem;
+    left: 0rem;
+    font-size: 0.8rem;
+    color: #FF4081;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+#policyModal,
+	#promptModal{
+	width:400px; 
+	height:350px;
+}
+
+@media only screen and (max-width: 992px) {
+
+	#surveyModal{
+		height: 90% !important;
+		width:	95% !important;
+	}
+
+	#surveyModal h4{
+		font-size: 25px;
+		padding  : 10px !important;
+	}
+
+	#surveyModal .row{
+		margin-bottom: 0 !important;
+	}
+
+	#surveyModal label{
+		font-size: 12px !important;
+	}
+
+	#surveyModal input[type=checkbox]{
+		width: 15px;
+    	height: 15px;
+        margin-top: 5px;
+    	margin-left: 10px;
+	}
+
+	#policyModal{
+		height: 60% !important;
+		width:	80% !important;
+	}
+
+	#policyModal h4{
+		font-size: 25px;
+		padding  : 10px !important;
+	}
+
+	#promptModal{
+		height: 60% !important;
+		width:	80% !important;
+	}
+
+	#promptModal p{
+		padding:120px 10px 10px 10px !important;
+	}
+
+}

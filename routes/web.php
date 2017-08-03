@@ -28,3 +28,7 @@ Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
 Route::get('music',array('uses'=>'MusicController@index'));
 Route::get('musicplayer',array('uses'=>'MusicController@playMusic'));
 
+Route::get('postConnection', array('uses'=>'ClientController@postConnection'));
+Route::get('checkConnection', array('uses'=>'ClientController@checkConnection'));
+Route::get('insertSurvey', array('uses'=>'ClientController@insertSurvey'));
+
