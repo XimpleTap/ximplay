@@ -17,6 +17,7 @@
 
                 var _dateNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate();
 
+
                 function checkConnection(LocalIpAdd){
                     $.ajax({
                         url : "../public/checkConnection",
@@ -59,7 +60,8 @@
                 var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
                     dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
                 
-                if(validateInput(in_ea_mn)){
+                $('#proceed').attr("disabled",true);
+
                     $.ajax({
                         url : "../public/insertSurvey",
                         type: 'GET',
@@ -70,6 +72,9 @@
                             answered_date   : _dateTimeNow
                         },
                         success: function (data) {
+
+                            $('#proceed').removeAttr('disabled');
+
                             $('#surveyModal').modal('close');
 
                             $("#policyModal #close").css('display','none');
@@ -79,7 +84,6 @@
                             $('#policyModal').modal('open');
                         }
                     });  
-                }
             });
 
             $('#ok').click(function(){
@@ -103,6 +107,7 @@
                 var intRegex = /[0-9 -()+]+$/;
                     if(input == "")
                     {
+                        $('#proceed').attr("disabled",true);
                         $('#in_ea_mn').css("border-bottom","1px solid #ff1744");
                         $('#in_ea_mn').after('<div class="error">Please fill-up.</div>');
                         return false;
@@ -111,16 +116,33 @@
                     //Validation Phone
                         if((input.length < 11) || (!intRegex.test(input)))
                             {
+                                $('#proceed').attr("disabled",true);
                                 $('#in_ea_mn').css("border-bottom","1px solid #ff1744");
-                                $('#in_ea_mn').after('<div class="error">Please enter a valid phone number.</div>');
+                                $('#in_ea_mn').after('<div class="error">Please enter a valid mobile number.</div>');
                                 return false;
                             }
                         else{
-
-                                $('#proceed').removeAttr('disabled');
-                                $('#in_ea_mn').css("border-bottom","1px solid #26a69a");
-                                $("#surveyModal div.error").remove();
-                                return true;                    
+                            var phone_num = String(input);
+                                if (!isNaN(phone_num)) {
+                                    //if phone_num is a set of numbers and length is 11
+                                    if (phone_num.substr(0, 2) == '09' && phone_num.length == 11) {
+                                        var temp_phone_num = phone_num.replace(0, "63");
+                                        $('#proceed').removeAttr('disabled');
+                                        $('#in_ea_mn').css("border-bottom","1px solid #26a69a");
+                                        $("#surveyModal div.error").remove();
+                                        return true;    
+                                    } else {
+                                        $('#proceed').attr("disabled",true);
+                                        $('#in_ea_mn').css("border-bottom","1px solid #ff1744");
+                                        $('#in_ea_mn').after('<div class="error">Please type your 11-digit mobile number (09xxxxxxxxx).</div>');
+                                        return false;
+                                    }
+                                } else {
+                                    $('#proceed').attr("disabled",true);
+                                    $('#in_ea_mn').css("border-bottom","1px solid #ff1744");
+                                    $('#in_ea_mn').after('<div class="error">Please enter a valid phone number.</div>');
+                                    return false;
+                                }                
                         }
                     }
                     else
@@ -129,6 +151,7 @@
                     //Validation Email
                         if (eml.test(input) == false) 
                             {
+                                $('#proceed').attr("disabled",true);
                                 $('#in_ea_mn').css("border-bottom","1px solid #ff1744");
                                 $('#in_ea_mn').after('<div class="error">Please enter valid email address..</div>');
                                 // $("#<%=txtEmail.ClientID %>").focus();
