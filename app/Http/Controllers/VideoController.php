@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
- use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 
 
 class VideoController extends Controller
@@ -33,8 +33,6 @@ class VideoController extends Controller
             }
             
         }
-        
-        
     }
 
     private function validateVideoUpload($file){
@@ -53,5 +51,21 @@ class VideoController extends Controller
         } else{
             return false;   
         }
+    }
+
+    // Client video fetch
+    public function getVideos(){
+
+    	$videoList = DB::table('videos')->paginate(10);
+    	return view('client.client_videolist')->with('videos',$videoList);
+    }
+
+    // Client video viewing
+    public function watchVideo(Request $request){
+
+    	$videoID = $request->input('video_id');
+		$video = DB::table('videos')->where('id',$videoID )->get();
+		$video = sizeof($video)==0 ? NULL : $video;
+		return view('client.client_videoplayer')->with('video',$video);
     }
 }

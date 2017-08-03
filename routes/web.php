@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,3 +22,9 @@ Route::post('/videos/upload','VideoController@upload');
 
 Route::get('/images/form','ImageController@uploadForm');
 Route::post('/images/upload','ImageController@upload');
+
+Route::get('/', array('uses'=>'VideoController@getVideos'));
+Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
+Route::get('music',array('uses'=>'MusicController@index'));
+Route::get('musicplayer',array('uses'=>'MusicController@playMusic'));
+
