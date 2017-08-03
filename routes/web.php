@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/videos/form','VideoController@uploadForm');
+Route::post('/videos/upload','VideoController@upload');
+
+Route::get('/images/form','ImageController@uploadForm');
+Route::post('/images/upload','ImageController@upload');
