@@ -20,8 +20,11 @@ Route::get('/', function () {
 Route::get('/videos/form','VideoController@uploadForm');
 Route::post('/videos/upload','VideoController@upload');
 
-Route::get('/images/form','ImageController@uploadForm');
-Route::post('/images/upload','ImageController@upload');
+Route::get('/images/adsform','ImageController@adsUploadForm');
+Route::post('/images/adsupload','ImageController@adsUpload');
+
+Route::get('/images/promosform','ImageController@promosUploadForm');
+Route::post('/images/promosupload','ImageController@promosUpload');
 
 Route::get('/', array('uses'=>'VideoController@getVideos'));
 Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));

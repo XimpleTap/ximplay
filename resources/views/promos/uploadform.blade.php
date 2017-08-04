@@ -2,9 +2,9 @@
 {!! Html::script('js/jquery-3.2.1.min.js') !!}
 <div align='center' style='margin-top: 5%;'>
 <?php
-    echo Form::open(array('url' => '/images/adsupload','files'=>'false','id'=>'uploadform'));
+    echo Form::open(array('url' => '/images/promosupload','files'=>'false','id'=>'uploadform'));
     echo 'Select the file to upload.';
-    echo Form::file('image',array('name'=>'file'));
+    echo Form::file('image',array('name'=>'file','id'=>'imageFile'));
     echo '<br /><br />';
     echo Form::text('endDate','Pick end date',array('id'=>'endDate'));
     echo '<br /><br />';
