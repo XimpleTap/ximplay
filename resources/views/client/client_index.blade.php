@@ -25,21 +25,23 @@
 
         <div class="index-container">
         <!-- Page Content goes here -->
-            <br>
-            <div class="row">
-              <div class="col s6 nav-col">
+            <div class="custom-nav">
+            <div class="left music-nav">
                 <button id="to-music" class="nav-btn btn waves-effect waves-light blue darken-4"><i class="fa fa-music"></i> Music
                     
                 </button>
-              </div>
-              <div class="col s6 nav-col">
+            </div>
+            <div class="right movie-nav">
                 <button id="to-movies" class="nav-btn btn waves-effect waves-light blue darken-4">Movies <i class="fa fa-tv"></i>
                     
                 </button>
-               </div>
             </div>
+            </div>
+            
+            
         </div>
-
+        <br>
+        <br>
         <div id="surveyModal" class="modal">
             <h4 style="text-align:center; padding:20px">Ximplay Quick Survey</h4>
             
@@ -108,6 +110,6 @@
         <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
         <script src="{{ asset('js/materialize.min.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
-        <script src="{{ asset('js/initial.js') }}"></script>
+        <!-- <script src="{{ asset('js/initial.js') }}"></script> -->
         @yield('js')
 </html>

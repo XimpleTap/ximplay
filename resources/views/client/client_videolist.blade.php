@@ -1,6 +1,7 @@
 @extends('client.client_index')
 @section('content')
 
+<br>
 <div class="index-container">
 	<div class="videolist">
 	@if(!empty($videos))			

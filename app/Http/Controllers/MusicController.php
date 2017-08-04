@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 
 class MusicController extends Controller
 {
@@ -41,13 +42,8 @@ class MusicController extends Controller
 
 			
 		}
-		$randomkeys=array_rand($musicList,6);
-		$randomMusic = array();
-
-		for($i=0; $i<sizeof($randomkeys); $i++){
-			array_push($randomMusic,$musicList[$randomkeys[$i]]);
-		}
-		return view('client.client_musiclist')->with('music_list',$randomMusic);
+		shuffle($musicList);
+		return view('client.client_musiclist')->with('music_list',$musicList);
     }
 
     public function playMusic(Request $request){
@@ -82,6 +78,18 @@ class MusicController extends Controller
 		}	
 
     	return view('client.client_musicplayer')->with('music',$fileMeta);
+    }
 
+    public function addToPlaylist(Request $request){
+
+    	if(empty(Session::get('my_playlist'))){
+    		Session::put('my_playlist');
+			Session::push('my_playlist',$request->input('music_data'));
+			Session::save();
+		}else{
+
+			Session::push('my_playlist',$request->input('music_data'));
+			Session::save();
+		}
     }
 }
