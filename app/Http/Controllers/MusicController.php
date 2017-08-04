@@ -45,7 +45,7 @@ class MusicController extends Controller
 		$randomMusic = array();
 
 		for($i=0; $i<sizeof($randomkeys); $i++){
-			array_push($randomMusic,$musicList[$i]);
+			array_push($randomMusic,$musicList[$randomkeys[$i]]);
 		}
 		return view('client.client_musiclist')->with('music_list',$randomMusic);
     }
