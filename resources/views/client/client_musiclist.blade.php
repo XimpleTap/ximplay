@@ -10,9 +10,9 @@
 			<div class="col music-col s4 m4 l4">
                 <div class="music-album-art" data-music-attr="{{ json_encode($music) }}">
                 	@if(empty($music['album_art']))
-                		<img src="{{ asset('images/defaultmusic.jpg') }}" class="responsive-img">
+                		<img src="{{ asset('images/defaultmusic.jpg') }}" class="responsive-img z-depth-3">
                 	@else
-                		<img src="{{ $music['album_art'] }}" class="responsive-img">
+                		<img src="{{ $music['album_art'] }}" class="responsive-img z-depth-3">
                 	@endif
                 </div>
 	            <div class="music-list-details" data-music-attr="{{ json_encode($music) }}">
