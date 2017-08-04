@@ -433,9 +433,7 @@ audio, #pause{
 	  height: 400px   !important;
 	  object-fit: cover !important;
 	  margin-top: 5px !important;
-	}
-
-	
+	}	
 }
 @media screen and (min-width: 720px){
 	#progressbar{
@@ -452,6 +450,134 @@ audio, #pause{
 	.player-controls{
 		margin-top: 10px;
 	}
+}
+@media screen and (min-width: 960px){
+
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		margin-bottom: 30px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -20px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 89px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 100px !important;
+	}
+
+	.audio-title{
+		width: 100%;
+		font-size: 14px;
+	}
+	.audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-art{
+		margin-left: -10px;
+	}
+	.audio-art img{
+		width: 100px !important;
+		height: 100px;
+	}
+
+	#search {
+	    position: relative;
+	    font-size: 18px;
+	    padding-left: 20px;
+	    padding-right: 45px;
+	    margin: 0 auto 0;
+	}
+	#search label {
+	    position: absolute;
+	    left: 37px;
+	    top: 4px;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
+	}
+
+	#progressbar{
+		height: 9px;
+	    width: 70%;
+	    float: right;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		margin: 10px 0 0 0;
+	}
+
+	.player-controls{
+		margin-top: 30px;
+	}
+
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
+	}	
 }
 @media screen and (min-width: 1280px){
 	#progressbar{
