@@ -287,7 +287,7 @@ function initPlayer(musicObj){
 
 	audio.addEventListener("ended", function(){
 		audio.currentTime = 0;  
-		if(playlist.length>0){
+		if(playlist != null){
 			playlistCounter++;
 			
 			if(playlistCounter==playlist.length){
