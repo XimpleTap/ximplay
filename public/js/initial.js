@@ -6,8 +6,14 @@
 
 //Start Initial Connection Insert
                 getUserIP(function(ip){
+
                     checkConnection(ip);
-                    postConnection(ip);
+
+                    setTimeout(
+                        function() { 
+                            postConnection(ip);
+                        }, 5000);
+
                 });
 
                 var dateNow = new Date();
@@ -59,8 +65,17 @@
                 var dateNow = new Date();
                 var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
                     dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
-                
-                $('#proceed').attr("disabled",true);
+
+                var policy = document.getElementById("policy").checked;
+
+                if(policy == false){
+
+                    $('#div_policy').after('<div id="div_error" class="error center">Please check this to agree to our policy.</div>');
+                    return false;
+                }
+                else{
+
+                    $('#proceed').attr("disabled",true);
 
                     $.ajax({
                         url : "../public/insertSurvey",
@@ -83,7 +98,8 @@
 
                             $('#policyModal').modal('open');
                         }
-                    });  
+                    }); 
+                } 
             });
 
             $('#ok').click(function(){
@@ -94,11 +110,19 @@
                 countdownTimer(5); 
             });
 
+            $('#policyModal #close').click(function(){
+                $('#surveyModal #policy').attr('checked',true);
+            });
+
             $('#in_ea_mn').on('keyup', function(e){
                 var input = $("#in_ea_mn").val();
 
                 validateInput(input);
-            }); 
+            });
+
+            $('#surveyModal #policy').click(function(){
+                $("#surveyModal div.error").remove();
+            });
 
             function validateInput(input){
 

@@ -67,7 +67,7 @@
                 <a id="proceed" class="waves-effect waves-light btn center" disabled>proceed</a>
             </div>
         </br>
-            <div class="row" style="text-align:center">
+            <div class="row" style="text-align:center" id="div_policy">
                 <p>
                   <input type="checkbox" id="policy"/>
                   <label for="policy">I agree that I have read and understood the <a href="#policyModal" class="modal-trigger" >Privacy Policy</a> </label>
@@ -87,7 +87,7 @@
 
             <div style="text-align:center">
                 <a id="ok" class="waves-effect waves-light btn center" style="display:none">ok</a>
-                <a id="close" class="waves-effect waves-light red btn center modal-close">close</a>
+                <a id="close" class="waves-effect waves-light btn center modal-close">ok</a>
             </div>
         </div>
 
