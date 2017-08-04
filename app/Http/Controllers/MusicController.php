@@ -88,8 +88,11 @@ class MusicController extends Controller
 			Session::save();
 		}else{
 
-			Session::push('my_playlist',$request->input('music_data'));
-			Session::save();
+			if(!in_array($request->input('music_data'),Session::get('my_playlist'))){
+				Session::push('my_playlist',$request->input('music_data'));
+				Session::save();
+			}
+			
 		}
     }
 }
