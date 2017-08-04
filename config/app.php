@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Reliese\Coders\CodersServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -226,7 +227,24 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Form' => 'Collective\Html\FormFacade',
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Files upload directories
+    |--------------------------------------------------------------------------
+    | LINUX OS: Set the upload directory URLs here for the different file types uploads
+    |
+    */
+    
+    'VIDEO_UPLOAD_DIR' =>$_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'videos'.DIRECTORY_SEPARATOR,
+    'MUSIC_UPLOAD_DIR' => $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'music'.DIRECTORY_SEPARATOR,
+    'ADS_UPLOAD_DIR' => $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'ads'.DIRECTORY_SEPARATOR,
+    'PROMOS_UPLOAD_DIR' => $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'promos'.DIRECTORY_SEPARATOR,
+
 
 ];
