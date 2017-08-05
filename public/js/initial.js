@@ -70,7 +70,9 @@
 
                 if(policy == false){
 
-                    $('#div_policy').after('<div id="div_error" class="error center">Please check this to agree to our policy.</div>');
+                    $('#policyModal').modal('open');
+
+                    //$('#div_policy').after('<div id="div_error" class="error center">Please check this to agree to our policy.</div>');
                     return false;
                 }
                 else{
@@ -96,18 +98,13 @@
 
                             $("#policyModal #ok").css('display','inline-block');
 
-                            $('#policyModal').modal('open');
+                            $('#promptModal').modal('open');
+
+                            countdownTimer(5); 
+
                         }
                     }); 
                 } 
-            });
-
-            $('#ok').click(function(){
-                $('#policyModal').modal('close');
-
-                $('#promptModal').modal('open');
-
-                countdownTimer(5); 
             });
 
             $('#policyModal #close').click(function(){
