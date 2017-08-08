@@ -26,8 +26,6 @@ Route::post('/images/adsupload','ImageController@adsUpload');
 Route::get('/images/promosform','ImageController@promosUploadForm');
 Route::post('/images/promosupload','ImageController@promosUpload');
 
-Route::get('/test/id3','TestController@testId3');
-
 Route::get('/', array('uses'=>'VideoController@getVideos'));
 Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
 Route::get('music',array('uses'=>'MusicController@index'));
