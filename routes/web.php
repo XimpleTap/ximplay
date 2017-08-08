@@ -38,3 +38,6 @@ Route::get('postConnection', array('uses'=>'ClientController@postConnection'));
 Route::get('checkConnection', array('uses'=>'ClientController@checkConnection'));
 Route::get('insertSurvey', array('uses'=>'ClientController@insertSurvey'));
 
+Route::get('adHits', array('uses'=>'ClientController@adHits'));
+Route::get('adPromoHits', array('uses'=>'ClientController@adPromoHits'));
+
