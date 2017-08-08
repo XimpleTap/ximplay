@@ -5,15 +5,13 @@
 	<img id="ad-banner" class="responsive-img" src="{{ asset('/ads/Ads.jpg') }}">
 
 	@if(!empty($music))
-		<div class="row">
-			<div class="col s4 m4 l4">
-				<div class="audio-art">
+		<div class="row player">
+			<div class="audio-art col s4 m4 l4">
 				@if(empty($music['album_art']))
-            		<img src="{{ asset('images/defaultmusic.jpg') }}" class=" z-depth-5">
+            		<img src="{{ asset('images/defaultmusic.jpg') }}" class="">
             	@else
-            		<img src="{{ $music['album_art'] }}" class="responsive-img z-depth-5">
+            		<img src="{{ $music['album_art'] }}" class="responsive-img">
             	@endif
-            	</div>
 			</div>
 			<div class="col s8 m8 l8">
 				<div class="audio-info" data-music-attr="{{ json_encode($music) }}">
@@ -21,18 +19,61 @@
 					<p class="audio-artist">{{ $music['music_artist'] }}</p>
 				</div>
 				
+
+				<div class="time">
+
+				</div>
 				<div class="player-controls">
 					<audio id="audio-player">
 						<source src="{{ asset('audio/'.$music['filename']) }}" type="audio/mpeg">
 					</audio>
-					<img id="prev" src="{{ asset('images/player-previous.png') }}">
-					<img id="play" src="{{ asset('images/player-play.png') }}">
-					<img id="pause" src="{{ asset('images/player-pause.png') }}">
-					<img id="next" src="{{ asset('images/player-next.png') }}">
+					<div class="row time">
+						<div class="col s6 l6 m6">
+						<p id="duration" class="left"></p>
+						</div>
+						<div class="col s6 l6 m6">
+						<p id="elapsed" class="right">-0:00</p>
+						</div>
+					</div>
+					
+					<div class="row controls">	
+						<div class="col s2 l2 m2">
+							<a id="repeat">
+								<p class='left'><i class="fa fa-repeat" aria-hidden="true"></i></p>
+							</a>
+						</div>
+						<div class="col s2 l2 m2">
+							<a id="prev" >
+								<p class="right"><i class="fa fa-backward" aria-hidden="true"></i></p>
+							</a>
+						</div>
+						<div class="col s4 l4 m4" style="display: none;">
+							<a id="pause">
+								<p class="center-align"><i class="fa fa-pause" aria-hidden="true"></i></p>
+							</a>
+						</div>
+						<div class="col s4 l4 m4">
+						<a id="play">
+							<p class="center-align"><i class="fa fa-play" aria-hidden="true"></i></p>
+						</a>
+						</div>
+						<div class="col s2 l2 m2">
+							<a id="next">
+								<p class="left"><i class="fa fa-forward" aria-hidden="true"></i></p>
+							</a>	
+						</div>
+						<div class="col s2 l2 m2">
+							<a id="shuffle" >
+								<p class="right"><i class="fa fa-random" aria-hidden="true"></i></p>
+							</a>	
+						</div>
+					</div>
+		
 					<div id="progressbar">
 						<span id="progress"></span>
 					</div>
 				</div>
+
 			</div>
 		</div>
 		<div class="row">
@@ -85,9 +126,9 @@
 					      <div class="left">
 					      <a href="#!" class="tracklist-duration"><i class="fa fa-clock-o"></i> {{ $music['music_duration'] }}</a>
 					      </div>
-					      <div class="right">
+					      <!-- <div class="right">
 					      	<a class="add-to-playlist"><i class="fa fa-plus-circle"></i> Add to Playlist</a>
-					      </div>
+					      </div> -->
 					    </li>
 
 				  	@endforeach
@@ -119,11 +160,14 @@ var audio = null;
 var nowPlaying = null;
 var playlist = null;
 var playlistCounter = -1;
+var repeatMode = 0; // 0 is for normal, 1 is for repeat, 2 is for shuffle
+var shuffleMode = 0;
+
 $(document).ready(function(){
 
 	initPlayer($('.audio-info').data('music-attr'));		
 	playlist = $('.tracklist').data('playlist');
-
+	
 	if(typeof playlist !== "undefined" && playlist !== null){
 		$.map(playlist, function(element,index){
 
@@ -138,89 +182,125 @@ $(document).ready(function(){
 
 	$('#prev').click(function(){
 
-		if(playlist.length>0){
-			playlistCounter--;
-			if(playlistCounter==-1){
-				playlistCounter=playlist.length-1;
-				var musicData = playlist[playlistCounter];
-				
-				console.log(musicData);
-				$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
-				$($('.tracklist li').get(playlistCounter+1)).addClass('active');
-		    	$('source').attr('src',musicData['filename']);
-		    	audio.pause();
-		    	initPlayer(musicData);
-				$('#play').hide();
-				$('#pause').show();
-		    	audio.play();
-		    	showDuration();
+		if(playlist != null && typeof playlist !== "undefined"){
+
+			if(repeatMode==1 && shuffleMode==0){
+				playlistCounter = playlistCounter;
+			}else if(repeatMode==0 && shuffleMode==1){
+				playlistCounter = Math.floor(Math.random() * playlist.length)
+			}else if(repeatMode==1 && shuffleMode==1){
+				playlistCounter = playlistCounter;
 			}else{
-				
-				
-				var musicData = playlist[playlistCounter];
-				
-				console.log(musicData);
-				$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
-				$($('.tracklist li').get(playlistCounter+1)).addClass('active');
-		    	$('source').attr('src',musicData['filename']);
-		    	audio.pause();
-		    	initPlayer(musicData);
-				$('#play').hide();
-				$('#pause').show();
-		    	audio.play();
-		    	showDuration();
+				playlistCounter--;
+			}
+			
+			if(playlistCounter==-1){
+				playlistCounter=playlist.length-1;	
 			}
 
+			var musicData = playlist[playlistCounter];
+			console.log(musicData);
+			$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
+			$($('.tracklist li').get(playlistCounter+1)).addClass('active');
+	    	$('source').attr('src',musicData['filename']);
+	    	audio.pause();
+	    	initPlayer(musicData);
+			$('#play').hide();
+			$('#pause').show();
+	    	audio.play();
+	    	showDuration();
+			$('#play').hide();
+			$('#play').parent('div').hide();
+			$('#pause').show();
+			$('#pause').parent('div').show();
 			
 		}
 	});
 	$('#play').click(function(){
 		audio.play();
 		$(this).hide();
+		$(this).parent('div').hide();
 		$('#pause').show();
+		$('#pause').parent('div').show();
 		showDuration();
 	});
 	$('#pause').click(function(){
 		audio.pause();
 		$(this).hide();
+		$(this).parent('div').hide();
 		$('#play').show();
+		$('#play').parent('div').show();
 	});
 	$('#next').click(function(){
-		
-		if(playlist.length>0){
-			playlistCounter++;
-			console.log(playlistCounter);
-			if(playlistCounter==playlist.length){
-				playlistCounter=0;
-				var musicData = playlist[playlistCounter];
-				console.log(musicData);
-				$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
-				$($('.tracklist li').get(playlistCounter+1)).addClass('active');
-		    	$('source').attr('src',musicData['filename']);
-		    	audio.pause();
-		    	initPlayer(musicData);
-				$('#play').hide();
-				$('#pause').show();
-		    	audio.play();
-		    	showDuration();
+
+		if(playlist != null && typeof playlist !== "undefined"){
+
+			if(repeatMode==1 && shuffleMode==0){
+				playlistCounter = playlistCounter;
+			}else if(repeatMode==0 && shuffleMode==1){
+				playlistCounter = Math.floor(Math.random() * playlist.length)
+			}else if(repeatMode==1 && shuffleMode==1){
+				playlistCounter = playlistCounter;
 			}else{
-				
-				var musicData = playlist[playlistCounter];
-				console.log(musicData);
-				$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
-				$($('.tracklist li').get(playlistCounter+1)).addClass('active');
-		    	$('source').attr('src',musicData['filename']);
-		    	audio.pause();
-		    	initPlayer(musicData);
-				$('#play').hide();
-				$('#pause').show();
-		    	audio.play();
-		    	showDuration();
+				playlistCounter++;
 			}
+
+
+			if(playlistCounter==playlist.length){
+				playlistCounter=0;	
+			}
+			var musicData = playlist[playlistCounter];
+			$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
+			$($('.tracklist li').get(playlistCounter+1)).addClass('active');
+	    	$('source').attr('src',musicData['filename']);
+	    	audio.pause();
+	    	initPlayer(musicData);
+	    	audio.play();
+	    	showDuration();
+			$('#play').hide();
+			$('#play').parent('div').hide();
+			$('#pause').show();
+			$('#pause').parent('div').show();
 		}
 	});
+	$('#repeat').click(function(){
 
+		if(playlist != null && typeof playlist !== "undefined"){
 
+			if(repeatMode==1){
+				repeatMode = 0;
+				$(this).css({"color":"white"});
+				Materialize.toast("Repeat Mode : OFF", 500);
+			}else{
+				$(this).css({"color":"#00467F"});
+				repeatMode = 1;
+				Materialize.toast("Repeat Mode : ON", 500);
+			}
+
+		}else{
+			
+			Materialize.toast("Player is already in repeat mode.", 500);
+		}
+	});
+	$('#shuffle').click(function(){
+
+		if(playlist != null && typeof playlist !== "undefined"){
+
+			if(shuffleMode==1){
+				shuffleMode = 0;
+				$(this).css({"color":"white"});
+				Materialize.toast("Shuffle Mode : OFF", 500);
+			}else{
+				$(this).css({"color":"#00467F"});
+				shuffleMode = 1;
+				Materialize.toast("Shuffle Mode : ON", 500);
+			}
+
+		}else{
+			
+			Materialize.toast("Player is already in repeat mode.", 500);
+		}
+	});
 	/* Modern Seeking */
 
     var timeDrag = false; /* Drag status */
@@ -257,6 +337,7 @@ $(document).ready(function(){
 	    
 	    $('#progress').css('width', percentage + '%');
         audio.currentTime = maxduration * percentage / 100;
+       
  
     };
 
@@ -269,7 +350,9 @@ $(document).ready(function(){
     	audio.pause();
     	initPlayer(musicData);
 		$('#play').hide();
+		$('#play').parent('div').hide();
 		$('#pause').show();
+		$('#pause').parent('div').show();
     	audio.play();
     	showDuration();
     });
@@ -283,11 +366,14 @@ function initPlayer(musicObj){
 	$('.audio-title').text(musicObj['music_title']);
 	$('.audio-artist').text(musicObj['music_artist']);
 	$('.audio-art img').attr('src',musicObj['album_art']==null? "{{ asset('images/defaultmusic.jpg') }}" : musicObj['album_art']);
+	console.log(musicObj['music_duration']);
+	$('.player-controls .time #duration').text(musicObj['music_duration']);
 	$('#progress').css({"display":"block","width":"0%"});
 
 	audio.addEventListener("ended", function(){
 		audio.currentTime = 0;  
-		if(playlist != null){
+		console.log(playlist);
+		if(playlist !== null){
 			playlistCounter++;
 			
 			if(playlistCounter==playlist.length){
@@ -305,7 +391,6 @@ function initPlayer(musicObj){
 		    	audio.play();
 		    	showDuration();
 			}else{
-				
 				var musicData = playlist[playlistCounter];
 				console.log(musicData);
 				$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
@@ -318,7 +403,9 @@ function initPlayer(musicObj){
 		    	audio.play();
 		    	showDuration();
 			}
-		}  
+		}else{
+			audio.play();
+		}
 	});
 }
 
@@ -328,10 +415,22 @@ function showDuration(){
 		var sec = parseInt(audio.currentTime % 60);
 		var min = parseInt(audio.currentTime/60) % 60;
 		var progressValue = 0;
+		var diff = audio.duration - audio.currentTime;
+		var diffsec = parseInt(diff % 60);
+		var diffmin = parseInt(diff/60) % 60;
+		
+		if(sec.toString().length==1){
+			sec = "0"+sec;
+		}
+		if(diffsec.toString().length==1){
+			diffsec = "0"+diffsec;
+		}
 		if(audio.currentTime>0){
 			progressValue = Math.floor((100/audio.duration) * audio.currentTime);
 		}
 		$('#progress').css({"width":progressValue+"%"});
+		$('.player-controls .time #duration').text(diffmin + ":" +diffsec);
+		$('.player-controls .time #elapsed').text("-"+min + ":" +sec);
 	});
 }
 

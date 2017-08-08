@@ -53,7 +53,7 @@ $(document).ready(function(){
 	        	music_data : musicData
 	        }
 		});
-		Materialize.toast(musicData['music_title']+' has been added to playlist.', 4000)
+		Materialize.toast(musicData['music_title']+' has been added to playlist.', 500);
 
 	});
 
