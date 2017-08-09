@@ -20,7 +20,7 @@
 		@endforeach
 			<center>{{ $videos->render() }}</center>
 	@else
-		<p>WALA</p>
+		<p class="center-align">No video on the list.</p>
 	@endif
 	</div>
 </div>

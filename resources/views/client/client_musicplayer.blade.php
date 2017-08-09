@@ -14,81 +14,73 @@
             	@endif
 			</div>
 			<div class="col s8 m8 l8">
+				<audio id="audio-player">
+						<source src="{{ asset('audio/'.$music['filename']) }}" type="audio/mpeg">
+					</audio>
 				<div class="audio-info" data-music-attr="{{ json_encode($music) }}">
 					<p class="audio-title">{{ $music['music_title'] }}</p>
 					<p class="audio-artist">{{ $music['music_artist'] }}</p>
 				</div>
-				
-
 				<div class="time">
-
+					<div class="col s6 l6 m6">
+					<p id="duration" class="left"></p>
+					</div>
+					<div class="col s6 l6 m6">
+					<p id="elapsed" class="right">-0:00</p>
+					</div>
 				</div>
 				<div class="player-controls">
-					<audio id="audio-player">
-						<source src="{{ asset('audio/'.$music['filename']) }}" type="audio/mpeg">
-					</audio>
-					<div class="row time">
-						<div class="col s6 l6 m6">
-						<p id="duration" class="left"></p>
-						</div>
-						<div class="col s6 l6 m6">
-						<p id="elapsed" class="right">-0:00</p>
-						</div>
-					</div>
-					
-					<div class="row controls">	
-						<div class="col s2 l2 m2">
-							<a id="repeat">
-								<p class='left'><i class="fa fa-repeat" aria-hidden="true"></i></p>
-							</a>
-						</div>
-						<div class="col s2 l2 m2">
-							<a id="prev" >
-								<p class="right"><i class="fa fa-backward" aria-hidden="true"></i></p>
-							</a>
-						</div>
-						<div class="col s4 l4 m4" style="display: none;">
-							<a id="pause">
-								<p class="center-align"><i class="fa fa-pause" aria-hidden="true"></i></p>
-							</a>
-						</div>
-						<div class="col s4 l4 m4">
-						<a id="play">
-							<p class="center-align"><i class="fa fa-play" aria-hidden="true"></i></p>
+					<div class="col s2 l2 m2">
+						<a id="repeat">
+							<p class='left'><i class="fa fa-repeat" aria-hidden="true"></i></p>
 						</a>
-						</div>
-						<div class="col s2 l2 m2">
-							<a id="next">
-								<p class="left"><i class="fa fa-forward" aria-hidden="true"></i></p>
-							</a>	
-						</div>
-						<div class="col s2 l2 m2">
-							<a id="shuffle" >
-								<p class="right"><i class="fa fa-random" aria-hidden="true"></i></p>
-							</a>	
-						</div>
 					</div>
-		
-					<div id="progressbar">
-						<span id="progress"></span>
+					<div class="col s2 l2 m2">
+						<a id="prev" >
+							<p class="right"><i class="fa fa-backward" aria-hidden="true"></i></p>
+						</a>
+					</div>
+					<div class="col s4 l4 m4" style="display: none;">
+						<a id="pause">
+							<p class="center-align"><i class="fa fa-pause" aria-hidden="true"></i></p>
+						</a>
+					</div>
+					<div class="col s4 l4 m4">
+					<a id="play">
+						<p class="center-align"><i class="fa fa-play" aria-hidden="true"></i></p>
+					</a>
+					</div>
+					<div class="col s2 l2 m2">
+						<a id="next">
+							<p class="left"><i class="fa fa-forward" aria-hidden="true"></i></p>
+						</a>	
+					</div>
+					<div class="col s2 l2 m2">
+						<a id="shuffle" >
+							<p class="right"><i class="fa fa-random" aria-hidden="true"></i></p>
+						</a>	
 					</div>
 				</div>
-
+				<div id="progressbar">
+					<span id="progress"></span>
+				</div>
 			</div>
 		</div>
 		<div class="row">
 			<section id="search">
-	        <label for="search-input"><h6><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search Music</span></h6></label>
-	        <input id="search-input" class="form-control input-lg" placeholder="Search Music" autocomplete="off" spellcheck="false" autocorrect="off" tabindex="1">
-	        <a id="search-clear" href="#" class="fa fa-times-circle hide" aria-hidden="true"><span class="sr-only">Clear search</span></a>
+		        <label for="search-input"><h6><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search Music</span></h6></label>
+		        <input id="search-input" class="form-control input-lg" placeholder="Search Music" autocomplete="off" spellcheck="false" autocorrect="off" tabindex="1">
+		        <a id="search-clear" href="#" class="fa fa-times-circle hide" aria-hidden="true"><span class="sr-only">Clear search</span></a>
+
 	     	</section>
+	     	<div id="search-result" class="col s12 m12 l12">
+	     		<ul class="search-ul collection">
+
+	     		</ul>
+		    </div>
 			<div class="col s12 m12 l12 tracklist-div">
 				  <ul class="tracklist collection" data-playlist="{{ json_encode(Session::get('my_playlist')) }}">
-				  	<li id="search-li">
-				  		
-			          	
-  
-				  	</li>
+				  	
 				  @if(!empty($music) && sizeof(Session::get('my_playlist'))==0)
 
 				  	<!-- <li class="collection-item avatar">
@@ -162,10 +154,10 @@ var playlist = null;
 var playlistCounter = -1;
 var repeatMode = 0; // 0 is for normal, 1 is for repeat, 2 is for shuffle
 var shuffleMode = 0;
-
+var musiclist = null;
 $(document).ready(function(){
 
-	$('#loaderModal').modal('open');
+	/*$('#loaderModal').modal('open');
 		getUserIP(function(ip){
 	    	var dateNow = new Date();
         
@@ -199,8 +191,8 @@ $(document).ready(function(){
 
 			            }
 			        });
-	    });
-		
+	    });*/
+	
 	initPlayer($('.audio-info').data('music-attr'));		
 	playlist = $('.tracklist').data('playlist');
 	
@@ -215,6 +207,11 @@ $(document).ready(function(){
 	}else{
 		playlistCounter=-1;
 	}
+
+	fetchAllMusic().then(function(data){
+		musiclist = data;
+	});
+
 
 	$('#prev').click(function(){
 
@@ -305,7 +302,7 @@ $(document).ready(function(){
 
 			if(repeatMode==1){
 				repeatMode = 0;
-				$(this).css({"color":"white"});
+				$(this).css({"color":"black"});
 				Materialize.toast("Repeat Mode : OFF", 500);
 			}else{
 				$(this).css({"color":"#00467F"});
@@ -324,17 +321,13 @@ $(document).ready(function(){
 
 			if(shuffleMode==1){
 				shuffleMode = 0;
-				$(this).css({"color":"white"});
+				$(this).css({"color":"black"});
 				Materialize.toast("Shuffle Mode : OFF", 500);
 			}else{
 				$(this).css({"color":"#00467F"});
 				shuffleMode = 1;
 				Materialize.toast("Shuffle Mode : ON", 500);
 			}
-
-		}else{
-			
-			Materialize.toast("Player is already in repeat mode.", 500);
 		}
 	});
 	/* Modern Seeking */
@@ -373,8 +366,6 @@ $(document).ready(function(){
 	    
 	    $('#progress').css('width', percentage + '%');
         audio.currentTime = maxduration * percentage / 100;
-       
- 
     };
 
     $('.tracklist-item').click(function(){
@@ -393,6 +384,41 @@ $(document).ready(function(){
     	showDuration();
     });
 
+    $('#search-input').on('keyup',function(){
+    	var val = $.trim(this.value);
+    	if(val!=""){
+    		var re = new RegExp("^"+val, 'gi');
+	    	var result = [];
+	    	$.map(musiclist, function(element,index){
+
+				if(element['music_title'].match(re)){
+					result.push(element);
+				}
+			});
+
+	    	createSearchResult(result);
+		    console.log(result);
+    	}else{
+    		$('#search-result .search-ul').empty();
+    	}
+    });
+    $(document).on('click','.add-to-playlist',function(){
+
+		var musicData = $(this).data("music-attr");
+		console.log(musicData);
+
+		$.ajax({
+			url : "{{ url('addtoplaylist') }}",
+			headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: 'POST',
+	        data : {
+	        	music_data : musicData
+	        }
+		});
+		Materialize.toast(musicData['music_title']+' has been added to playlist.', 500);
+	});
 });
 
 
@@ -403,7 +429,7 @@ function initPlayer(musicObj){
 	$('.audio-artist').text(musicObj['music_artist']);
 	$('.audio-art img').attr('src',musicObj['album_art']==null? "{{ asset('images/defaultmusic.jpg') }}" : musicObj['album_art']);
 	console.log(musicObj['music_duration']);
-	$('.player-controls .time #duration').text(musicObj['music_duration']);
+	$('.time #duration').text(musicObj['music_duration']);
 	$('#progress').css({"display":"block","width":"0%"});
 
 	audio.addEventListener("ended", function(){
@@ -465,11 +491,52 @@ function showDuration(){
 			progressValue = Math.floor((100/audio.duration) * audio.currentTime);
 		}
 		$('#progress').css({"width":progressValue+"%"});
-		$('.player-controls .time #duration').text(diffmin + ":" +diffsec);
-		$('.player-controls .time #elapsed').text("-"+min + ":" +sec);
+		$('.time #duration').text(diffmin + ":" +diffsec);
+		$('.time #elapsed').text("-"+min + ":" +sec);
 	});
 }
 
+function fetchAllMusic(){
+	return $.ajax({
+
+		url : "{{ url('getallmusic') }}",
+		type : "GET"
+
+	});
+}
+
+function createSearchResult(result){
+	var searchUl = $('#search-result .search-ul');
+	if(result.length!=0){
+		searchUl.empty();
+		var i=0;
+
+		for(i=0; i<result.length; i++){
+			if(typeof result[i]['album_art'] !== "undefined"){
+				console.log("AW");
+				
+				var imgString = result[i]['album_art'] === null ? "<img src='{{ asset('images/defaultmusic.jpg') }}' class='circle z-depth-5'>" : "<img src='"+result[i]['album_art']+"' class='circle z-depth-5'>";
+
+				var liString = "<li class='tracklist-item collection-item avatar'>"+
+								imgString+
+							   "<p class='tracklist-title'>"+result[i]['music_title']+"</p>"+
+							   "<p class='tracklist-artist'>"+result[i]['music_artist']+"</p>"+
+							   "<div class='left'>"+
+							   "<a href='#!' class='tracklist-duration'><i class='fa fa-clock-o'></i>"+ result[i]['music_duration']+"</a></div>"+
+							   "<div class='right'>"+
+							   "<a class='add-to-playlist'><i class='fa fa-plus-circle'></i> Add to Playlist</a></div></li>";
+				searchUl.append(liString);
+				$('.search-ul li a').last().data("music-attr",result[i]);
+			}
+		}
+	}else{
+		searchUl.append("<li class='tracklist-item collection-item avatar'><p>No results found.</p></li>")
+	}
+}
+
+function refreshPlaylist(){
+	
+}
 </script>
 
 @endsection

@@ -24,7 +24,7 @@
 		@endforeach
 		</div>
 	@else
-		<p>WALA</p>
+		<p class="center-align">No music on the list.</p>
 	@endif
 	</div>
 </div>
@@ -54,7 +54,6 @@ $(document).ready(function(){
 	        }
 		});
 		Materialize.toast(musicData['music_title']+' has been added to playlist.', 500);
-
 	});
 
 });
