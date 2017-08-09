@@ -35,11 +35,18 @@ Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
 Route::get('music',array('uses'=>'MusicController@index'));
 Route::get('musicplayer',array('uses'=>'MusicController@playMusic'));
 Route::post('addtoplaylist',array('uses'=>'MusicController@addToPlaylist'));
+Route::get('getallmusic',array('uses'=>'MusicController@fetchAllMusic'));
 
 Route::get('postConnection', array('uses'=>'ClientController@postConnection'));
 Route::get('checkConnection', array('uses'=>'ClientController@checkConnection'));
 Route::get('insertSurvey', array('uses'=>'ClientController@insertSurvey'));
 
+
 Route::get('/music/form','AdminMusicController@musicForm');
 Route::post('/music/upload','AdminMusicController@musicUpload');
 Route::post('/music/list','AdminMusicController@musicList');
+
+Route::get('adHits', array('uses'=>'ClientController@adHits'));
+Route::get('adPromoHits', array('uses'=>'ClientController@adPromoHits'));
+
+
