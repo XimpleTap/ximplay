@@ -19,8 +19,10 @@ Route::get('/', function () {
 
 Route::get('/videos/form','VideoController@uploadForm');
 Route::post('/videos/upload','VideoController@upload');
+Route::get('/videos/list','VideoController@listMovie');
 
 Route::get('/images/adsform','ImageController@adsUploadForm');
+Route::get('/images/adslist','ImageController@adsList');
 Route::post('/images/adsupload','ImageController@adsUpload');
 
 Route::get('/images/promosform','ImageController@promosUploadForm');
@@ -38,3 +40,6 @@ Route::get('postConnection', array('uses'=>'ClientController@postConnection'));
 Route::get('checkConnection', array('uses'=>'ClientController@checkConnection'));
 Route::get('insertSurvey', array('uses'=>'ClientController@insertSurvey'));
 
+Route::get('/music/form','AdminMusicController@musicForm');
+Route::post('/music/upload','AdminMusicController@musicUpload');
+Route::post('/music/list','AdminMusicController@musicList');

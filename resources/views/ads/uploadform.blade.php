@@ -2,7 +2,26 @@
 {!! Html::style('css/smoothness.jqueryui.css') !!}
 {!! Html::style('css/admin.css') !!}
 {!! Html::style('css/materialize.css') !!}
+{!! Html::style('css/font-icon.css') !!}
 
+<nav>
+    <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">Admin</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/music/form">Music Uploader</a></li>
+            <li><a href="/videos/form">Movie Uploader</a></li>
+            <li><a href="/images/adsform">Ads Uploader</a></li>
+            <li><a href="/images/promosform">Promo Uploader</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="/music/form">Music Uploader</a></li>
+            <li><a href="/videos/form">Movie Uploader</a></li>
+            <li><a href="/images/adsform">Ads Uploader</a></li>
+            <li><a href="/images/promosform">Promo Uploader</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
     <div class="row">
         <div class="input-field col s12 center-align">
@@ -26,23 +45,29 @@
 
 {!! Html::script('js/jquery1.10.2.js') !!}
 {!! Html::script('js/jqueryui1.11.2.js') !!}
+{!! Html::script('js/materialize.min.js') !!}
 <script>
-    jQuery("#endDate").datepicker();
-    jQuery('#imageFile').change(function(){
-        var imageProps = $('#imageFile')[0].files[0]; 
-        var data = $(this)[0].files; //this file data
-            
-        $.each(data, function(index, file){ //loop though each file
-            if(/(\.|\/)(gif|jpe?g|png)$/i.test(file.type)){ //check supported file type
-                var fRead = new FileReader(); //new filereader
-                fRead.onload = (function(file){ //trigger function on successful read
-                return function(e) {
-                    var img = $('<img/>').addClass('thumb').attr('src', e.target.result); //create image element 
-                    $('#preview').append(img); //append image to output element
-                };
-                })(file);
-                fRead.readAsDataURL(file); //URL representing the file's data.
-            }
-        });
-    })
+    jQuery(document).ready(function(){
+        $(".button-collapse").sideNav();
+
+        jQuery("#endDate").datepicker();
+        jQuery('#imageFile').change(function(){
+            var imageProps = $('#imageFile')[0].files[0]; 
+            var data = $(this)[0].files; //this file data
+                
+            $.each(data, function(index, file){ //loop though each file
+                if(/(\.|\/)(gif|jpe?g|png)$/i.test(file.type)){ //check supported file type
+                    var fRead = new FileReader(); //new filereader
+                    fRead.onload = (function(file){ //trigger function on successful read
+                    return function(e) {
+                        var img = $('<img/>').addClass('thumb').attr('src', e.target.result); //create image element 
+                        $('#preview').append(img); //append image to output element
+                    };
+                    })(file);
+                    fRead.readAsDataURL(file); //URL representing the file's data.
+                }
+            });
+        })
+    });
+    
 </script>

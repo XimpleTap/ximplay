@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Ad extends Model
 {
@@ -17,6 +18,10 @@ class Ad extends Model
        $adInstance->ad_end = $data['promo_end'];
        $status = $adInstance->save();
        return $status;
+    }
+
+    public function fetchAds(){
+        return DB::table('ads')->get();
     }
 
     private function removeWhiteSpace($str){

@@ -25,6 +25,7 @@ class ImageController extends Controller
         $endDate = Carbon::createFromFormat('m/d/Y', $endDate);
         $endDate = $endDate->format('Y-m-d');
         $destinationPath = config('app.ADS_UPLOAD_DIR');
+        $viewData = [];
         if($validateImage){
             foreach(Input::file('file') as $file){
                 try{
@@ -38,7 +39,8 @@ class ImageController extends Controller
                         'image_path'=>$destinationPath.$filename
                     );
                     $status = $adModelInstance->saveAds($dataToSave);  
-                    echo $status;
+                    array_push($viewData,$imageName);
+                    
                     
                 } catch (Exception $e) {
 
@@ -48,7 +50,7 @@ class ImageController extends Controller
                     return false;
                 }
             }
-            
+            return view('ads.success',array('data'=>$viewData));
         }
     }
 
@@ -74,6 +76,7 @@ class ImageController extends Controller
         $endDate = Carbon::createFromFormat('m/d/Y', $endDate);
         $endDate = $endDate->format('Y-m-d');
         $destinationPath = config('app.PROMOS_UPLOAD_DIR');
+        $viewData = [];
         
         if($validateImage){
             foreach(Input::file('file') as $file){
@@ -88,7 +91,7 @@ class ImageController extends Controller
                         'image_path'=>$destinationPath.$filename
                     );
                     $status = $promoModelInstance->savePromo($dataToSave);
-                    echo $status;
+                     array_push($viewData,$imageName);
                 } catch (Exception $e) {
 
                     Log::error("AppImage::promosUpload()  " . $e->getMessage());
@@ -98,9 +101,21 @@ class ImageController extends Controller
                 }
             }
             
-            
+            return view('promos.success',array('data'=>$viewData));
             
         }
+    }
+
+    public function adsList(){
+        $adModelInstance = new Ad();
+        $adDbData = $adModelInstance->fetchAds();
+        return view('ads.index',array('data'=>$adDbData));
+    }
+
+    public function promosList(){
+        $promoModelInstance = new Promo();
+        $promoDbData = $promoModelInstance->fetchPromos();
+        
     }
 
 

@@ -22,5 +22,9 @@ class Promo extends Model
     private function removeWhiteSpace($str){
         return preg_replace('/\s+/', '', $str);
     }
+
+    public function fetchPromos(){
+        return DB::table('advertiser_promo')->get();
+    }
 }
         
