@@ -13,15 +13,15 @@
             		<img src="{{ $music['album_art'] }}" class="responsive-img">
             	@endif
 			</div>
-			<div class="col s8 m8 l8">
+			<div class="audio col s8 m8 l8">
 				<audio id="audio-player">
-						<source src="{{ asset('audio/'.$music['filename']) }}" type="audio/mpeg">
+						<source src="{{ asset('music/'.$music['filename']) }}" type="audio/mpeg">
 					</audio>
 				<div class="audio-info" data-music-attr="{{ json_encode($music) }}">
 					<p class="audio-title">{{ $music['music_title'] }}</p>
 					<p class="audio-artist">{{ $music['music_artist'] }}</p>
 				</div>
-				<div class="time">
+				<div class="audio-time">
 					<div class="col s6 l6 m6">
 					<p id="duration" class="left"></p>
 					</div>
@@ -29,7 +29,11 @@
 					<p id="elapsed" class="right">-0:00</p>
 					</div>
 				</div>
-				<div class="player-controls">
+				
+				<div id="progressbar">
+					<span id="progress"></span>
+				</div>
+				<div class="audio-controls">
 					<div class="col s2 l2 m2">
 						<a id="repeat">
 							<p class='left'><i class="fa fa-repeat" aria-hidden="true"></i></p>
@@ -61,23 +65,19 @@
 						</a>	
 					</div>
 				</div>
-				<div id="progressbar">
-					<span id="progress"></span>
-				</div>
 			</div>
 		</div>
 		<div class="row">
-			<section id="search">
+			<div id="search" class="col s12 m12 l12">
 		        <label for="search-input"><h6><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search Music</span></h6></label>
 		        <input id="search-input" class="form-control input-lg" placeholder="Search Music" autocomplete="off" spellcheck="false" autocorrect="off" tabindex="1">
-		        <a id="search-clear" href="#" class="fa fa-times-circle hide" aria-hidden="true"><span class="sr-only">Clear search</span></a>
-
-	     	</section>
-	     	<div id="search-result" class="col s12 m12 l12">
-	     		<ul class="search-ul collection">
+		        <ul class="search-ul collection">
 
 	     		</ul>
-		    </div>
+	     	</div>
+	     	
+	     		
+		    
 			<div class="col s12 m12 l12 tracklist-div">
 				  <ul class="tracklist collection" data-playlist="{{ json_encode(Session::get('my_playlist')) }}">
 				  	
@@ -197,21 +197,17 @@ $(document).ready(function(){
 	playlist = $('.tracklist').data('playlist');
 	
 	if(typeof playlist !== "undefined" && playlist !== null){
+		$('.tracklist-div').css({"display":"block"});
 		$.map(playlist, function(element,index){
 
 			if(element['music_title']===$('.audio-info').data('music-attr')['music_title']){
-				$($('.tracklist li').get(index+1)).addClass('active');
+				$($('.tracklist li').get(index)).addClass('active');
 				playlistCounter = index;
 			}
 		});
 	}else{
 		playlistCounter=-1;
 	}
-
-	fetchAllMusic().then(function(data){
-		musiclist = data;
-	});
-
 
 	$('#prev').click(function(){
 
@@ -232,9 +228,8 @@ $(document).ready(function(){
 			}
 
 			var musicData = playlist[playlistCounter];
-			console.log(musicData);
-			$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
-			$($('.tracklist li').get(playlistCounter+1)).addClass('active');
+			$($('.tracklist li').get(playlistCounter)).siblings().removeClass("active");
+			$($('.tracklist li').get(playlistCounter)).addClass('active');
 	    	$('source').attr('src',musicData['filename']);
 	    	audio.pause();
 	    	initPlayer(musicData);
@@ -283,8 +278,8 @@ $(document).ready(function(){
 				playlistCounter=0;	
 			}
 			var musicData = playlist[playlistCounter];
-			$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
-			$($('.tracklist li').get(playlistCounter+1)).addClass('active');
+			$($('.tracklist li').get(playlistCounter)).siblings().removeClass("active");
+			$($('.tracklist li').get(playlistCounter)).addClass('active');
 	    	$('source').attr('src',musicData['filename']);
 	    	audio.pause();
 	    	initPlayer(musicData);
@@ -371,7 +366,7 @@ $(document).ready(function(){
     $('.tracklist-item').click(function(){
     	$('.tracklist li').siblings().removeClass("active");
 		$(this).addClass('active');
-		playlistCounter = $(this).index()-1;
+		playlistCounter = $(this).index();
 		var musicData = playlist[playlistCounter];
     	$('source').attr('src',musicData['filename']);
     	audio.pause();
@@ -397,16 +392,15 @@ $(document).ready(function(){
 			});
 
 	    	createSearchResult(result);
-		    console.log(result);
+	    	searchMusic(val);
     	}else{
-    		$('#search-result .search-ul').empty();
+    		$('.search-ul').css({"display":"none"});
+    		$('.search-ul').empty();
     	}
     });
     $(document).on('click','.add-to-playlist',function(){
 
 		var musicData = $(this).data("music-attr");
-		console.log(musicData);
-
 		$.ajax({
 			url : "{{ url('addtoplaylist') }}",
 			headers: {
@@ -421,50 +415,46 @@ $(document).ready(function(){
 	});
 });
 
-
 function initPlayer(musicObj){
 	
-	audio = new Audio('audio/'+musicObj['filename']);
+	audio = new Audio('music/'+musicObj['filename']);
 	$('.audio-title').text(musicObj['music_title']);
 	$('.audio-artist').text(musicObj['music_artist']);
 	$('.audio-art img').attr('src',musicObj['album_art']==null? "{{ asset('images/defaultmusic.jpg') }}" : musicObj['album_art']);
-	console.log(musicObj['music_duration']);
-	$('.time #duration').text(musicObj['music_duration']);
+	$('.audio-time #duration').text(musicObj['music_duration']);
 	$('#progress').css({"display":"block","width":"0%"});
 
 	audio.addEventListener("ended", function(){
 		audio.currentTime = 0;  
-		console.log(playlist);
 		if(playlist !== null){
-			playlistCounter++;
+
+			if(repeatMode==1 && shuffleMode==0){
+				playlistCounter = playlistCounter;
+			}else if(repeatMode==0 && shuffleMode==1){
+				playlistCounter = Math.floor(Math.random() * playlist.length);
+			}else if(repeatMode==1 && shuffleMode==1){
+				playlistCounter = playlistCounter;
+			}else{
+				playlistCounter++;
+			}
 			
 			if(playlistCounter==playlist.length){
-				playlistCounter=0;
-				console.log(playlistCounter);
-				var musicData = playlist[playlistCounter];
-				console.log(musicData);
-				$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
-				$($('.tracklist li').get(playlistCounter+1)).addClass('active');
-		    	$('source').attr('src',musicData['filename']);
-		    	audio.pause();
-		    	initPlayer(musicData);
-				$('#play').hide();
-				$('#pause').show();
-		    	audio.play();
-		    	showDuration();
-			}else{
-				var musicData = playlist[playlistCounter];
-				console.log(musicData);
-				$($('.tracklist li').get(playlistCounter+1)).siblings().removeClass("active");
-				$($('.tracklist li').get(playlistCounter+1)).addClass('active');
-		    	$('source').attr('src',musicData['filename']);
-		    	audio.pause();
-		    	initPlayer(musicData);
-				$('#play').hide();
-				$('#pause').show();
-		    	audio.play();
-		    	showDuration();
+				playlistCounter=0;	
 			}
+			var musicData = playlist[playlistCounter];
+			$($('.tracklist li').get(playlistCounter)).siblings().removeClass("active");
+			$($('.tracklist li').get(playlistCounter)).addClass('active');
+	    	$('source').attr('src',musicData['filename']);
+	    	audio.pause();
+	    	initPlayer(musicData);
+	    	audio.play();
+	    	showDuration();
+			$('#play').hide();
+			$('#play').parent('div').hide();
+			$('#pause').show();
+			$('#pause').parent('div').show();
+
+
 		}else{
 			audio.play();
 		}
@@ -491,8 +481,8 @@ function showDuration(){
 			progressValue = Math.floor((100/audio.duration) * audio.currentTime);
 		}
 		$('#progress').css({"width":progressValue+"%"});
-		$('.time #duration').text(diffmin + ":" +diffsec);
-		$('.time #elapsed').text("-"+min + ":" +sec);
+		$('.audio-time #duration').text(diffmin + ":" +diffsec);
+		$('.audio-time #elapsed').text("-"+min + ":" +sec);
 	});
 }
 

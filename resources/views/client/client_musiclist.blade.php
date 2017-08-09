@@ -1,7 +1,6 @@
 @extends('client.client_index')
 @section('content')
 
-<br>
 <div class="index-container">
 	<div class="musiclist">
 	@if(!empty($music_list))	

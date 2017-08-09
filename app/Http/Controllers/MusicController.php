@@ -10,14 +10,20 @@ class MusicController extends Controller
 {
     //
 
+	$searchResult = array();
+
     public function index(){
 
-		$files = \File::allFiles(public_path('audio'));
+		$files = \File::allFiles(public_path('music'));
+
+		shuffle($files);
+		$files = array_slice($files, 0, 49);
 
 		$musicList = array();
+
 		foreach ($files as $file)
 		{
-		    $remotefilename = public_path('audio/'.basename($file));
+		    $remotefilename = public_path('music/'.basename($file));
 			$getID3 = new \getID3;
 			$ThisFileInfo = $getID3->analyze($remotefilename);
 			
@@ -26,7 +32,7 @@ class MusicController extends Controller
 	        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
 	        $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
 	        
-			$albumArt = !empty($picture) == true ? $base64 = 'data:' . $type . ';base64,' . base64_encode($picture) : NULL;
+			//$albumArt = !empty($picture) == true ? $base64 = 'data:' . $type . ';base64,' . base64_encode($picture) : NULL;
 
 			if(!empty($ThisFileInfo['tags']['id3v2']['title']) && !empty($ThisFileInfo['tags']['id3v2']['artist'])){
 				$fileMeta = [
@@ -34,7 +40,7 @@ class MusicController extends Controller
 					"music_title" => $ThisFileInfo['tags']['id3v2']['title'][0],
 					"music_artist" => $ThisFileInfo['tags']['id3v2']['artist'][0],
 					"music_duration" => $ThisFileInfo['playtime_string'],
-					"album_art" => $albumArt
+					"album_art" => NULL
 				];
 				array_push($musicList,$fileMeta);
 			}
@@ -42,7 +48,8 @@ class MusicController extends Controller
 
 			
 		}
-		shuffle($musicList);
+
+		
 		return view('client.client_musiclist')->with('music_list',$musicList);
     }
 
@@ -50,12 +57,12 @@ class MusicController extends Controller
 
     	$musicFile = $request->input('music_file');
 
-    	if (!File::exists(public_path('audio/'.basename($musicFile))))
+    	if (!File::exists(public_path('music/'.basename($musicFile))))
 		{
 		   return view('client.client_musicplayer')->with('music',NULL);
 		}
 		
-    	$remotefilename = public_path('audio/'.basename($musicFile));
+    	$remotefilename = public_path('music/'.basename($musicFile));
 		$getID3 = new \getID3;
 		$ThisFileInfo = $getID3->analyze($remotefilename);
 
@@ -99,12 +106,12 @@ class MusicController extends Controller
 
     public function fetchAllMusic(){
 
-    	$files = \File::allFiles(public_path('audio'));
+    	$files = \File::allFiles(public_path('music'));
 
 		$musicList = array();
 		foreach ($files as $file)
 		{
-		    $remotefilename = public_path('audio/'.basename($file));
+		    $remotefilename = public_path('music/'.basename($file));
 			$getID3 = new \getID3;
 			$ThisFileInfo = $getID3->analyze($remotefilename);
 			

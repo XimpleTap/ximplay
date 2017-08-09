@@ -6,7 +6,7 @@ $(document).ready(function(){
 	});
 
 	$('#to-music').click(function(){
-		window.location.href = "../public/music";
+		window.location.href = "../public/audio";
 	});
 
 	// pulse effect for the ad banner
