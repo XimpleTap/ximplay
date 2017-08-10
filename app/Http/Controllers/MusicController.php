@@ -10,10 +10,10 @@ class MusicController extends Controller
 {
     //
 
-	$searchResult = array();
+	
 
     public function index(){
-
+		$searchResult = array();
 		$files = \File::allFiles(public_path('music'));
 
 		shuffle($files);
