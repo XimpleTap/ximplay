@@ -36,7 +36,7 @@ $(document).ready(function(){
 
 	$('.add-to-playlist').click(function(){
 
-		var musicData = $(this).parent('div').closest('div').data("music-attr");
+		var musicData = $(this).parent('div').parent('div').data("music-attr");
 		console.log(musicData);
 
 		$.ajax({

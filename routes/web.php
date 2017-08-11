@@ -35,7 +35,7 @@ Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
 Route::get('audios',array('uses'=>'MusicController@index'));
 Route::get('musicplayer',array('uses'=>'MusicController@playMusic'));
 Route::post('addtoplaylist',array('uses'=>'MusicController@addToPlaylist'));
-Route::get('getallmusic',array('uses'=>'MusicController@fetchAllMusic'));
+Route::post('searchmusic',array('uses'=>'MusicController@searchMusic'));
 
 Route::get('postConnection', array('uses'=>'ClientController@postConnection'));
 Route::get('checkConnection', array('uses'=>'ClientController@checkConnection'));

@@ -6,7 +6,7 @@
 	<img id="ad-banner" class="ad-promo-hits responsive-img" style="display:none">
 	@if(!empty($video))
 	<div class="video-container">
-	<video controls poster>
+	<video controls controlsList="nodownload" poster>
 		<source src="{{ asset(''.$video[0]->video_path) }}" type="video/mp4">
 	</video>
 	</div>
@@ -24,7 +24,7 @@
 
 <script>
 $(document).ready(function(){
-	$('#loaderModal').modal('open');
+	//$('#loaderModal').modal('open');
 		getUserIP(function(ip){
 	    	var dateNow = new Date();
         

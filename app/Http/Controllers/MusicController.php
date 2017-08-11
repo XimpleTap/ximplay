@@ -32,7 +32,7 @@ class MusicController extends Controller
 	        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
 	        $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
 	        
-			$albumArt = !empty($picture) == true ? 'data:image/png;charset=utf-8;base64,' . base64_encode($picture) : NULL;
+			$albumArt = !empty($picture) == true ? 'data: ' . $type . ';base64,' . base64_encode($picture) : NULL;
 
 			if(!empty($ThisFileInfo['tags']['id3v2']['title']) && !empty($ThisFileInfo['tags']['id3v2']['artist'])){
 				$fileMeta = [
@@ -95,8 +95,9 @@ class MusicController extends Controller
 				Session::push('my_playlist',$request->input('music_data'));
 				Session::save();
 			}
-			
 		}
+
+		return response()->json(Session::get('my_playlist'));
     }
 
     public function fetchAllMusic(){
@@ -137,9 +138,44 @@ class MusicController extends Controller
 
     public function searchMusic(Request $request){
 
+    	$filenames = array();
+    	$searchResult = array();
     	$searchKeys = $request->input('search_keys');
+    	$files = \File::allFiles(public_path('music'));
+    	foreach ($files as $file)
+		{
+			$filename = str_replace('_', ' ',basename($file,'.mp3')); 
+			if (preg_match('/^'.$searchKeys.'/i', $filename)) {
 
+			    array_push($filenames,$file);
+			}
+			
+		}
+		
+		$i=0;
+		for($i=0; $i<sizeof($filenames); $i++){
 
+			$getID3 = new \getID3;
+			$ThisFileInfo = $getID3->analyze($filenames[$i]);
+			$picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
+			$type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
+			$albumArt = !empty($picture) == true ? 'data: ' . $type . ';base64,' . base64_encode($picture) : NULL;
+
+			if(!empty($ThisFileInfo['tags']['id3v2']['title']) && !empty($ThisFileInfo['tags']['id3v2']['artist'])){
+				$fileMeta = [
+					"filename" => basename($filenames[$i]),
+					"music_title" => $ThisFileInfo['tags']['id3v2']['title'][0],
+					"music_artist" => $ThisFileInfo['tags']['id3v2']['artist'][0],
+					"music_duration" => $ThisFileInfo['playtime_string'],
+					"album_art" => $albumArt
+				];
+				array_push($searchResult,$fileMeta);
+				
+			}
+
+		}
+
+		return response()->json($searchResult);
     }
 
 }

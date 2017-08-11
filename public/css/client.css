@@ -171,7 +171,9 @@ audio, #pause{
   margin-bottom: 5px !important;
   object-fit: fill;
 }
-
+video::-internal-media-controls-download-button {
+    display:none;
+}
 @media screen and (min-width: 320px){
 	
 	.custom-nav{
@@ -201,12 +203,12 @@ audio, #pause{
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 400px;
 	}
 
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
+	  height: 320px   !important;
 	  object-fit: cover !important;
 	  margin-top: 15px !important;
 	}
@@ -297,6 +299,10 @@ audio, #pause{
     	top: 205px;
 	}
 
+	.search-ul{
+		position: relative;
+		margin-top: -55px;
+	}
 	.tracklist-div{
 		margin-top: -20px;
 		padding: 0 !important;
@@ -353,7 +359,19 @@ audio, #pause{
 		margin-left: -7px;
 		height: 50px;
 	}
-		.audio{
+
+	.video-container{
+		margin: 0 auto;
+		height: 580px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 400px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+	.audio{
 		padding-right: 0 !important;
 	}
 
@@ -418,7 +436,7 @@ audio, #pause{
 	#search label {
 	    position: absolute;
 	    left: 40px;
-    	top: 205px;
+    	top: 315px;
 	}
 
 	.tracklist-div{
@@ -1061,12 +1079,12 @@ audio, #pause{
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 600px;
 	}
 
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
+	  height: 520px   !important;
 	  object-fit: cover !important;
 	  margin-top: 15px !important;
 	}
@@ -2277,12 +2295,12 @@ audio, #pause{
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 600px;
 	}
 
 	video {
 	  width: 100%    !important;
-	  height: 280px   !important;
+	  height: 540px   !important;
 	  object-fit: cover !important;
 	  margin-top: 15px !important;
 	}
@@ -2399,6 +2417,9 @@ audio, #pause{
 	    position: absolute;
 	    left: 37px;
 	    top: 4px;
+	}
+	#ad-banner{
+		height: 150px !important;
 	}
 }
 
