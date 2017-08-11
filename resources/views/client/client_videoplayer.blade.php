@@ -7,7 +7,7 @@
 	@if(!empty($video))
 	<div class="video-container">
 	<video controls poster>
-		<source src="{{ asset('/videos/'.$video[0]->title.'.mp4') }}" type="video/mp4">
+		<source src="{{ asset(''.$video[0]->video_path) }}" type="video/mp4">
 	</video>
 	</div>
 	@else

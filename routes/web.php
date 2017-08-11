@@ -32,7 +32,7 @@ Route::get('/test/id3','TestController@testId3');
 
 Route::get('/', array('uses'=>'VideoController@getVideos'));
 Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
-Route::get('audio',array('uses'=>'MusicController@index'));
+Route::get('audios',array('uses'=>'MusicController@index'));
 Route::get('musicplayer',array('uses'=>'MusicController@playMusic'));
 Route::post('addtoplaylist',array('uses'=>'MusicController@addToPlaylist'));
 Route::get('getallmusic',array('uses'=>'MusicController@fetchAllMusic'));
