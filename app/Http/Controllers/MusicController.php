@@ -11,7 +11,7 @@ class MusicController extends Controller
     //
 
     public function index(){
-
+    	$searchResult = array();
 		$files = \File::allFiles(public_path('music'));
 		$musicID=0;
 		shuffle($files);
@@ -138,6 +138,7 @@ class MusicController extends Controller
     public function searchMusic(Request $request){
 
     	$searchKeys = $request->input('search_keys');
+
 
     }
 
