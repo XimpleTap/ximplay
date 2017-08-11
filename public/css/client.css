@@ -129,14 +129,26 @@ audio, #pause{
     top: 35px;
     left: 0;
     right: 0;
-    z-index: 10;
+    z-index: 50;
     padding: 0;
     margin: 0;
     border-width: 1px;
 }
 
+.search-ul li, .search-ul li a{
+	cursor: pointer !important;
+}
+
+
+
 .tracklist-div{
 	display: none;
+}
+.tracklist li .tracklist-duration{
+	text-decoration: none;
+}
+.tracklist li.active .tracklist-duration{
+	color: white;
 }
 .form-control{
 	-webkit-box-sizing: border-box;
@@ -205,7 +217,9 @@ video::-internal-media-controls-download-button {
 		margin: 0 auto;
 		height: 400px;
 	}
-
+	.no-match-err p{
+		font-size: 18px;
+	}
 	video {
 	  width: 100%    !important;
 	  height: 320px   !important;
@@ -436,7 +450,7 @@ video::-internal-media-controls-download-button {
 	#search label {
 	    position: absolute;
 	    left: 40px;
-    	top: 315px;
+    	top: 310px;
 	}
 
 	.tracklist-div{
@@ -791,7 +805,7 @@ video::-internal-media-controls-download-button {
 
 	.movie-nav button{
 		width: 80.5% !important;
-		margin-left: -4px;
+		margin-left: -10px !important;
 	}
 	.music-nav button{
 		width: 95% !important;
@@ -816,7 +830,7 @@ video::-internal-media-controls-download-button {
 	}
 
 	.music-list-details{
-		width: 79px;
+		width: 129px;
 		text-align: center;
 	}
 
@@ -830,7 +844,7 @@ video::-internal-media-controls-download-button {
 
 	.music-album-art img{
 		width: 100% !important;
-		height: 80px !important;
+		height: 100px !important;
 	}
 
 	.audio{
@@ -1065,7 +1079,7 @@ video::-internal-media-controls-download-button {
 
 	.movie-nav button{
 		width: 80.5% !important;
-		margin-left: -4px;
+		margin-left: -13px !important; 
 	}
 	.music-nav button{
 		width: 95% !important;
@@ -1856,7 +1870,7 @@ video::-internal-media-controls-download-button {
 
 	.movie-nav button{
 		width: 80.5% !important;
-		margin-left: -4px;
+		margin-left: -21px !important;
 	}
 	.music-nav button{
 		width: 95% !important;
@@ -1881,7 +1895,7 @@ video::-internal-media-controls-download-button {
 	}
 
 	.music-list-details{
-		width: 79px;
+		width: 249px;
 		text-align: center;
 	}
 
@@ -1895,7 +1909,7 @@ video::-internal-media-controls-download-button {
 
 	.music-album-art img{
 		width: 100% !important;
-		height: 80px !important;
+		height: 140px !important;
 	}
 
 	.audio{
@@ -1991,7 +2005,7 @@ video::-internal-media-controls-download-button {
 
 	#ad-banner{
 	  width: 100%    !important;
-	  height: 80px   !important;
+	  height: 100px   !important;
 	  margin-top: 15px;
 	  margin-bottom: 5px !important;
 	  object-fit: fill;
@@ -2298,6 +2312,9 @@ video::-internal-media-controls-download-button {
 		height: 600px;
 	}
 
+	.no-match-err p{
+		font-size: 38px;
+	}
 	video {
 	  width: 100%    !important;
 	  height: 540px   !important;

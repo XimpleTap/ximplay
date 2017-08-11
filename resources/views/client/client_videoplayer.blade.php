@@ -11,9 +11,9 @@
 	</video>
 	</div>
 	@else
-		<div class="center-align">
-			<i style="font-size: 150px;" class="material-icons">personal_video</i>
-			<h3 style="margin-top: -20px;">Sorry. Video not found.</h3>
+		<div class="no-match-err center-align">
+			<p><i class="fa fa-file-video-o"></i></p>
+			<p>Sorry. Video not found.</p>
 		</div>
 	@endif
 </div>

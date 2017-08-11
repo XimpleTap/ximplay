@@ -70,7 +70,7 @@
 		<div class="row">
 			<div id="search" class="col s12 m12 l12">
 		        <label for="search-input"><h6><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search Music</span></h6></label>
-		        <input id="search-input" class="form-control input-lg" placeholder="Search Music" autocomplete="off" spellcheck="false" autocorrect="off" tabindex="1">
+		        <input onkeyup="musicSearch(event);" id="search-input" class="form-control input-lg" placeholder="Search Music" autocomplete="off" spellcheck="false" autocorrect="off" tabindex="1">
 		        <ul class="search-ul collection">
 
 	     		</ul>
@@ -131,10 +131,9 @@
 			</div>
 		</div>
 	@else
-		<div class="center-align">
-			<i style="font-size: 150px;" class="material-icons">library_music</i>
-			<br><br>
-			<h3 style="margin-top: -20px;">Sorry. Music not found.</h3>
+		<div class="no-match-err center-align">
+			<p><i class="fa fa-file-audio-o"></i></p>
+			<p>Sorry. Music not found.</p>
 		</div>
 	@endif
 
@@ -376,15 +375,15 @@ $(document).ready(function(){
     	audio.play();
     	showDuration();
     });
-    $('#search-input').on('keyup keypress',function(){
-    	var val = $.trim(this.value);
-    	if(val!=""){
-    		var searchUl = $('.search-ul');
-    		$('.tracklist-div').css({"opacity":".5"});
-    		searchUl.empty();
-        	$('.search-ul').css({"display":"block"});
-        	searchUl.append('<li style="padding-left: 20px !important;" class="tracklist-item collection-item avatar"><div class="center-align progress">'+
-			      '<div class="center-align indeterminate"></div></div><p>Looking for Match...</p></li>');
+    $('#search-input').on('keyup',function(){
+    	/*var val = $.trim(e.target.value);
+		if(val!=""){
+			var searchUl = $('.search-ul');
+			$('.tracklist-div').css({"opacity":".5"});
+			searchUl.empty();
+	    	$('.search-ul').css({"display":"block"});
+	    	searchUl.append('<li style="padding-left: 20px !important;" class="tracklist-item collection-item avatar"><div class="center-align progress">'+
+			      '<div class="center-align indeterminate"></div></div><p>Looking for music...</p></li>');
 	    	$.ajax({
 	    		url : "{{ url('searchmusic') }}",
 				headers: {
@@ -428,13 +427,13 @@ $(document).ready(function(){
 	    	
 	    	
 
-    	}else{
-    		$('.search-ul').css({"display":"none"});
-    		$('.search-ul').empty();
-    		$('.tracklist-div').css({"opacity":"1"});
-    	}
+		}else{
+			$('.search-ul').css({"display":"none"});
+			$('.search-ul').empty();
+			$('.tracklist-div').css({"opacity":"1"});
+		}*/
     });
-    $(document).on('focus click','.add-to-playlist',function(){
+    $('.search-ul').on('click touchstart','.add-to-playlist',function(){
 		var musicData = $(this).data("music-attr");
 		$.ajax({
 			url : "{{ url('addtoplaylist') }}",
@@ -449,11 +448,14 @@ $(document).ready(function(){
 	        	refreshPlaylist(data);
 	        	$('.search-ul').css({"display":"none"});
     			$('.search-ul').empty();
+    			$('.tracklist-div').css({"opacity":"1"});
     			Materialize.toast(musicData['music_title']+' has been added to playlist.', 500);
 	        }
 		});	
+
+		return false;
 	});
-	$(document).on('focus click','.search-item',function(){
+	$('.search-ul').on('click touchstart','.search-item',function(){
 		var musicData = $(this).data("music-attr");
     	$('source').attr('src',musicData['filename']);
 		$('.tracklist-div .tracklist li').each(function(){
@@ -482,6 +484,9 @@ $(document).ready(function(){
     	showDuration();
     	$('.search-ul').empty();
     	$('.search-ul').css({"display":"none"});
+    	$('.tracklist-div').css({"opacity":"1"});
+
+    	return false;
 	});
 
 });
@@ -551,9 +556,9 @@ function showDuration(){
 			progressValue = Math.floor((100/audio.duration) * audio.currentTime);
 		}
 		$('#progress').css({"width":progressValue+"%"});
-		if(isNaN(diffmin)==true && isNaN(diffSec)==true){
+		if(isNaN(diffmin)==true && isNaN(diffsec)==true){
 			diffmin = "00";
-			diffSec = "00";
+			diffsec = "00";
 		}
 		$('.audio-time #duration').text(diffmin + ":" +diffsec);
 		$('.audio-time #elapsed').text("-"+min + ":" +sec);
@@ -590,6 +595,69 @@ function refreshPlaylist(data){
 		   "<a href='#!' class='tracklist-duration'><i class='fa fa-clock-o'></i>"+ data[i]['music_duration']+"</a></div>";
 			tracklistUl.append(liString);
 	}
+}
+
+function musicSearch(e){
+	var val = $.trim(e.target.value);
+	if(val!=""){
+		var searchUl = $('.search-ul');
+		$('.tracklist-div').css({"opacity":".5"});
+		searchUl.empty();
+    	$('.search-ul').css({"display":"block"});
+    	searchUl.append('<li style="padding-left: 20px !important;" class="tracklist-item collection-item avatar"><div class="center-align progress">'+
+		      '<div class="center-align indeterminate"></div></div><p>Looking for music...</p></li>');
+    	$.ajax({
+    		url : "{{ url('searchmusic') }}",
+			headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: 'POST',
+	        data : {
+	        	search_keys : val
+	        }, success:function(data){
+
+				if(data.length!=0){
+					searchUl.empty();
+					var i=0;
+
+					for(i=0; i<data.length; i++){
+
+						var imgString = data[i]['album_art'] === null ? "<img src='{{ asset('images/defaultmusic.jpg') }}' class='circle z-depth-5'>" : "<img src='"+data[i]['album_art']+"' class='circle z-depth-5'>";
+
+						var liString = "<li onclick='' class='search-item collection-item avatar'>"+
+						imgString+
+					   "<p class='tracklist-title'>"+data[i]['music_title']+"</p>"+
+					   "<p class='tracklist-artist'>"+data[i]['music_artist']+"</p>"+
+					   "<div class='left'>"+
+					   "<a href='#!' class='tracklist-duration'><i class='fa fa-clock-o'></i>"+ data[i]['music_duration']+"</a></div>"+
+					   "<div class='right'>"+
+					   "<a style='cursor:pointer' onClick='' class='add-to-playlist'><i class='fa fa-plus-circle'></i> Add to Playlist</a></div></li>";
+						searchUl.append(liString);
+						
+						$('.search-ul li').last().data("music-attr",data[i]);
+						$('.search-ul li a').last().data("music-attr",data[i]);
+
+					}
+					
+				}else{
+					searchUl.empty();
+					searchUl.append("<li class='tracklist-item collection-item avatar'><p>No results found.</p></li>");
+
+				}
+	        }
+    	});
+    	
+    	
+
+	}else{
+		$('.search-ul').css({"display":"none"});
+		$('.search-ul').empty();
+		$('.tracklist-div').css({"opacity":"1"});
+	}
+}
+
+function addToPlaylist(){
+	
 }
 </script>
 
