@@ -5,16 +5,16 @@
         <a href="#!" class="brand-logo">Admin</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="/music/form">Music Uploader</a></li>
-            <li><a href="/videos/form">Movie Uploader</a></li>
-            <li><a href="/images/adsform">Ads Uploader</a></li>
-            <li><a href="/images/promosform">Promo Uploader</a></li>
+            <li><a href="/public/music/form">Music Uploader</a></li>
+            <li><a href="/public/videos/form">Movie Uploader</a></li>
+            <li><a href="/public/images/adsform">Ads Uploader</a></li>
+            <li><a href="/public/images/promosform">Promo Uploader</a></li>
         </ul>
         <ul class="side-nav" id="mobile-demo">
-            <li><a href="/music/form">Music Uploader</a></li>
-            <li><a href="/videos/form">Movie Uploader</a></li>
-            <li><a href="/images/adsform">Ads Uploader</a></li>
-            <li><a href="/images/promosform">Promo Uploader</a></li>
+            <li><a href="/public/music/form">Music Uploader</a></li>
+            <li><a href="/public/videos/form">Movie Uploader</a></li>
+            <li><a href="/public/images/adsform">Ads Uploader</a></li>
+            <li><a href="/public/images/promosform">Promo Uploader</a></li>
         </ul>
     </div>
 </nav>

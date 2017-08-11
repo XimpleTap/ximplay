@@ -17,16 +17,16 @@ Route::get('/', function () {
 });
 
 
-Route::get('/videos/form','VideoController@uploadForm');
-Route::post('/videos/upload','VideoController@upload');
-Route::get('/videos/list','VideoController@listMovie');
+Route::get('/public/videos/form','VideoController@uploadForm');
+Route::post('/public/videos/upload','VideoController@upload');
+Route::get('/public/videos/list','VideoController@listMovie');
 
-Route::get('/images/adsform','ImageController@adsUploadForm');
-Route::get('/images/adslist','ImageController@adsList');
-Route::post('/images/adsupload','ImageController@adsUpload');
+Route::get('/public/images/adsform','ImageController@adsUploadForm');
+Route::get('/public/images/adslist','ImageController@adsList');
+Route::post('/public/images/adsupload','ImageController@adsUpload');
 
-Route::get('/images/promosform','ImageController@promosUploadForm');
-Route::post('/images/promosupload','ImageController@promosUpload');
+Route::get('/public/images/promosform','ImageController@promosUploadForm');
+Route::post('/public/images/promosupload','ImageController@promosUpload');
 
 Route::get('/test/id3','TestController@testId3');
 
@@ -42,9 +42,9 @@ Route::get('checkConnection', array('uses'=>'ClientController@checkConnection'))
 Route::get('insertSurvey', array('uses'=>'ClientController@insertSurvey'));
 
 
-Route::get('/music/form','AdminMusicController@musicForm');
-Route::post('/music/upload','AdminMusicController@musicUpload');
-Route::post('/music/list','AdminMusicController@musicList');
+Route::get('/public/music/form','AdminMusicController@musicForm');
+Route::post('/public/music/upload','AdminMusicController@musicUpload');
+Route::post('/public/music/list','AdminMusicController@musicList');
 
 Route::get('adHits', array('uses'=>'ClientController@adHits'));
 Route::get('adPromoHits', array('uses'=>'ClientController@adPromoHits'));
