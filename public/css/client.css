@@ -85,7 +85,7 @@
 	text-align: center;
 }
 
-.player-controls a,.player-controls a:hover, .player-controls a:active{
+.audio-controls a,.audio-controls a:hover, .audio-controls a:active{
 	text-decoration: none;
 	color: black;
 }
@@ -112,28 +112,6 @@ audio, #pause{
     background: transparent url(../images/player-elapsed.png) repeat-x 0 0 scroll;
 }
 
-#search {
-    position: relative;
-    font-size: 18px;
-    padding-left: 20px;
-    padding-right: 45px;
-    margin: 40px auto 0;
-}
-#search label {
-    position: absolute;
-    left: 37px;
-    top: 4px;
-}
-
-#search #search-input, #search .hint {
-    padding-left: 43px;
-    padding-right: 43px;
-    border-radius: 23px;
-    text-indent: 25px;
-    width: 100% !important;
-    z-index: 5;
-}
-
 .sr-only{
 	position: absolute;
     width: 1px;
@@ -145,16 +123,20 @@ audio, #pause{
     border: 0;
 }
 
-#search-result {
-    width: 95%;
-    margin-top: -28px;
-    margin-right: auto;
-    margin-left: 35px;
-    z-index: 200;
-    height: 100px;
+.search-ul {
+	display: none;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    border-width: 1px;
 }
+
 .tracklist-div{
-	z-index: 100;
+	display: none;
 }
 .form-control{
 	-webkit-box-sizing: border-box;
@@ -189,14 +171,15 @@ audio, #pause{
   margin-bottom: 5px !important;
   object-fit: fill;
 }
-
+video::-internal-media-controls-download-button {
+    display:none;
+}
 @media screen and (min-width: 320px){
-
+	
 	.custom-nav{
 		width: 100%;
 		position: fixed;
 		margin-top: 5px;
-		margin-bottom: 30px;
 		z-index: 100;
 	}
 
@@ -220,18 +203,18 @@ audio, #pause{
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 400px;
 	}
 
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
+	  height: 320px   !important;
 	  object-fit: cover !important;
 	  margin-top: 15px !important;
 	}
 
 	.music-list-details{
-		width: 89px;
+		width: 79px;
 		text-align: center;
 	}
 
@@ -245,47 +228,84 @@ audio, #pause{
 
 	.music-album-art img{
 		width: 100% !important;
-		height: 100px !important;
+		height: 80px !important;
 	}
 
-
-	#search-result {
-	    width: 100%;
-	    margin-top: -28px;
-	    margin-left: 0px;
-	    z-index: 200;
-	    height: 100px;
+	.audio{
+		padding-right: 0 !important;
 	}
 
-	.audio-title{
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 100px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
 		width: 100%;
-		font-size: 14px;
+		font-size: 16px;
 	}
-	.audio-artist{
+
+	.audio-info .audio-artist{
 		margin-top: -10px;
 		width: 100%;
 		font-size: 11px;
 	}
 
-	.audio-art img{
-		margin-top: 7px;
-		margin-left: 2px;
-		width: 100px !important;
-		height: 100px;
-		border-radius: 10px;
+	.audio-time{
+		position: relative;
 	}
 
-	#search {
-	    position: relative;
-	    font-size: 18px;
-	    padding-left: 20px;
-	    padding-right: 45px;
-	    margin: 0 auto 0;
+	.audio-controls{
+		margin-top: -25px;
+		position: relative;
+	}
+
+	#progressbar{
+		margin-top: 35px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 15px;
+	    width: 90% !important;
+	    z-index: 5;
 	}
 	#search label {
 	    position: absolute;
-	    left: 37px;
-	    top: 4px;
+	    left: 40px;
+    	top: 205px;
+	}
+
+	.search-ul{
+		position: relative;
+		margin-top: -55px;
+	}
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
 	}
 	.tracklist-title{
 		font-size: 14px;
@@ -302,29 +322,6 @@ audio, #pause{
 	.add-to-playlist,.add-to-playlist:hover{
 		font-size: 10px;
 		text-decoration: none;
-	}
-
-	#progressbar{
-		height: 9px;
-	    width: 100%;
-	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
-	    border-radius: 4px;
-	    -moz-border-radius: 4px;
-		-webkit-border-radius: 4px;
-		margin-top: 35px;
-		z-index: 50;
-	}
-
-	.player-controls .time, .player-control .controls{
-		z-index: 10;
-	}
-	.time p{
-		font-size: 12px;
-		margin-bottom: 0px;
-	}
-	.player-controls{
-		margin-top: 10px;
-		position: relative;
 	}
 
 	#ad-banner{
@@ -336,7 +333,7 @@ audio, #pause{
 	}
 }
 @media screen and (min-width: 360px){
-
+	
 	.movie-nav button{
 		width: 92.5% !important;
 		margin-left: -4px;
@@ -345,7 +342,7 @@ audio, #pause{
 		width: 100%;
 		position: fixed;
 		margin-top: 5px;
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 		z-index: 100;
 	}
 
@@ -362,166 +359,89 @@ audio, #pause{
 		margin-left: -7px;
 		height: 50px;
 	}
-	#progressbar{
-		height: 9px;
-	    width: 70%;
-	    float: right;
-	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
-	    border-radius: 4px;
-	    -moz-border-radius: 4px;
-		-webkit-border-radius: 4px;
-		margin: 10px 0 0 0;
-	}
-
-
-	.audio-art{
-		margin-left: -10px;
-	}
-	.audio-art img{
-		width: 100px !important;
-		height: 100px;
-	}
-	.player-controls{
-		margin-top: 25px;
-	}
-
-	#ad-banner{
-	  width: 100%    !important;
-	  height: 90px   !important;
-	  margin-top: 15px;
-	  margin-bottom: 5px !important;
-	  object-fit: fill;
-	}
-}
-@media screen and (min-width: 375px){
-	#progressbar{
-		height: 9px;
-	    width: 40%;
-	    float: right;
-	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
-	    border-radius: 4px;
-	    -moz-border-radius: 4px;
-		-webkit-border-radius: 4px;
-		margin: 10px 0 0 0;
-	}
-
-	.player-controls{
-		margin-top: 10px;
-	}
-}
-@media screen and (min-width: 414px){
-
-	.tracklist-title{
-		width: 80%;
-	}
-	.tracklist-artist{
-		width: 50%;
-	}
-	.tracklist-duration{
-		font-size: 12px;
-	}
-
-	#progressbar{
-		height: 9px;
-	    width: 75%;
-	    float: right;
-	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
-	    border-radius: 4px;
-	    -moz-border-radius: 4px;
-		-webkit-border-radius: 4px;
-		margin: 10px 0 0 0;
-	}
-
-	.player-controls{
-		margin-top: 35px;
-	}
-}
-@media screen and (min-width: 480px){
-	.custom-nav{
-		width: 100%;
-		position: fixed;
-		margin-top: 5px;
-		margin-bottom: 30px;
-		z-index: 100;
-	}
-
-	.music-nav{
-		width: 50% !important;
-	}
-
-	.movie-nav button{
-		width: 80.5% !important;
-		margin-left: -4px;
-	}
-	.music-nav button{
-		width: 95% !important;
-		height: 50px;
-	}
-	.movie-nav button{
-		width: 94.5% !important;
-		margin-left: -10px;
-		height: 50px;
-	}
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 580px;
 	}
 
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
+	  height: 400px   !important;
 	  object-fit: cover !important;
 	  margin-top: 15px !important;
 	}
-
-	.music-list-details{
-		width: 147px;
-		text-align: center;
-	}
-
-	.music-list-title{
-		font-size: 12px;
-	}
-	.music-list-artist{
-		font-size: 10px;
-		margin-top: -10px;
-	}
-
-	.music-album-art img{
-		width: 100% !important;
-		height: 100px !important;
-	}
-
-	.audio-title{
-		width: 100%;
-		font-size: 20px;
-	}
-	.audio-artist{
-		margin-top: -10px;
-		width: 100%;
-		font-size: 14px;
+	.audio{
+		padding-right: 0 !important;
 	}
 
 	.audio-art{
-		margin-left: -10px;
+		padding: 0 !important;
 	}
 	.audio-art img{
-		width: 150px !important;
-		height: 150px;
+		margin-top: 7px;
+		width: 100% !important;
+		height: 100px;
+		border-radius: 10px;
 	}
 
-	#search {
-	    position: relative;
-	    font-size: 18px;
-	    padding-left: 20px;
-	    padding-right: 45px;
-	    margin: 0 auto 0;
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 16px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-time{
+		position: relative;
+	}
+
+	.audio-controls{
+		margin-top: -25px;
+		position: relative;
+	}
+
+	#progressbar{
+		margin-top: 35px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 20px;
+	    width: 93% !important;
+	    z-index: 5;
 	}
 	#search label {
 	    position: absolute;
-	    left: 37px;
-	    top: 4px;
+	    left: 40px;
+    	top: 315px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
 	}
 	.tracklist-title{
 		font-size: 14px;
@@ -540,19 +460,475 @@ audio, #pause{
 		text-decoration: none;
 	}
 
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 90px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
+	}
+}
+@media screen and (min-width: 375px){
+	
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -4px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 79px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 80px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 100px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 16px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-time{
+		position: relative;
+	}
+
+	.audio-controls{
+		margin-top: -25px;
+		position: relative;
+	}
+
 	#progressbar{
+		margin-top: 35px;
+		position: relative;
 		height: 9px;
-	    width: 80%;
-	    float: right;
+	    width: 100%;
 	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
 	    border-radius: 4px;
 	    -moz-border-radius: 4px;
 		-webkit-border-radius: 4px;
-		margin: 10px 0 0 0;
 	}
 
-	.player-controls{
-		margin-top: 60px;
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 15px;
+	    width: 92% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 40px;
+    	top: 205px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
+	}
+
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
+	}
+}
+@media screen and (min-width: 414px){
+	
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -4px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 79px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 80px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 100px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 16px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-time{
+		position: relative;
+	}
+
+	.audio-controls{
+		margin-top: -25px;
+		position: relative;
+	}
+
+	#progressbar{
+		margin-top: 35px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 15px;
+	    width: 93% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 40px;
+    	top: 205px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
+	}
+
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
+	}
+}
+@media screen and (min-width: 480px){
+	
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -4px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 79px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 80px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 120px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 16px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-time{
+		top: 20px;
+		position: relative;
+	}
+
+	.audio-controls{
+		top: 15px;
+		position: relative;
+	}
+
+	#progressbar{
+		top: 15px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 20px;
+	    width: 90% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 45px;
+    	top: 224px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
+	}
+
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
 	}
 }
 @media screen and (min-width: 540px){
@@ -635,8 +1011,6 @@ audio, #pause{
 	#search {
 	    position: relative;
 	    font-size: 18px;
-	    padding-left: 20px;
-	    padding-right: 45px;
 	    margin: 0 auto 0;
 	}
 	#search label {
@@ -676,13 +1050,12 @@ audio, #pause{
 		margin-top: 60px;
 	}
 }
-@media screen and (min-width: 640px){
-
+@media screen and (min-width: 600px) and (max-width: 601px){
+	
 	.custom-nav{
 		width: 100%;
 		position: fixed;
 		margin-top: 5px;
-		margin-bottom: 30px;
 		z-index: 100;
 	}
 
@@ -700,24 +1073,24 @@ audio, #pause{
 	}
 	.movie-nav button{
 		width: 94.5% !important;
-		margin-left: -15px;
+		margin-left: -7px;
 		height: 50px;
 	}
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 600px;
 	}
 
 	video {
 	  width: 100%    !important;
-	  height: 200px   !important;
+	  height: 520px   !important;
 	  object-fit: cover !important;
 	  margin-top: 15px !important;
 	}
 
 	.music-list-details{
-		width: 185px;
+		width: 179px;
 		text-align: center;
 	}
 
@@ -731,38 +1104,81 @@ audio, #pause{
 
 	.music-album-art img{
 		width: 100% !important;
-		height: 150px !important;
+		height: 120px !important;
 	}
 
-	.audio-title{
-		width: 100%;
-		font-size: 26px;
-	}
-	.audio-artist{
-		margin-top: -10px;
-		width: 100%;
-		font-size: 14px;
+	.audio{
+		padding-right: 0 !important;
 	}
 
 	.audio-art{
-		margin-left: -10px;
+		padding: 0 !important;
 	}
 	.audio-art img{
-		width: 200px !important;
-		height: 200px;
+		margin-top: 7px;
+		width: 100% !important;
+		height: 150px;
+		border-radius: 10px;
 	}
 
-	#search {
-	    position: relative;
-	    font-size: 18px;
-	    padding-left: 20px;
-	    padding-right: 45px;
-	    margin: 0 auto 0;
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 16px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-time{
+		position: relative;
+		top: 47px;
+	}
+
+	.audio-controls{
+		margin-top: -25px;
+		position: relative;
+	}
+
+	#progressbar{
+		margin-top: 35px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 25px;
+	    width: 95% !important;
+	    z-index: 5;
 	}
 	#search label {
 	    position: absolute;
-	    left: 37px;
-	    top: 4px;
+	    left: 15px;
+    	top: 7px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
 	}
 	.tracklist-title{
 		font-size: 14px;
@@ -781,19 +1197,314 @@ audio, #pause{
 		text-decoration: none;
 	}
 
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
+	}
+}
+@media screen and (min-width: 640px){
+	
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -4px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 179px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 120px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 150px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 16px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-time{
+		position: relative;
+		top: 47px;
+	}
+
+	.audio-controls{
+		margin-top: -25px;
+		position: relative;
+	}
+
 	#progressbar{
+		margin-top: 35px;
+		position: relative;
 		height: 9px;
-	    width: 80%;
-	    float: right;
+	    width: 100%;
 	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
 	    border-radius: 4px;
 	    -moz-border-radius: 4px;
 		-webkit-border-radius: 4px;
-		margin: 10px 0 0 0;
 	}
 
-	.player-controls{
-		margin-top: 110px;
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 25px;
+	    width: 96% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 15px;
+    	top: 7px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
+	}
+
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
+	}
+}
+@media screen and (min-width: 667px){
+	
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -4px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 179px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 120px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 150px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 16px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-time{
+		position: relative;
+		top: 47px;
+	}
+
+	.audio-controls{
+		margin-top: -25px;
+		position: relative;
+	}
+
+	#progressbar{
+		margin-top: 35px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 25px;
+	    width: 96% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 15px;
+    	top: 7px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
 	}
 
 	#ad-banner{
@@ -820,13 +1531,12 @@ audio, #pause{
 		margin-top: 10px;
 	}
 }
-@media screen and (min-width: 960px){
-
+@media screen and (min-width: 736px){
+	
 	.custom-nav{
 		width: 100%;
 		position: fixed;
 		margin-top: 5px;
-		margin-bottom: 30px;
 		z-index: 100;
 	}
 
@@ -836,7 +1546,7 @@ audio, #pause{
 
 	.movie-nav button{
 		width: 80.5% !important;
-		margin-left: -20px;
+		margin-left: -4px;
 	}
 	.music-nav button{
 		width: 95% !important;
@@ -861,7 +1571,7 @@ audio, #pause{
 	}
 
 	.music-list-details{
-		width: 89px;
+		width: 179px;
 		text-align: center;
 	}
 
@@ -875,38 +1585,81 @@ audio, #pause{
 
 	.music-album-art img{
 		width: 100% !important;
-		height: 100px !important;
+		height: 120px !important;
 	}
 
-	.audio-title{
-		width: 100%;
-		font-size: 14px;
-	}
-	.audio-artist{
-		margin-top: -10px;
-		width: 100%;
-		font-size: 11px;
+	.audio{
+		padding-right: 0 !important;
 	}
 
 	.audio-art{
-		margin-left: -10px;
+		padding: 0 !important;
 	}
 	.audio-art img{
-		width: 100px !important;
-		height: 100px;
+		margin-top: 7px;
+		width: 100% !important;
+		height: 150px;
+		border-radius: 10px;
 	}
 
-	#search {
-	    position: relative;
-	    font-size: 18px;
-	    padding-left: 20px;
-	    padding-right: 45px;
-	    margin: 0 auto 0;
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 18px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 14px;
+	}
+
+	.audio-time{
+		position: relative;
+		top: 47px;
+	}
+
+	.audio-controls{
+		margin-top: -25px;
+		position: relative;
+	}
+
+	#progressbar{
+		margin-top: 35px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 25px;
+	    width: 96% !important;
+	    z-index: 5;
 	}
 	#search label {
 	    position: absolute;
-	    left: 37px;
-	    top: 4px;
+	    left: 15px;
+    	top: 7px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
 	}
 	.tracklist-title{
 		font-size: 14px;
@@ -925,19 +1678,159 @@ audio, #pause{
 		text-decoration: none;
 	}
 
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
+	}
+}
+@media screen and (min-width: 768px){
+	
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -4px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 209px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 120px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 150px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 16px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.audio-time{
+		top: 45px;
+		position: relative;
+	}
+
+	.audio-controls{
+		top: 5px;
+		position: relative;
+	}
+
 	#progressbar{
+		top: 5px;
+		position: relative;
 		height: 9px;
-	    width: 70%;
-	    float: right;
+	    width: 100%;
 	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
 	    border-radius: 4px;
 	    -moz-border-radius: 4px;
 		-webkit-border-radius: 4px;
-		margin: 10px 0 0 0;
 	}
 
-	.player-controls{
-		margin-top: 30px;
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 25px;
+	    width: 96% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 20px;
+    	top: 5px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
 	}
 
 	#ad-banner{
@@ -946,25 +1839,323 @@ audio, #pause{
 	  margin-top: 15px;
 	  margin-bottom: 5px !important;
 	  object-fit: fill;
-	}	
+	}
 }
-@media screen and (min-width: 1280px){
+@media screen and (min-width: 960px){
+	
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -4px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 79px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 80px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 170px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 22px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 14px;
+	}
+
+	.audio-time{
+		top: 55px;
+		position: relative;
+	}
+
+	.audio-controls{
+		top: 10px;
+		position: relative;
+	}
+
 	#progressbar{
+		top: 10px;
+		margin-top: 35px;
+		position: relative;
 		height: 9px;
-	    width: 70%;
-	    float: right;
+	    width: 100%;
 	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
 	    border-radius: 4px;
 	    -moz-border-radius: 4px;
 		-webkit-border-radius: 4px;
-		margin: 10px 0 0 0;
 	}
 
-	.player-controls{
-		margin-top: 10px;
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 25px;
+	    width: 97% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 15px;
+    	top: 5px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
+	}
+
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
 	}
 }
-@media screen and (min-width: 1366px){
+@media screen and (min-width: 962px){
+	
+	.custom-nav{
+		width: 100%;
+		position: fixed;
+		margin-top: 5px;
+		z-index: 100;
+	}
+
+	.music-nav{
+		width: 50% !important;
+	}
+
+	.movie-nav button{
+		width: 80.5% !important;
+		margin-left: -4px;
+	}
+	.music-nav button{
+		width: 95% !important;
+		height: 50px;
+	}
+	.movie-nav button{
+		width: 94.5% !important;
+		margin-left: -7px;
+		height: 50px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 220px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-list-details{
+		width: 79px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 12px;
+	}
+	.music-list-artist{
+		font-size: 10px;
+		margin-top: -10px;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 80px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 170px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 22px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 14px;
+	}
+
+	.audio-time{
+		top: 55px;
+		position: relative;
+	}
+
+	.audio-controls{
+		top: 10px;
+		position: relative;
+	}
+
+	#progressbar{
+		top: 10px;
+		margin-top: 35px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: -10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 25px;
+	    width: 97% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 15px;
+    	top: 5px;
+	}
+
+	.tracklist-div{
+		margin-top: -20px;
+		padding: 0 !important;
+	}
+	.tracklist-title{
+		font-size: 14px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 11px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 12px;
+	}
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 10px;
+		text-decoration: none;
+	}
+
+	#ad-banner{
+	  width: 100%    !important;
+	  height: 80px   !important;
+	  margin-top: 15px;
+	  margin-bottom: 5px !important;
+	  object-fit: fill;
+	}
+}
+@media screen and (min-width: 1080px){
+}
+@media screen and (min-width: 1280px){
 	.movie-nav button{
 		width: 94% !important;
 		margin-left: -27px;
@@ -1025,54 +2216,211 @@ audio, #pause{
 		height: 300px !important;
 	}
 
-	#search-result {
-	    width: 95%;
-	    margin-top: -28px;
-	    margin-right: auto;
-	    margin-left: 35px;
-	    z-index: 200;
-	    height: 100px;
+		.audio{
+		padding-right: 0 !important;
 	}
 
-	.audio-title{
-		margin-top: 10px;
-		width: 100%;
-		font-size: 32px;
+	.audio-art{
+		padding: 0 !important;
 	}
-	.audio-artist{
-		margin-top: -10px;
-		width: 100%;
-		font-size: 22px;
-	}
-
 	.audio-art img{
-		margin-top: 20px;
-		margin-left: 10px;
-		width: 400px !important;
-		height: 400px;
+		margin-top: 7px;
+		width: 100% !important;
+		height: 350px;
 		border-radius: 10px;
 	}
-	.player-controls{
-		margin-top: 230px;
-		text-align: center;
+
+	.audio-info{
+		position: relative;
 	}
 
-	.player-controls .time p, .player-controls .controls p{
-		font-size: 25px;
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 30px;
 	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 20px;
+	}
+
+	.audio-time{
+		font-size: 18px;
+		position: relative;
+		top: 190px;
+	}
+
+	.audio-controls{
+		font-size: 18px;
+		top: 155px;
+		position: relative;
+	}
+
 	#progressbar{
+		top: 155px;
+		position: relative;
 		height: 9px;
 	    width: 100%;
 	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
 	    border-radius: 4px;
 	    -moz-border-radius: 4px;
 		-webkit-border-radius: 4px;
-		margin-top: -80px;
+	}
+
+	#search{
+		margin-top: 10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 50px;
+	    width: 98% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 37px;
+	    top: 4px;
+	}
+}
+@media screen and (min-width: 1366px){
+	.movie-nav button{
+		width: 94% !important;
+		margin-left: -27px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 600px;
+	}
+
+	video {
+	  width: 100%    !important;
+	  height: 540px   !important;
+	  object-fit: cover !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 400px !important;
 	}
 
 
 
+	.music-list-details{
+		width: 409px;
+		text-align: center;
+	}
 
+	.music-list-title{
+		font-size: 24px;
+	}
+	.music-list-artist{
+		font-size: 20px;
+		margin-top: -10px;
+	}
+	.tracklist-title{
+		font-size: 18px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 16px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 16px;
+	}
+
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 16px;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 300px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 350px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 30px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 20px;
+	}
+
+	.audio-time{
+		font-size: 18px;
+		position: relative;
+		top: 190px;
+	}
+
+	.audio-controls{
+		font-size: 18px;
+		top: 150px;
+		position: relative;
+	}
+
+	#progressbar{
+		top: 150px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: 10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 50px;
+	    width: 98% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 37px;
+	    top: 4px;
+	}
+	#ad-banner{
+		height: 150px !important;
+	}
 }
 
 

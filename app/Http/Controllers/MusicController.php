@@ -11,22 +11,28 @@ class MusicController extends Controller
     //
 
     public function index(){
-
-		$files = \File::allFiles(public_path('audio'));
+    	$searchResult = array();
+		$files = \File::allFiles(public_path('music'));
+		$musicID=0;
+		shuffle($files);
+		$files = array_slice($files, 0, 36);
 
 		$musicList = array();
+
 		foreach ($files as $file)
 		{
-		    $remotefilename = public_path('audio/'.basename($file));
+			$musicID++;
+		    $remotefilename = public_path('music/'.basename($file));
 			$getID3 = new \getID3;
 			$ThisFileInfo = $getID3->analyze($remotefilename);
 			
 
 			$picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
+
 	        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
 	        $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
 	        
-			$albumArt = !empty($picture) == true ? $base64 = 'data:' . $type . ';base64,' . base64_encode($picture) : NULL;
+			$albumArt = !empty($picture) == true ? 'data: ' . $type . ';base64,' . base64_encode($picture) : NULL;
 
 			if(!empty($ThisFileInfo['tags']['id3v2']['title']) && !empty($ThisFileInfo['tags']['id3v2']['artist'])){
 				$fileMeta = [
@@ -38,24 +44,21 @@ class MusicController extends Controller
 				];
 				array_push($musicList,$fileMeta);
 			}
-
-
-			
 		}
-		shuffle($musicList);
+		
 		return view('client.client_musiclist')->with('music_list',$musicList);
     }
 
     public function playMusic(Request $request){
 
     	$musicFile = $request->input('music_file');
-
-    	if (!File::exists(public_path('audio/'.basename($musicFile))))
+    
+   		if (!File::exists(public_path('music/'.basename($musicFile))))
 		{
 		   return view('client.client_musicplayer')->with('music',NULL);
 		}
 		
-    	$remotefilename = public_path('audio/'.basename($musicFile));
+    	$remotefilename = public_path('music/'.basename($musicFile));
 		$getID3 = new \getID3;
 		$ThisFileInfo = $getID3->analyze($remotefilename);
 
@@ -63,7 +66,7 @@ class MusicController extends Controller
 	        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
         $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
         
-		$albumArt = !empty($picture) == true ? $base64 = 'data:' . $type . ';base64,' . base64_encode($picture) : NULL;
+		$albumArt = !empty($picture) == true ? 'data: ' . $type . ';base64,' . base64_encode($picture) : NULL;
 		if(!empty($ThisFileInfo['tags']['id3v2']['title']) && !empty($ThisFileInfo['tags']['id3v2']['artist'])){
 			$fileMeta = [
 				"filename" => basename($remotefilename),
@@ -76,7 +79,7 @@ class MusicController extends Controller
 		}else{
 			$fileMeta = NULL;
 		}	
-
+		
     	return view('client.client_musicplayer')->with('music',$fileMeta);
     }
 
@@ -92,19 +95,19 @@ class MusicController extends Controller
 				Session::push('my_playlist',$request->input('music_data'));
 				Session::save();
 			}
-			
 		}
-    }
 
+		return response()->json(Session::get('my_playlist'));
+    }
 
     public function fetchAllMusic(){
 
-    	$files = \File::allFiles(public_path('audio'));
+    	$files = \File::allFiles(public_path('music'));
 
 		$musicList = array();
 		foreach ($files as $file)
 		{
-		    $remotefilename = public_path('audio/'.basename($file));
+		    $remotefilename = public_path('music/'.basename($file));
 			$getID3 = new \getID3;
 			$ThisFileInfo = $getID3->analyze($remotefilename);
 			
@@ -125,12 +128,54 @@ class MusicController extends Controller
 				];
 				array_push($musicList,$fileMeta);
 			}
+		}
+		
+		Session::put('music_storage');
+		Session::push('music_storage',null);
+		Session::push('music_storage',$musicList);
+		Session::save();
+    }
 
+    public function searchMusic(Request $request){
 
+    	$filenames = array();
+    	$searchResult = array();
+    	$searchKeys = $request->input('search_keys');
+    	$files = \File::allFiles(public_path('music'));
+    	foreach ($files as $file)
+		{
+			$filename = str_replace('_', ' ',basename($file,'.mp3')); 
+			if (preg_match('/^'.$searchKeys.'/i', $filename)) {
+
+			    array_push($filenames,$file);
+			}
 			
 		}
 		
-		return response()->json($musicList);
+		$i=0;
+		for($i=0; $i<sizeof($filenames); $i++){
+
+			$getID3 = new \getID3;
+			$ThisFileInfo = $getID3->analyze($filenames[$i]);
+			$picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
+			$type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
+			$albumArt = !empty($picture) == true ? 'data: ' . $type . ';base64,' . base64_encode($picture) : NULL;
+
+			if(!empty($ThisFileInfo['tags']['id3v2']['title']) && !empty($ThisFileInfo['tags']['id3v2']['artist'])){
+				$fileMeta = [
+					"filename" => basename($filenames[$i]),
+					"music_title" => $ThisFileInfo['tags']['id3v2']['title'][0],
+					"music_artist" => $ThisFileInfo['tags']['id3v2']['artist'][0],
+					"music_duration" => $ThisFileInfo['playtime_string'],
+					"album_art" => $albumArt
+				];
+				array_push($searchResult,$fileMeta);
+				
+			}
+
+		}
+
+		return response()->json($searchResult);
     }
 
 }

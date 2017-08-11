@@ -6,7 +6,7 @@ $(document).ready(function(){
 	});
 
 	$('#to-music').click(function(){
-		window.location.href = "../public/music";
+		window.location.href = "../public/audios";
 	});
 
 	// pulse effect for the ad banner
@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 	$('.music-album-art').click(function(){
 
-		var musicAttr = $(this).data("music-attr");
+		var musicAttr = $(this).parent('div').data("music-attr");
 		window.location.href = "../public/musicplayer?music_file="+musicAttr['filename'];
 
 
