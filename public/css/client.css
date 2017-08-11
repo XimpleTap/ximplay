@@ -139,7 +139,10 @@ audio, #pause{
 	cursor: pointer !important;
 }
 
-
+.search-ul li a.add-to-playlist{
+	z-index: 100;
+	position: relative;
+}
 
 .tracklist-div{
 	display: none;
