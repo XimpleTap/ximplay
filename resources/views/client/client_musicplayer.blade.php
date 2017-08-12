@@ -155,7 +155,7 @@ $(document).ready(function(){
 
 	playmode = $('.player').data("play-mode");
 	//$('#loaderModal').modal('open');
-	getUserIP(function(ip){
+	/*getUserIP(function(ip){
 	var dateNow = new Date();
 
 	var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
@@ -188,7 +188,7 @@ $(document).ready(function(){
 
 	            }
 	        });
-	    });
+	    });*/
 
 	initPlayer($('.audio-info').data('music-attr'));		
 	playlist = $('.tracklist').data('playlist');
@@ -662,7 +662,7 @@ function addToPlaylist(evt){
         	console.log(data);
         	playlist=data;
         	console.log(playmode);
-        	if(playmode==1){
+        	if(playmode==1 || playmode==2){
         		refreshPlaylist(data);	
         	}
         	
