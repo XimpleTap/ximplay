@@ -12,27 +12,19 @@ class Promo extends Model
     public $timestamps = false;
 
     public function savePromo($data){
-       $destinationPath = config('app.PROMOS_UPLOAD_DIR');
        $promoInstance = new Promo();
-       $filename = $this->removeWhiteSpace($data['file']->getClientOriginalName());
-       
-       $date = Carbon::createFromFormat('m/d/Y', $data['endDate']);
-       $usableDate = $date->format('Y-m-d');
-       dump($usableDate);
-
-
-       $promoInstance->image_path = $destinationPath.$filename;
-       $promoInstance->promo_end = $usableDate;
+       $promoInstance->image_path = $data['image_path'];
+       $promoInstance->promo_end = $data['promo_end'];
        $status = $promoInstance->save();
        return $status;
-
-
     }
 
     private function removeWhiteSpace($str){
         return preg_replace('/\s+/', '', $str);
     }
 
-
+    public function fetchPromos(){
+        return DB::table('advertiser_promo')->get();
+    }
 }
         

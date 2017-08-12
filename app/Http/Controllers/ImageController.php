@@ -7,6 +7,7 @@ use App\Promo;
 use App\Ad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
 
 
 class ImageController extends Controller
@@ -16,24 +17,40 @@ class ImageController extends Controller
     }
 
     public function adsUpload(Request $request){
-        $validateImage = $this->validateImageUpload(Input::file('file'));
+        //TODO: enter validation method call here
+        //$validateImage = $this->validateImageUpload(Input::file('file'));
+        $validateImage = true;
+        $postData = $request->all();
+        $endDate = $postData['endDate'];
+        $endDate = Carbon::createFromFormat('m/d/Y', $endDate);
+        $endDate = $endDate->format('Y-m-d');
+        $destinationPath = config('app.ADS_UPLOAD_DIR');
+        $viewData = [];
         if($validateImage){
+            foreach(Input::file('file') as $file){
+                try{
+                    $imageName = $file->getClientOriginalName();
+                    $destinationPath = config('app.ADS_UPLOAD_DIR');
+                    $filename = $this->removeWhiteSpace($imageName);
+                    $file->move($destinationPath,$filename);  
+                    $adModelInstance = new Ad();
+                    $dataToSave = array(
+                        'promo_end'=>$endDate,
+                        'image_path'=>$destinationPath.$filename
+                    );
+                    $status = $adModelInstance->saveAds($dataToSave);  
+                    array_push($viewData,$imageName);
+                    
+                    
+                } catch (Exception $e) {
 
-            try{
-                $file = $request->file('file');
-                $destinationPath = config('app.ADS_UPLOAD_DIR');
-                $filename = $this->removeWhiteSpace($file->getClientOriginalName());
-                $file->move($destinationPath,$filename);  
-                $adModelInstance = new Ad();
-                $status = $adModelInstance->saveAds($request->all());  
-                 
-            } catch (Exception $e) {
-
-                Log::error("AppImage::adsUpload()  " . $e->getMessage());
-                $this->data['message'] = Lang::get('messages.image_upload_fail');
-                $this->utilObj->renderJson('error', $this->data);
-                return false;
+                    Log::error("AppImage::adsUpload()  " . $e->getMessage());
+                    $this->data['message'] = Lang::get('messages.image_upload_fail');
+                    $this->utilObj->renderJson('error', $this->data);
+                    return false;
+                }
             }
+            return view('ads.success',array('data'=>$viewData));
         }
     }
 
@@ -51,26 +68,54 @@ class ImageController extends Controller
     }
 
     public function promosUpload(Request $request){
-        $validateImage = $this->validateImageUpload(Input::file('file'));
+        //TODO: enter validation method call here
+        //$validateImage = $this->validateImageUpload(Input::file('file'));
+        $validateImage = true;
+        $postData = $request->all();
+        $endDate = $postData['endDate'];
+        $endDate = Carbon::createFromFormat('m/d/Y', $endDate);
+        $endDate = $endDate->format('Y-m-d');
+        $destinationPath = config('app.PROMOS_UPLOAD_DIR');
+        $viewData = [];
+        
         if($validateImage){
+            foreach(Input::file('file') as $file){
+                try{
+                    $imageName = $file->getClientOriginalName();
+                    $destinationPath = config('app.PROMOS_UPLOAD_DIR');
+                    $filename = $this->removeWhiteSpace($imageName);
+                    $file->move($destinationPath,$filename);  
+                    $promoModelInstance = new Promo();
+                    $dataToSave = array(
+                        'promo_end'=>$endDate,
+                        'image_path'=>$destinationPath.$filename
+                    );
+                    $status = $promoModelInstance->savePromo($dataToSave);
+                     array_push($viewData,$imageName);
+                } catch (Exception $e) {
 
-            try{
-                $file = $request->file('file');
-                $destinationPath = config('app.PROMOS_UPLOAD_DIR');
-                $filename = $this->removeWhiteSpace($file->getClientOriginalName());
-                $file->move($destinationPath,$filename);  
-                $promoModelInstance = new Promo();
-                $status = $promoModelInstance->savePromo($request->all());
-                echo $status;
-                 
-            } catch (Exception $e) {
-
-                Log::error("AppImage::promosUpload()  " . $e->getMessage());
-                $this->data['message'] = Lang::get('messages.image_upload_fail');
-                $this->utilObj->renderJson('error', $this->data);
-                return false;
+                    Log::error("AppImage::promosUpload()  " . $e->getMessage());
+                    $this->data['message'] = Lang::get('messages.image_upload_fail');
+                    $this->utilObj->renderJson('error', $this->data);
+                    return false;
+                }
             }
+            
+            return view('promos.success',array('data'=>$viewData));
+            
         }
+    }
+
+    public function adsList(){
+        $adModelInstance = new Ad();
+        $adDbData = $adModelInstance->fetchAds();
+        return view('ads.index',array('data'=>$adDbData));
+    }
+
+    public function promosList(){
+        $promoModelInstance = new Promo();
+        $promoDbData = $promoModelInstance->fetchPromos();
+        
     }
 
 

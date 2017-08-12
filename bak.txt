@@ -1,0 +1,422 @@
+	public function index($genre = ""){
+		/*$remotefilename = public_path('audio/Gonna Lose You.mp3');
+		$getID3 = new \getID3;
+		$ThisFileInfo = $getID3->analyze($remotefilename);
+
+        //$ThisFileInfo = $getID3->analyze($localtempfilename);
+       	
+        $picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
+        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
+        $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
+
+		if ($fp_remote = fopen($remotefilename, 'rb')) {
+		    $localtempfilename = tempnam('/tmp', 'getID3');
+		    if ($fp_local = fopen($localtempfilename, 'wb')) {
+		        while ($buffer = fread($fp_remote, 8192)) {
+		            fwrite($fp_local, $buffer);
+		        }
+		        fclose($fp_local);
+		        // Initialize getID3 engine
+		        $getID3 = new \getID3;
+		        $ThisFileInfo = $getID3->analyze($localtempfilename);
+		       	
+		        $picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
+		        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
+		        $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
+		        // Delete temporary file
+
+		        unlink($localtempfilename);
+		    }
+		    fclose($fp_remote);
+		}
+
+		if(!empty($picture)){
+			return view('music',['album_art' => $base64 = 'data:' . $type . ';base64,' . base64_encode($picture)]);
+		}else{
+			return view('music',['album_art' => null]);
+		}*/
+
+		return view('music');
+	}
+
+	public function indexPlaylist(){	
+		return view('playlist')->with('playlist_data',Session::get('my_playlist'));
+	}
+
+	public function fetchAllMusic(Request $request){
+
+		$genre = $request->input('genre');
+
+		$files = \File::allFiles(public_path('audio/'.$genre));
+
+		$musicPlaylist = array();
+		foreach ($files as $file)
+		{
+		    $remotefilename = public_path('audio/'.$genre.'/'.basename($file));
+			$getID3 = new \getID3;
+			$ThisFileInfo = $getID3->analyze($remotefilename);
+			
+
+			$picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
+	        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
+	        $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
+	        
+			$albumArt = !empty($picture) == true ? $base64 = 'data:' . $type . ';base64,' . base64_encode($picture) : NULL;
+
+			if(!empty($ThisFileInfo['tags']['id3v2']['title']) && !empty($ThisFileInfo['tags']['id3v2']['artist'])){
+				$fileMeta = [
+					"filename" => basename($remotefilename),
+					"music_title" => $ThisFileInfo['tags']['id3v2']['title'][0],
+					"music_artist" => $ThisFileInfo['tags']['id3v2']['artist'][0],
+					"music_duration" => $ThisFileInfo['playtime_string'],
+					"album_art" => $albumArt
+				];
+				array_push($musicPlaylist,$fileMeta);
+			}
+
+
+			
+		}
+		return response()->json($musicPlaylist);
+	}
+
+	public function createPlaylist(Request $request){
+
+		$playlistTitle = $request->input('playlist_title');
+
+		if(empty(Session::get('my_playlist.title'))){
+			$request->session()->flush();
+			Session::put('my_playlist.title',$playlistTitle);
+			Session::push('my_playlist.music',$request->input('music_data'));
+			Session::save();
+		}
+	}
+
+	public function addMusicToPlaylist(Request $request){
+		
+		if(!empty(Session::get('my_playlist.music'))){
+			Session::push('my_playlist.music',$request->input('music_data'));
+			Session::save();
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+
+
+
+	public function index($category = ""){
+
+    	$files = array();
+    	
+    	if($category!=""){
+    		$files = \File::allFiles(public_path('movies/'.$category));
+    		$videoFiles = array();
+    		foreach ($files as $file)
+			{
+				$path_parts = pathinfo($file);
+				$getID3 = new \getID3;
+				$ThisFileInfo = $getID3->analyze($file);
+				$ThisFileInfo['filename'] = $path_parts['filename'];
+				$ThisFileInfo['file_extension'] = '.'.$path_parts['extension'];
+				$ThisFileInfo['file_folder'] = $category;
+				array_push($videoFiles, $ThisFileInfo);
+
+			}
+    		//Get current page form url e.g. &page=6
+	        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+	        //Create a new Laravel collection from the array data
+	        $collection = new Collection($videoFiles);
+
+	        //Define how many items we want to be visible in each page
+	        $perPage = 5;
+
+	        //Slice the collection to get the items to display in current page
+	        $currentPageSearchResults = $collection->slice(($currentPage-1) * $perPage, $perPage)->all();
+	         
+
+	        //Create our paginator and pass it to the view
+	        $paginatedSearchResults= new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
+
+	        return view('video', ['video_list' => $paginatedSearchResults]);
+    	}
+		
+		/*$remotefilename = public_path('audio/Gonna Lose You.mp3');
+		$getID3 = new \getID3;
+		$ThisFileInfo = $getID3->analyze($remotefilename);
+
+        //$ThisFileInfo = $getID3->analyze($localtempfilename);
+       	
+        $picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
+        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
+        $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
+
+		if ($fp_remote = fopen($remotefilename, 'rb')) {
+		    $localtempfilename = tempnam('/tmp', 'getID3');
+		    if ($fp_local = fopen($localtempfilename, 'wb')) {
+		        while ($buffer = fread($fp_remote, 8192)) {
+		            fwrite($fp_local, $buffer);
+		        }
+		        fclose($fp_local);
+		        // Initialize getID3 engine
+		        $getID3 = new \getID3;
+		        $ThisFileInfo = $getID3->analyze($localtempfilename);
+		       	
+		        $picture = @$ThisFileInfo['id3v2']['APIC'][0]['data'];
+		        //$picture = @$ThisFileInfo['comments']['picture'][0]['data'];
+		        $type = @$ThisFileInfo['id3v2']['APIC'][0]['image_mime'];
+		        // Delete temporary file
+
+		        unlink($localtempfilename);
+		    }
+		    fclose($fp_remote);
+		}
+
+		if(!empty($picture)){
+			return view('music',['album_art' => $base64 = 'data:' . $type . ';base64,' . base64_encode($picture)]);
+		}else{
+			return view('music',['album_art' => null]);
+		}*/
+
+		return view('video')->with('video_list',$files);
+	}
+
+	public function watchVideo($category ="",$filename="") // default 1 is needed here 
+	{
+	   return view('watchvideo')->with('video_file',public_path('movies/'.$category.'/'.$filename));
+	}
+
+
+	var musicPlaylist = [];
+	var href = location.href;
+	var genre = href.match(/([^\/]*)\/*$/)[1];
+	var playlistIndex = 0;
+
+	getAllMusic(genre).then(function(data){
+		if(data!=null){
+				
+			var musicCount = 0;
+			for(musicCount=0; musicCount<data.length; musicCount++){
+
+				musicPlaylist.push({
+					mp3: "/ximplay/public/audio/"+genre+"/"+data[musicCount].filename,
+			        oga:"",
+			        title: data[musicCount].music_title,
+			        artist: data[musicCount].music_artist,
+			        rating:4,
+			        buy:'',
+			        price:'',
+			        duration: data[musicCount].music_duration,
+			        cover: data[musicCount].album_art == null ? "{{ asset('images/defaultmusic.jpg') }}" :  data[musicCount].album_art
+				});
+			}
+			
+			if(musicPlaylist.length!=0){
+				$('#ximple-player').ttwMusicPlayer(musicPlaylist, {
+			        autoPlay:true, 
+			        isPlaylist : false,
+			        description:"",
+			        jPlayer:{
+			            swfPath:"{{ asset('jquery-player') }}" //You need to override the default swf path any time the directory structure changes
+			        }
+			    },
+		        {
+		        	ad_file : "{{ asset('images/NoticeMe.png') }}"
+		        });
+			}else{
+
+			}
+
+			
+		}
+	});
+
+	$(document).on('click','.add-to-playlist',function(){
+		playlistIndex = $(this).parents('li').data('index');
+		var musicData = musicPlaylist[playlistIndex];
+		addToPlaylist(musicData).then(function(data){
+			console.log(data);
+			if(data==0){
+				$('#create-playlist-modal').modal("show");
+			}else{
+
+				alert(musicData.title+" has been added to your playlist.");
+			    
+			}
+		});
+    });
+
+    $('#create-playlist').click(function(){
+    	var playlistName = $('#playlist-name').val();
+    	var musicData = musicPlaylist[playlistIndex];
+    	console.log(musicData);
+    	if(playlistName==""){
+    		alert("Please input your playlist name");
+    	}else{
+    		createPlaylist(playlistName,musicData).then(function(data){
+    			$('#create-playlist-modal #playlist-name').val("");
+    			$('#create-playlist-modal').modal("hide");
+    		});
+    	}
+    });
+});
+
+
+function getAllMusic(genre){
+
+	return $.ajax({
+		url : "{{ url('fetchmusic') }}",
+		type: "GET",
+		data :{
+			genre: genre
+		}
+	});
+}
+
+function addToPlaylist(music_data){
+
+	return $.ajax({
+		url : "{{ url('addtoplaylist') }}",
+		type: "GET",
+		data : {
+			"music_data" : music_data
+		}
+	});
+}
+
+function createPlaylist(playlist_title, music_data){
+
+	return $.ajax({
+		url : "{{ url('createplaylist') }}",
+		type : "GET",
+		data : {
+			"playlist_title" : playlist_title,
+			"music_data" : music_data
+		}
+	});
+}
+
+
+var href = location.href;
+	var vid_category = href.match(/([^\/]*)\/*$/)[1];
+
+	$('#category-header').text(vid_category.slice(0,vid_category.lastIndexOf("?")));
+
+	$('.pagination li a').each(function () {
+	    var link = vid_category;
+	    link = link.slice(0,link.indexOf("="));
+	    var pageText = $(this).text();
+	    var activePage = parseInt($('.pagination li.active span').text());
+	    if (pageText.trim() == "«") {
+	      pageText = activePage - 1;
+	    } else if (pageText.trim() == "»") {
+	      pageText = activePage + 1;
+	    }
+	    link = link+"="+pageText;
+	    console.log(link);
+	    $(this).attr('href', link);
+	  });
+
+
+
+    <nav class="navbar-custom navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url('/') }}">Ximpletainment</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="">Music
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu music-dropdown-menu">
+                @if(!empty($audioGenres))
+                  @foreach($audioGenres as $audio_genre)
+                    <li><a href="{{ URL::to('music/'.$audio_genre->genre_name) }}">{{ $audio_genre->genre_name }}</a></li>
+                  @endforeach
+                  @if(!empty(Session::get('my_playlist.title')))
+                    <li><a href="{{ url('musicplaylist') }}">{{ Session::get('my_playlist.title') }}</a></li>
+                  @endif
+                @else
+                    <li><a href="#">Nothing on music.</a></li>
+                @endif
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="">Movies
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu movie-dropdown-menu">
+                  @if(!empty($videoCategories))
+                    @foreach($videoCategories as $video_category)
+                      <li><a href="{{ URL::to('video/'.$video_category->category_name) }}">{{ $video_category->category_name }}</a></li>
+                    @endforeach
+                  @else
+                    <li><a href="#">Nothing on movies.</a></li>
+                  @endif
+                </ul>
+            </li>
+            <li><a href="#">Settings</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav> 
+
+    Route::get('/music/{genre?}',array('as'=>'music','uses'=>'MusicController@index'));
+	Route::get('/fetchmusic',array('uses'=>'MusicController@fetchAllMusic'));
+	
+	Route::get('/addtoplaylist', array('uses'=>'MusicController@addMusicToPlaylist'));
+	Route::get('/createplaylist',array('uses'=>'MusicController@createPlaylist'));
+	Route::get('/musicplaylist',array('uses'=>'MusicController@indexPlaylist'));
+
+
+	Route::get('/video/{category?}',array('as'=>'video','uses'=>'VideoController@index'))->where('page', '[1-9]+[0-9]*');
+	Route::get('/watchvideo/{category?}/{filename?}',array('as'=>'watchvideo','uses'=>'VideoController@watchVideo'));
+
+	var musicPlaylist = [];
+	var href = location.href;
+	var genre = href.match(/([^\/]*)\/*$/)[1];
+	var playlistIndex = 0;
+
+	var playlistData = $('#playlist-data').data("playlist");
+	console.log(playlistData['music']);
+
+	$('#ximple-player').ttwMusicPlayer(playlistData['music'], {
+        autoPlay:true, 
+        isPlaylist : true,
+        description:"",
+        jPlayer:{
+            swfPath:"{{ asset('jquery-player') }}" //You need to override the default swf path any time the directory structure changes
+        }
+    },
+    {
+    	ad_file : "{{ asset('images/NoticeMe.png') }}"
+    });
+
+    <div class="col-sm-8" id="ximple-player">
+			<input type="hidden" id="playlist-data" data-playlist="{{ json_encode($playlist_data) }}">
+			<!-- @if(isset($album_art)) 
+				<img style="width: 100%; max-width: 500px;" class="img-responsive" id="album-art" src="{{ $album_art }}">
+			@else
+				<img style="width: 100%; max-width: 500px;" class="img-responsive" id="album-art" src="{{ asset('images/defaultmusic.jpg') }}">
+			@endif
+			
+
+
+
+			<audio controls style="width: 100%; max-width: 500px;">
+			  
+			  <source src="{{ url('audio/Gonna Lose You.mp3') }}" type="audio/mpeg">
+			  
+				Your browser does not support the audio element.
+			</audio> -->
+		</div>

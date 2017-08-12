@@ -6,14 +6,16 @@
 
 //Start Initial Connection Insert
                 getUserIP(function(ip){
+                    var handling_param =$('#handling_param').val();
 
-                    checkConnection(ip);
+                    if(handling_param == " "){
+                        checkConnection(ip);
 
-                    setTimeout(
-                        function() { 
-                            postConnection(ip);
-                        }, 5000);
-
+                        setTimeout(
+                            function() { 
+                                postConnection(ip);
+                            }, 3000);
+                    }
                 });
 
                 var dateNow = new Date();
@@ -22,7 +24,6 @@
                     dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
 
                 var _dateNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate();
-
 
                 function checkConnection(LocalIpAdd){
                     $.ajax({
@@ -72,7 +73,6 @@
 
                     $('#policyModal').modal('open');
 
-                    //$('#div_policy').after('<div id="div_error" class="error center">Please check this to agree to our policy.</div>');
                     return false;
                 }
                 else{
@@ -96,8 +96,6 @@
 
                             $("#policyModal #close").css('display','none');
 
-                            $("#policyModal #ok").css('display','inline-block');
-
                             $('#promptModal').modal('open');
 
                             countdownTimer(5); 
@@ -107,7 +105,20 @@
                 } 
             });
 
-            $('#policyModal #close').click(function(){
+            $('#policyModal').scroll(function() {
+              if ($(this).scrollTop() + $(this).height() >= $(this)[0].scrollHeight - 4) {
+                $('#policyModal #close').css('display','inline-block');
+              }
+            });
+
+            $('#surveyModal #policy').click(function(){
+
+                $('#policy').removeAttr('checked');
+
+            });
+
+            $('#close').click(function(){
+                document.getElementById("policy").checked = true;
                 $('#surveyModal #policy').attr('checked',true);
             });
 
@@ -203,6 +214,36 @@
                 }
             });
 
+            $('.ad-promo-hits').click(function(){
+                getUserIP(function(ip){
+                    var dateNow = new Date();
+                
+                    var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
+                    dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
+
+                    var _dateNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate();
+                            $.ajax({
+                                url : "../public/adPromoHits",
+                                type: 'GET',
+                                data: {
+                                    dateTimeNow     : _dateTimeNow,
+                                    dateNow         : _dateNow,
+                                    ipAddress       : ip 
+                                },
+                                success: function (data) {
+
+                                if(data != ''){
+                                    var image_path = data[0]['image_path'];
+
+                                        $('.ad-promo-banner').attr('src', '../public'+image_path);
+
+                                        $('#adPromoModal').modal('open');
+                                    }
+                                }
+                            });
+                });
+            });
+
             function countdownTimer(count) {
                 var count = count;
                 var countdown = setInterval(function(){
@@ -215,11 +256,11 @@
                 }, 1000);
             }
 
-            /**
-             * Get the user IP throught the webkitRTCPeerConnection
-             * @param onNewIP {Function} listener function to expose the IP locally
-             * @return undefined
-             */
+        /**
+         * Get the user IP throught the webkitRTCPeerConnection
+         * @param onNewIP {Function} listener function to expose the IP locally
+         * @return undefined
+         */
             function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
                 //compatibility for firefox and chrome
                 var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;

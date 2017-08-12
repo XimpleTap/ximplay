@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Ad extends Model
 {
@@ -12,20 +13,15 @@ class Ad extends Model
     public $timestamps = false;
 
     public function saveAds($data){
-        
-       $destinationPath = config('app.ADS_UPLOAD_DIR');
-       $promoInstance = new Ad();
-       $filename = $this->removeWhiteSpace($data['file']->getClientOriginalName());
-       
-       $date = Carbon::createFromFormat('m/d/Y', $data['endDate']);
-       $usableDate = $date->format('Y-m-d');
-
-       $promoInstance->image_path = $destinationPath.$filename;
-       $promoInstance->ad_end = $usableDate;
-       $status = $promoInstance->save();
+       $adInstance = new Ad();
+       $adInstance->image_path = $data['image_path'];
+       $adInstance->ad_end = $data['promo_end'];
+       $status = $adInstance->save();
        return $status;
+    }
 
-
+    public function fetchAds(){
+        return DB::table('ads')->get();
     }
 
     private function removeWhiteSpace($str){

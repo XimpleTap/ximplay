@@ -23,6 +23,8 @@
     </head>
     <body>
 
+    <input type='hidden' id='handling_param' value="<?php echo (is_null($segment1 =  Request::segment(1)) ? " " : $segment1);  ?>"/>
+
         <div class="index-container">
         <!-- Page Content goes here -->
             <div class="custom-nav">
@@ -76,30 +78,54 @@
         </div>
 
         <div id="policyModal" class="modal">
-            <h4 style="text-align:center; padding:30px">Privacy Policy</h4>
+            <h4 style="text-align:center; padding:25px">Privacy Policy</h4>
             
             <div class="row">
-                <p style="text-align:center; padding:10px 10px 10px 10px">
+                <p style="text-align:justify; padding:10px 10px 10px 10px">
                     After filling up the form, the user should check that he/she agrees with the privacy policy. 
                     If the “PROCEED” button is pressed without checking the agreement, show the user, the privacy policy as seen on the next slide.
+                    After filling up the form, the user should check that he/she agrees with the privacy policy. 
+                    If the “PROCEED” button is pressed without checking the agreement, show the user, the privacy policy as seen on the next slide.
+                    After filling up the form, the user should check that he/she agrees with the privacy policy. 
+                    If the “PROCEED” button is pressed without checking the agreement, show the user, the privacy policy as seen on the next slide.
+                    After filling up the form, the user should check that he/she agrees with the privacy policy. 
+                    If the “PROCEED” button is pressed without checking the agreement, show the user, the privacy policy as seen on the next slide.
+                    After filling up the form, the user should check that he/she agrees with the privacy policy. 
+                    If the “PROCEED” button is pressed without checking the agreement, show the user, the privacy policy as seen on the next slide.
+                    After filling up the form, the user should check that he/she agrees with the privacy policy. 
+                    If the “PROCEED” button is pressed without checking the agreement, show the user, the privacy policy as seen on the next slide.
+                    
                 </p>
             </div>
-
             <div style="text-align:center">
-                <a id="ok" class="waves-effect waves-light btn center" style="display:none">ok</a>
-                <a id="close" class="waves-effect waves-light btn center modal-close">ok</a>
+                <a id="close" class="waves-effect waves-light btn center modal-close" style="display:none">ok</a>
             </div>
+            <br>
         </div>
 
         <div id="promptModal" class="modal">
+            <a class="btn-floating btn-small waves-effect waves-light modal-close close-button">
+                <i class="material-icons">add</i>
+            </a>
             <div class="row">
-                <p style="text-align:center; padding:145px 10px 10px 10px">
+                <p style="text-align:center; padding:125px 10px 10px 10px">
                     Thank you and welcome to Ximplay! <br>
                     You may close this window to proceed or wait, for <span class="timer">5</span> seconds.
                 </p>
-                <div style="text-align:center">
-                    <a id="close" class="waves-effect waves-light red btn center modal-close">close</a>
-                </div>
+            </div>
+        </div>
+
+        <div id="adPromoModal" class="modal">
+            <a class="btn-floating btn-small waves-effect waves-light modal-close close-button">
+                <i class="material-icons">add</i>
+            </a>
+            <div class="row center">
+                <img class="ad-promo-banner responsive-img">
+            </div>
+        </div>
+
+        <div id="loaderModal" class="modal">
+            <div id="loader">
             </div>
         </div>
         @yield('content')
