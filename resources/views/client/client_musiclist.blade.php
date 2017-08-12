@@ -2,22 +2,41 @@
 @section('content')
 
 <div class="index-container">
+	
 	<div class="musiclist">
 	@if(!empty($music_list))	
 		<div class="row">	
 		@foreach($music_list as $music)
 			<div class="col music-col s4 m4 l4" data-music-attr="{{ json_encode($music) }}">
                 <div class="music-album-art" >
-                	<img src="{{ asset('images/defaultmusic.jpg') }}" class="responsive-img z-depth-3">
-                	
+                	@if(empty($music->album_art_path))
+                	<a href="{{ url('/musicplayer?music_id='.$music->id.'&play_mode=1') }}"><img src="{{ asset('images/defaultmusic.jpg') }}" class="responsive-img z-depth-3"></a>
+                	@else
+                	<a href="{{ url('/musicplayer?music_id='.$music->id.'&play_mode=1') }}"><img src="{{ asset($music->album_art_path) }}" class="responsive-img z-depth-3"></a>
+                	@endif
                 </div>
 	            <div class="music-list-details">
-	            	<p class="music-list-title">{{ $music['music_title'] }}</p>
-	            	<p class="music-list-artist">{{ $music['music_artist'] }}</p>
+	            	<p class="music-list-title">{{ $music->title }}</p>
+	            	<p class="music-list-artist">{{ $music->artist }}</p>
 	            	<a class="add-to-playlist"><i class="fa fa-plus-circle"></i> Add to Playlist</a>
 	            </div>
             </div>    	
 		@endforeach
+		</div>
+		<div class="fixed-action-btn horizontal click-to-toggle">
+		    <a class="btn-floating waves-effect waves-light blue">
+		      <i class="fa fa-ellipsis-v"></i>
+		    </a>
+		    <ul class="nav-floaters">
+		    	@if(sizeof(Session::get('my_playlist')[0])!=0)
+		    		<li><a href="{{ url('/musicplayer?music_id='.Session::get('my_playlist')[0]['id'].'&play_mode=2') }}" class="play-playlist btn-floating waves-effect waves-light blue"><i class="fa fa-list"></i></a></li>
+		    	@endif
+		    	@if(sizeof($music_list)!=0)
+		      <li><a href="{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}" class="play-all btn-floating waves-effect waves-light blue"><i class="fa fa-play"></i></a></li>
+		      @endif
+
+
+		    </ul>
 		</div>
 	@else
 		<p class="center-align">No music on the list.</p>
@@ -49,17 +68,14 @@ $(document).ready(function(){
 	        	music_data : musicData
 	        }
 		});
-		Materialize.toast(musicData['music_title']+' has been added to playlist.', 500);
+		Materialize.toast(musicData['title']+' has been added to playlist.', 500);
 	});
 
-	
-
-	$('.music-col').each(function(){
-
-		var imgData = $(this).data("music-attr").album_art==null?"{{ asset('images/defaultmusic.jpg') }}":$(this).data("music-attr").album_art;
-
-		$(this).children().find('img').attr("src",imgData);
-
+	$('.play-all').click(function(e){
+		if($('.music-col').length==0){
+			e.stopPropagation();
+			alert("There are no music to play");
+		}
 	});
 
 });

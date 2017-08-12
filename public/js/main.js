@@ -21,14 +21,5 @@ $(document).ready(function(){
 		window.location.href = "../public/watchvideo?video_id="+videoAttr['id'];
     });
 
-	$('.music-album-art').click(function(){
-
-		var musicAttr = $(this).parent('div').data("music-attr");
-		window.location.href = "../public/musicplayer?music_file="+musicAttr['filename'];
-
-
-	});
-
-
 });
 
