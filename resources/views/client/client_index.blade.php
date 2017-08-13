@@ -45,8 +45,9 @@
         <br>
         <br>
         <div id="surveyModal" class="modal">
-            <h4 style="text-align:center; padding:20px">Ximplay Quick Survey</h4>
-            
+            <h5 style="text-align:center; padding:10px">Ximplay Quick Survey</h5>
+                <p style="text-align:center;">Brought to you by:</p>
+                <img class="company-banner responsive-img" src="{{ asset('banner/company_banner.jpg') }}">
             <div class="row">
                 <div class="input-field col s8">
                     <input name="in_name" id="in_name" type="text" class="validate">
@@ -105,7 +106,7 @@
 
         <div id="promptModal" class="modal">
             <a class="btn-floating btn-small waves-effect waves-light modal-close close-button">
-                <i class="material-icons">add</i>
+                <i class="fa fa-times" aria-hidden="true"></i>
             </a>
             <div class="row">
                 <p style="text-align:center; padding:125px 10px 10px 10px">
@@ -117,13 +118,14 @@
 
         <div id="adPromoModal" class="modal">
             <a class="btn-floating btn-small waves-effect waves-light modal-close close-button">
-                <i class="material-icons">add</i>
+                <i class="fa fa-times" aria-hidden="true"></i>
             </a>
             <div class="row center">
                 <img class="ad-promo-banner responsive-img">
             </div>
         </div>
 
+<<<<<<< HEAD
         <div id="loaderModal" class="modal">
             <div id="loader">
             </div>
@@ -133,13 +135,15 @@
               <i class="fa fa-caret-up"></i>
             </a>
         </div>
+=======
+>>>>>>> 280733ce34ea3f838c603f1d9bd313d635ef9839
         @yield('content')
 
     </body>
 
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
-        <script src="{{ asset('js/materialize.min.js') }}"></script>
+        <script src="{{ asset('js/materialize.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/initial.js') }}"></script>
         <script>
