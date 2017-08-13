@@ -125,7 +125,6 @@
             </div>
         </div>
 
-<<<<<<< HEAD
         <div id="loaderModal" class="modal">
             <div id="loader">
             </div>
@@ -135,8 +134,6 @@
               <i class="fa fa-caret-up"></i>
             </a>
         </div>
-=======
->>>>>>> 280733ce34ea3f838c603f1d9bd313d635ef9839
         @yield('content')
 
     </body>

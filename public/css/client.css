@@ -9,6 +9,9 @@
 	margin-bottom: 10px;
 	z-index: 100;
 }
+.marg-top{
+	margin-top: 20px;
+}
 .music-nav{
 	width: 50% !important;
 }
@@ -357,7 +360,7 @@ video::-internal-media-controls-download-button {
 	}
 }
 @media screen and (min-width: 360px){
-	
+
 	.movie-nav button{
 		width: 92.5% !important;
 		margin-left: -4px;
@@ -460,7 +463,7 @@ video::-internal-media-controls-download-button {
 	#search label {
 	    position: absolute;
 	    left: 40px;
-    	top: 310px;
+    	top: 280px;
 	}
 
 	.tracklist-div{
@@ -1230,7 +1233,7 @@ video::-internal-media-controls-download-button {
 	}
 }
 @media screen and (min-width: 640px){
-	
+
 	.custom-nav{
 		width: 100%;
 		position: fixed;
@@ -2336,8 +2339,6 @@ video::-internal-media-controls-download-button {
 		width: 100% !important;
 		height: 400px !important;
 	}
-
-
 
 	.music-list-details{
 		width: 409px;

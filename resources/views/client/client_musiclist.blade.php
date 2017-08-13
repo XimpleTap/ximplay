@@ -1,8 +1,7 @@
 @extends('client.client_index')
 @section('content')
-
+<div class="marg-top"></div>
 <div class="index-container">
-	
 	<div class="musiclist">
 	@if(!empty($music_list))	
 		<div class="row">	

@@ -1,6 +1,5 @@
 @extends('client.client_index')
 @section('content')
-
 <div class="index-container">
 	<img id="ad-banner" class="ad-promo-hits responsive-img" style="display:none">
 	@if(!empty($music))
@@ -169,11 +168,10 @@ var playmode = 1;
 var musiclist = null;
 $(document).ready(function(){
 
-<<<<<<< HEAD
 	window.onscroll = function() {scrollFunction()};
-=======
->>>>>>> 280733ce34ea3f838c603f1d9bd313d635ef9839
+
 	playmode = $('.player').data("play-mode");
+
 	var dateNow = new Date();
 
 	var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
