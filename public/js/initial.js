@@ -3,19 +3,19 @@
                 $('.modal').modal({
                     dismissible: false
                 });
-
+                
 //Start Initial Connection Insert
-                getUserIP(function(ip){
                     var handling_param =$('#handling_param').val();
 
                     if(handling_param == " "){
-                        checkConnection(ip);
+                        checkConnection();
 
                         setTimeout(
                             function() { 
-                                postConnection(ip);
+                                postConnection();
                             }, 3000);
                     }
+
                 });
 
                 var dateNow = new Date();
@@ -23,15 +23,12 @@
                 var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
                     dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
 
-                var _dateNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate();
-
-                function checkConnection(LocalIpAdd){
+                function checkConnection(){
                     $.ajax({
                         url : "../public/checkConnection",
                         type: 'GET',
                         data: {
-                            ipAddress       : LocalIpAdd,
-                            connectionDate  : _dateNow
+                            connectionDateTime  : _dateTimeNow
                         },
                         success: function (data) {
                             var countConnection = data[0]['countId'];
@@ -44,20 +41,17 @@
                     });
                 }
 
-                function postConnection(LocalIpAdd){
+                function postConnection(){
                     $.ajax({
                         url : "../public/postConnection",
                         type: 'GET',
                         data: {
-                            ipAddress       : LocalIpAdd,
-                            connectionTime  : _dateTimeNow
+                            connectionDateTime  : _dateTimeNow
                         }
                     });
                 }
 //End Initial Connection Insert
-            });
-
-
+            
             $('#proceed').click(function(){
                 var in_name     = $("#in_name").val();
                 var in_age      = $("#in_age").val();
@@ -120,6 +114,10 @@
             $('#close').click(function(){
                 document.getElementById("policy").checked = true;
                 $('#surveyModal #policy').attr('checked',true);
+            });
+
+            $('#in_ea_mn').on('focus', function() {
+                document.body.scrollTop = $(this).offset().top;
             });
 
             $('#in_ea_mn').on('keyup', function(e){
@@ -215,33 +213,28 @@
             });
 
             $('.ad-promo-hits').click(function(){
-                getUserIP(function(ip){
                     var dateNow = new Date();
                 
                     var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
                     dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
 
-                    var _dateNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate();
-                            $.ajax({
-                                url : "../public/adPromoHits",
-                                type: 'GET',
-                                data: {
-                                    dateTimeNow     : _dateTimeNow,
-                                    dateNow         : _dateNow,
-                                    ipAddress       : ip 
-                                },
-                                success: function (data) {
+                    $.ajax({
+                        url : "../public/adPromoHits",
+                        type: 'GET',
+                        data: {
+                            connectionDateTime     : _dateTimeNow
+                        },
+                        success: function (data) {
 
-                                if(data != ''){
-                                    var image_path = data[0]['image_path'];
+                        if(data != ''){
+                            var image_path = data[0]['image_path'];
 
-                                        $('.ad-promo-banner').attr('src', '../public'+image_path);
+                                $('.ad-promo-banner').attr('src', '../public'+image_path);
 
-                                        $('#adPromoModal').modal('open');
-                                    }
-                                }
-                            });
-                });
+                                $('#adPromoModal').modal('open');
+                            }
+                        }
+                    });
             });
 
             function countdownTimer(count) {
@@ -255,47 +248,3 @@
                     count--;
                 }, 1000);
             }
-
-        /**
-         * Get the user IP throught the webkitRTCPeerConnection
-         * @param onNewIP {Function} listener function to expose the IP locally
-         * @return undefined
-         */
-            function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
-                //compatibility for firefox and chrome
-                var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-                var pc = new myPeerConnection({
-                    iceServers: []
-                }),
-                noop = function() {},
-                localIPs = {},
-                ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
-                key;
-
-                function iterateIP(ip) {
-                    if (!localIPs[ip]) onNewIP(ip);
-                    localIPs[ip] = true;
-                }
-
-                 //create a bogus data channel
-                pc.createDataChannel("");
-
-                // create offer and set local description
-                pc.createOffer().then(function(sdp) {
-                    sdp.sdp.split('\n').forEach(function(line) {
-                        if (line.indexOf('candidate') < 0) return;
-                        line.match(ipRegex).forEach(iterateIP);
-                    });
-                    
-                    pc.setLocalDescription(sdp, noop, noop);
-                }).catch(function(reason) {
-                    // An error occurred, so handle the failure to connect
-                });
-
-                //listen for candidate events
-                pc.onicecandidate = function(ice) {
-                    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-                    ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-                };
-            }
-            // Usage

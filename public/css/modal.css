@@ -1,53 +1,3 @@
-
-#loader {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  width: 250px !important;
-  height: 250px !important;
-  margin: -75px 0 0 -75px;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Add animation to "page content" */
-.animate-bottom {
-  position: relative;
-  -webkit-animation-name: animatebottom;
-  -webkit-animation-duration: 1s;
-  animation-name: animatebottom;
-  animation-duration: 1s
-}
-
-@-webkit-keyframes animatebottom {
-  from { bottom:-100px; opacity:0 } 
-  to { bottom:0px; opacity:1 }
-}
-
-@keyframes animatebottom { 
-  from{ bottom:-100px; opacity:0 } 
-  to{ bottom:0; opacity:1 }
-}
-
-#loaderModal{
-	background-color: transparent;
-	-webkit-box-shadow: none;
-    box-shadow: none;
-}
 #surveyModal{
 	height: 500px;
 	width:	450px;
@@ -63,7 +13,7 @@
 
 ::-webkit-scrollbar
 {
-	width: 12px;
+	width: 6px;
 	background-color: #F5F5F5;
 	border-radius: 10px
 }
@@ -91,6 +41,14 @@
     transform: translateY(0%);
 }
 
+#surveyModal img.company-banner {
+	border-radius: 5px;
+	box-shadow: 10px 6px 5px #888888;
+}
+#surveyModal p{
+    margin: -15px 0 11px;
+}
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none;
@@ -111,24 +69,26 @@ input[type=number]::-webkit-outer-spin-button {
 	border-radius: 5px !important;
 }
 #adPromoModal .ad-promo-banner{
-    height: 450px;
+    height: 425px;
     width: 500px;
    	padding: 10px;
+   	margin-top: 10px;
 }
 
 .row {
     margin-left: 20px;
     margin-right: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .close-button {
-	height: 24px;
-	width:	24px;
+	height: 20px;
+	width:	20px;
 	background-color: white;
 	box-shadow: none;
 	float: right;
+	line-height: inherit;
 }
 
 .close-button:hover {
@@ -136,37 +96,31 @@ input[type=number]::-webkit-outer-spin-button {
 	box-shadow: none;
 }
 
-.close-button i.material-icons{
+.close-button i{
 	color:	black;
-	font-size: 30px;
+	font-size: 20px;
 	line-height: 0;
-	margin-left: 4px;
-	-ms-transform: rotate(135deg); /* IE 9 */
-    -webkit-transform: rotate(135deg); /* Chrome, Safari, Opera */
-    transform: rotate(135deg);
 }
 @media only screen and (max-width: 992px) {
-	#loader {
-	  width: 150px !important;
-	  height: 150px !important;
-	}
 
 	#surveyModal{
 		height: 90% !important;
 		width:	95% !important;
 	}
 
-	#surveyModal h4{
+	#surveyModal h5{
 		font-size: 25px;
 		padding  : 10px !important;
 	}
 
 	#surveyModal .row{
+		margin-top: 0 !important;
 		margin-bottom: 0 !important;
 	}
 
 	#surveyModal label{
-		font-size: 12px !important;
+		font-size: 10px !important;
+		margin: 0px;
 	}
 
 	#surveyModal input[type=checkbox]{
@@ -196,14 +150,13 @@ input[type=number]::-webkit-outer-spin-button {
 	}
 
 	#adPromoModal{
-		height: 95% !important;
+		height: 100% !important;
 		width:	90% !important;
 	}
 	
 	.ad-promo-banner{
 	    height: 350px !important;
 	    width: 95% !important;
-	   	padding: 10px;
 	}
 
 }

@@ -2088,7 +2088,7 @@ if (jQuery) {
     }, {
       key: 'animateOut',
       value: function animateOut() {
-        var _this2 = this;
+        var this2 = this;
 
         // Animate overlay
         Vel(this.$overlay[0], { opacity: 0 }, { duration: this.options.outDuration, queue: false, ease: 'easeOutQuart' });
@@ -2100,12 +2100,12 @@ if (jQuery) {
           ease: 'easeOutCubic',
           // Handle modal ready callback
           complete: function () {
-            _this2.$el[0].style.display = 'none';
+            this2.$el[0].style.display = 'none';
             // Call complete callback
-            if (typeof _this2.options.complete === 'function') {
-              _this2.options.complete.call(_this2, _this2.$el);
+            if (typeof this2.options.complete === 'function') {
+              this2.options.complete.call(this2, this2.$el);
             }
-            _this2.$overlay[0].remove();
+            this2.$overlay[0].parentNode.removeChild(this2.$overlay[0]);
           }
         };
 

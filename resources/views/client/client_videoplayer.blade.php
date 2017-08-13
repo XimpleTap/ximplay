@@ -24,41 +24,34 @@
 
 <script>
 $(document).ready(function(){
-	//$('#loaderModal').modal('open');
-		getUserIP(function(ip){
-	    	var dateNow = new Date();
-        
-        	var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
-            dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
+	
+	var dateNow = new Date();
 
-        	var _dateNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate();
-        	        $.ajax({
-			            url : "../public/adHits",
-			            type: 'GET',
-			            data: {
-			                dateTimeNow     : _dateTimeNow,
-			                dateNow 		: _dateNow,
-			                ipAddress		: ip 
-			            },
-			            success: function (data) {
+	var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
+    dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
 
-			            	$('#loaderModal').modal('close');
+    $.ajax({
+        url : "../public/adHits",
+        type: 'GET',
+        data: {
+            connectionDateTime     : _dateTimeNow
+        },
+        success: function (data) {
+			if(data != ''){
+                var image_path = data[0]['image_path'];
 
-						if(data != ''){
-			                var image_path = data[0]['image_path'];
+                	$('#ad-banner').attr('src', '../public'+image_path);
 
-			                	$('#ad-banner').attr('src', '../public'+image_path);
+                	$('#ad-banner').css('display', 'block');
+                }
+             else{
 
-			                	$('#ad-banner').css('display', 'block');
-			                }
-			             else{
+             	$('#ad-banner').css('display', 'none');
 
-			             	$('#ad-banner').css('display', 'none');
-
-			             }
-			            }
-			        });
-	    });
+             }
+        }
+    });
+	
 });
 
 </script>
