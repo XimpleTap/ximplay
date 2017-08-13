@@ -34,8 +34,7 @@ class MusicController extends Controller
 		}else{
 			$music = DB::table('audios')->where('id',$musicID )->get();
 			$music = sizeof($music)==0 ? NULL : $music;
-			
-			return view('client.client_musicplayer')->with(['music'=>$music,'playmode'=>$playMode]);	
+			return view('client.client_musicplayer')->with(['music'=>$music,'playmode'=>$playMode,'music_list'=>Session::get('index_music')[0]]);	
 		}		
 	}
 	public function addToPlaylist(Request $request){

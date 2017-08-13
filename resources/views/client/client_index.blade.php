@@ -128,6 +128,11 @@
             <div id="loader">
             </div>
         </div>
+        <div style="display:none;" id="go-up" class="fixed-action-btn horizontal click-to-toggle">
+            <a onclick="topFunction()" class="btn-floating waves-effect waves-light blue">
+              <i class="fa fa-caret-up"></i>
+            </a>
+        </div>
         @yield('content')
 
     </body>
@@ -137,5 +142,26 @@
         <script src="{{ asset('js/materialize.min.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/initial.js') }}"></script>
+        <script>
+
+        $(document).ready(function(){
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            
+        });
+        function scrollFunction() {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                $('#go-up').show();
+            } else {
+                $('#go-up').hide();
+            }
+        }
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            $('html, body').animate({ scrollTop: 0}, 1200);
+        }
+        </script>
         @yield('js')
+        
 </html>

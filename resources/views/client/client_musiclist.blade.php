@@ -10,9 +10,9 @@
 			<div class="col music-col s4 m4 l4" data-music-attr="{{ json_encode($music) }}">
                 <div class="music-album-art" >
                 	@if(empty($music->album_art_path))
-                	<a href="{{ url('/musicplayer?music_id='.$music->id.'&play_mode=1') }}"><img src="{{ asset('images/defaultmusic.jpg') }}" class="responsive-img z-depth-3"></a>
+                	<img src="{{ asset('images/defaultmusic.jpg') }}" class="responsive-img z-depth-3">
                 	@else
-                	<a href="{{ url('/musicplayer?music_id='.$music->id.'&play_mode=1') }}"><img src="{{ asset($music->album_art_path) }}" class="responsive-img z-depth-3"></a>
+                	<img src="{{ asset($music->album_art_path) }}" class="responsive-img z-depth-3">
                 	@endif
                 </div>
 	            <div class="music-list-details">
@@ -23,6 +23,7 @@
             </div>    	
 		@endforeach
 		</div>
+		
 		<div class="fixed-action-btn horizontal click-to-toggle">
 		    <a class="btn-floating waves-effect waves-light blue">
 		      <i class="fa fa-ellipsis-v"></i>
@@ -34,10 +35,14 @@
 		    	@if(sizeof($music_list)!=0)
 		      <li><a href="{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}" class="play-all btn-floating waves-effect waves-light blue"><i class="fa fa-play"></i></a></li>
 		      @endif
-
-
+		      <li style="display:none;" id="go-up">
+		      <a onclick="topFunction()" class="btn-floating waves-effect waves-light blue">
+	              <i class="fa fa-caret-up"></i>
+	            </a>
+		      </li>
 		    </ul>
 		</div>
+
 	@else
 		<p class="center-align">No music on the list.</p>
 	@endif
@@ -52,6 +57,7 @@
 <script>
 
 $(document).ready(function(){
+	window.onscroll = function() {scrollFunction()};
 
 	$('.add-to-playlist').click(function(){
 
@@ -77,9 +83,18 @@ $(document).ready(function(){
 			alert("There are no music to play");
 		}
 	});
-
 });
-
+function scrollFunction() {
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        $('.nav-floaters #go-up').show();
+    } else {
+        $('.nav-floaters #go-up').hide();
+    }
+}
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    $('html, body').animate({ scrollTop: 0}, 1200);
+}
 </script>
 
 

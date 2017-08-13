@@ -77,14 +77,14 @@
 	     	
 			<div class="col s12 m12 l12 tracklist-div">
 				  @if($playmode==1 || $playmode==2)
-				  	@if(!sizeof(Session::get('my_playlist')[0])==0)
+				  	@if(!sizeof(Session::get('my_playlist'))==0)
 				  	<ul class="tracklist collection"  data-playlist="{{ json_encode(Session::get('my_playlist')) }}">
 					  	@foreach(Session::get('my_playlist') as $music)
 						  	<li data-music-attr="{{ json_encode($music) }}" onclick="playThis(this)" class="tracklist-item collection-item avatar">
 						      	@if(empty($music['album_art_path']))
 				            		<img src="{{ asset('images/defaultmusic.jpg') }}" class="circle z-depth-5">
 				            	@else
-				            		<img src="{{ $music->album_art_path }}" class="circle z-depth-5">
+				            		<img src="{{ asset($music['album_art_path']) }}" class="circle z-depth-5">
 				            	@endif
 						      <p class="tracklist-title">{{ $music['title'] }}</p>
 						      <p class="tracklist-artist">
@@ -108,7 +108,7 @@
 						      	@if(empty($music->album_art_path))
 				            		<img src="{{ asset('images/defaultmusic.jpg') }}" class="circle z-depth-5">
 				            	@else
-				            		<img src="{{ $music->album_art_path }}" class="circle z-depth-5">
+				            		<img src="{{ asset($music->album_art_path) }}" class="circle z-depth-5">
 				            	@endif
 						      <p class="tracklist-title">{{ $music->title }}</p>
 						      <p class="tracklist-artist">
@@ -117,9 +117,9 @@
 						      <div class="left">
 						      <a href="#!" class="tracklist-duration"><i class="fa fa-clock-o"></i> {{ $music->duration }}</a>
 						      </div>
-						      <!-- <div class="right">
-						      	<a class="add-to-playlist"><i class="fa fa-plus-circle"></i> Add to Playlist</a>
-						      </div> -->
+						      <div class="right">
+						      	<a onclick="addToPlaylist(this);" data-music-attr="{{ json_encode($music) }}" class="add-to-playlist"><i class="fa fa-plus-circle"></i> Add to Playlist</a>
+						      </div>
 						    </li>
 					  	@endforeach
 					@endif
@@ -134,7 +134,24 @@
 			<p>Sorry. Music not found.</p>
 		</div>
 	@endif
-
+	<div class="fixed-action-btn horizontal click-to-toggle">
+	    <a class="btn-floating waves-effect waves-light blue">
+	      <i class="fa fa-ellipsis-v"></i>
+	    </a>
+	    <ul class="nav-floaters">
+	    	@if(sizeof(Session::get('my_playlist')[0])!=0)
+	    		<li><a href="{{ url('/musicplayer?music_id='.Session::get('my_playlist')[0]['id'].'&play_mode=2') }}" class="play-playlist btn-floating waves-effect waves-light blue"><i class="fa fa-list"></i></a></li>
+	    	@endif
+	    	@if(sizeof($music_list)!=0)
+		      <li><a href="{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}" class="play-all btn-floating waves-effect waves-light blue"><i class="fa fa-play"></i></a></li>
+		      @endif
+	      <li style="display:none;" id="go-up">
+	      <a onclick="topFunction()" class="btn-floating waves-effect waves-light blue">
+              <i class="fa fa-caret-up"></i>
+            </a>
+	      </li>
+	    </ul>
+	</div>
 </div>
 
 @endsection
@@ -152,7 +169,7 @@ var playmode = 1;
 var musiclist = null;
 $(document).ready(function(){
 
-
+	window.onscroll = function() {scrollFunction()};
 	playmode = $('.player').data("play-mode");
 	//$('#loaderModal').modal('open');
 	/*getUserIP(function(ip){
@@ -239,6 +256,7 @@ $(document).ready(function(){
 			$('#play').parent('div').hide();
 			$('#pause').show();
 			$('#pause').parent('div').show();
+			$('.tracklist-div').animate({ scrollTop: $('.tracklist li:nth-child('+(playlistCounter+1)+')').position().top - $('.tracklist li:first').position().top}, 1200);
 			
 		}
 	});
@@ -288,6 +306,8 @@ $(document).ready(function(){
 			$('#play').parent('div').hide();
 			$('#pause').show();
 			$('#pause').parent('div').show();
+			$('.tracklist-div').animate({ scrollTop: $('.tracklist li:nth-child('+(playlistCounter+1)+')').position().top - $('.tracklist li:first').position().top}, 1200);
+
 		}
 	});
 	$('#repeat').click(function(){
@@ -359,131 +379,6 @@ $(document).ready(function(){
 	    $('#progress').css('width', percentage + '%');
         audio.currentTime = maxduration * percentage / 100;
     };
-    $('.tracklist').on('click','.tracklist-item',function(){
-    	/*$('.tracklist li').siblings().removeClass("active");
-		$(this).addClass('active');
-		playlistCounter = $(this).index();
-		var musicData = playlist[playlistCounter];
-    	$('source').attr('src',musicData['audio_path']);
-    	audio.pause();
-    	initPlayer(musicData);
-		$('#play').hide();
-		$('#play').parent('div').hide();
-		$('#pause').show();
-		$('#pause').parent('div').show();
-    	audio.play();
-    	showDuration();*/
-    });
-    $('#search-input').on('keyup',function(){
-    	/*var val = $.trim(e.target.value);
-		if(val!=""){
-			var searchUl = $('.search-ul');
-			$('.tracklist-div').css({"opacity":".5"});
-			searchUl.empty();
-	    	$('.search-ul').css({"display":"block"});
-	    	searchUl.append('<li style="padding-left: 20px !important;" class="tracklist-item collection-item avatar"><div class="center-align progress">'+
-			      '<div class="center-align indeterminate"></div></div><p>Looking for music...</p></li>');
-	    	$.ajax({
-	    		url : "{{ url('searchmusic') }}",
-				headers: {
-	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		        },
-		        type: 'POST',
-		        data : {
-		        	search_keys : val
-		        }, success:function(data){
-
-					if(data.length!=0){
-						searchUl.empty();
-						var i=0;
-
-						for(i=0; i<data.length; i++){
-
-								var imgString = data[i]['album_art'] === null ? "<img src='{{ asset('images/defaultmusic.jpg') }}' class='circle z-depth-5'>" : "<img src='"+data[i]['album_art']+"' class='circle z-depth-5'>";
-
-								var liString = "<li class='search-item collection-item avatar'>"+
-								imgString+
-							   "<p class='tracklist-title'>"+data[i]['title']+"</p>"+
-							   "<p class='tracklist-artist'>"+data[i]['music_artist']+"</p>"+
-							   "<div class='left'>"+
-							   "<a href='#!' class='tracklist-duration'><i class='fa fa-clock-o'></i>"+ data[i]['music_duration']+"</a></div>"+
-							   "<div class='right'>"+
-							   "<a class='add-to-playlist'><i class='fa fa-plus-circle'></i> Add to Playlist</a></div></li>";
-								searchUl.append(liString);
-								
-								$('.search-ul li').last().data("music-attr",data[i]);
-								$('.search-ul li a').last().data("music-attr",data[i]);
-
-						}
-						
-					}else{
-						searchUl.empty();
-						searchUl.append("<li class='tracklist-item collection-item avatar'><p>No results found.</p></li>");
-
-					}
-		        }
-	    	});
-	    	
-	    	
-
-		}else{
-			$('.search-ul').css({"display":"none"});
-			$('.search-ul').empty();
-			$('.tracklist-div').css({"opacity":"1"});
-		}*/
-    });
-    $('.search-ul').on('click','.add-to-playlist',function(){
-		/*var musicData = $(this).data("music-attr");
-		$.ajax({
-			url : "{{ url('addtoplaylist') }}",
-			headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        },
-	        type: 'POST',
-	        data : {
-	        	music_data : musicData
-	        },success:function(data){
-	        	playlist=data;
-	        	refreshPlaylist(data);
-	        	$('.search-ul').css({"display":"none"});
-    			$('.search-ul').empty();
-    			$('.tracklist-div').css({"opacity":"1"});
-    			Materialize.toast(musicData['title']+' has been added to playlist.', 500);
-	        }
-		});	
-
-		return false;*/
-	});
-	$('.search-ul').on('click','.search-item',function(){
-		/*var musicData = $(this).data("music-attr");
-    	$('source').attr('src',musicData['audio_path']);
-		$('.tracklist-div .tracklist li').each(function(){
-			$(this).removeClass("active");
-		});
-		if(typeof playlist !== "undefined" && playlist !== null){
-			$('.tracklist-div').css({"display":"block"});
-			$.map(playlist, function(element,index){
-
-				if(element['title']===musicData['title']){
-					$($('.tracklist li').get(index)).addClass('active');
-					playlistCounter = index;
-				}
-			});
-		}else{
-			playlistCounter=-1;
-		}
-		
-    	initPlayer(musicData);
-		$('#play').hide();
-		$('#play').parent('div').hide();
-		$('#pause').show();
-		$('#pause').parent('div').show();
-    	audio.play();
-    	showDuration();
-    	$('.search-ul').empty();
-    	$('.search-ul').css({"display":"none"});
-    	$('.tracklist-div').css({"opacity":"1"});*/
-	});
 });
 
 function initPlayer(musicObj){
@@ -492,7 +387,7 @@ function initPlayer(musicObj){
 
 	$('.audio-title').text(musicObj['title']);
 	$('.audio-artist').text(musicObj['artist']);
-	$('.audio-art img').attr('src',musicObj['album_art_path']==null? "{{ asset('images/defaultmusic.jpg') }}" : musicObj['album_art_path']);
+	$('.audio-art img').attr('src',musicObj['album_art_path']==null? "{{ asset('images/defaultmusic.jpg') }}" : '../public/'+musicObj['album_art_path']);
 	$('#progress').css({"display":"block","width":"0%"});
 	Materialize.toast(musicObj['title']+' now playing.', 800);
 	audio.addEventListener("ended", function(){
@@ -576,7 +471,7 @@ function refreshPlaylist(data){
 
 	for(i=0; i<data.length; i++){
 
-		var imgString = data[i]['album_art_path'] === null ? "<img src='{{ asset('images/defaultmusic.jpg') }}' class='circle z-depth-5'>" : "<img src='"+data[i]['album_art_path']+"' class='circle z-depth-5'>";
+		var imgString = data[i]['album_art_path'] === null ? "<img src='{{ asset('images/defaultmusic.jpg') }}' class='circle z-depth-5'>" : "<img src='../public"+data[i]['album_art_path']+"' class='circle z-depth-5'>";
 
 		var liString = "<li onclick='playThis(this)' class='tracklist-item collection-item avatar'>"+
 		imgString+
@@ -612,7 +507,7 @@ function musicSearch(e){
 
 					for(i=0; i<data.length; i++){
 
-						var imgString = data[i]['album_art_path'] === null ? "<img src='{{ asset('images/defaultmusic.jpg') }}' class='circle z-depth-5'>" : "<img src='"+data[i]['album_art_path']+"' class='circle z-depth-5'>";
+						var imgString = data[i]['album_art_path'] === null ? "<img src='{{ asset('images/defaultmusic.jpg') }}' class='circle z-depth-5'>" : "<img src='../public"+data[i]['album_art_path']+"' class='circle z-depth-5'>";
 
 						var liString = "<li onclick='' class='search-item collection-item avatar'>"+
 						imgString+
@@ -627,7 +522,7 @@ function musicSearch(e){
 						$('.search-ul li').last().data("music-attr",data[i]);
 						$('.search-ul li').last()[0].addEventListener('click',playSearchMusic,false);
 						$('.search-ul li .add-to-playlist').last().data("music-attr",data[i]);
-						$('.search-ul li .add-to-playlist').last()[0].addEventListener('click',addToPlaylist,false);
+						$('.search-ul li .add-to-playlist').last()[0].addEventListener('click',addToPlaylistSafari,false);
 
 					}
 					
@@ -648,7 +543,8 @@ function musicSearch(e){
 		$('.tracklist-div').css({"opacity":"1"});
 	}
 }
-function addToPlaylist(evt){
+function addToPlaylistSafari(evt){
+
 	var musicData = $(evt.target).data("music-attr");
 	$.ajax({
 		url : "{{ url('addtoplaylist') }}",
@@ -659,19 +555,51 @@ function addToPlaylist(evt){
         data : {
         	music_data : musicData
         },success:function(data){
-        	console.log(data);
-        	playlist=data;
-        	console.log(playmode);
+        	
         	if(playmode==1 || playmode==2){
+        		playlist=data;
         		refreshPlaylist(data);	
         	}
+        	$('.search-ul').css({"display":"none"});
+			$('.search-ul').empty();
+			$('.tracklist-div').css({"opacity":"1"});
+			Materialize.toast(musicData['title']+' has been added to playlist.', 500);
+			
+			var musicID =data[0]['id'];
+			var link = '../public/musicplayer?music_id='+musicID+'&play_mode=2")';
+			$('.nav-floaters').children().find('.play-playlist').parent('li').remove();
+        	$('.nav-floaters').prepend('<li><a href="'+link+'" class="play-playlist btn-floating waves-effect waves-light blue"><i class="fa fa-list"></i></a></li>');
+        }
+	});
+}
+function addToPlaylist(evt){
+
+	var musicData = $(evt).data("music-attr");
+	console.log(musicData);
+	$.ajax({
+		url : "{{ url('addtoplaylist') }}",
+		headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data : {
+        	music_data : musicData
+        },success:function(data){
         	
+        	if(playmode==1 || playmode==2){
+        		playlist=data;
+        		refreshPlaylist(data);	
+        	}
+        	var musicID =data[0]['id'];
+			var link = '../public/musicplayer?music_id='+musicID+'&play_mode=2")';
+			$('.nav-floaters').children().find('.play-playlist').parent('li').remove();
+        	$('.nav-floaters').prepend('<li><a href="'+link+'" class="play-playlist btn-floating waves-effect waves-light blue"><i class="fa fa-list"></i></a></li>');
         	$('.search-ul').css({"display":"none"});
 			$('.search-ul').empty();
 			$('.tracklist-div').css({"opacity":"1"});
 			Materialize.toast(musicData['title']+' has been added to playlist.', 500);
         }
-	});	
+	});
 }
 function playSearchMusic(evt){
 
@@ -738,11 +666,13 @@ function playSearchMusic(evt){
 	}
 }
 function playThis(evt){
-	console.log($(evt).index());
+	
 	$('.tracklist li').siblings().removeClass("active");
 	$(evt).addClass('active');
 	playlistCounter = $(evt).index();
+
 	var musicData = playlist[playlistCounter];
+	console.log(musicData);
 	$('source').attr('src',musicData['audio_path']);
 	audio.pause();
 	initPlayer(musicData);
@@ -752,6 +682,17 @@ function playThis(evt){
 	$('#pause').parent('div').show();
 	audio.play();
 	showDuration();
+}
+function scrollFunction() {
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        $('.nav-floaters #go-up').show();
+    } else {
+        $('.nav-floaters #go-up').hide();
+    }
+}
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    $('html, body').animate({ scrollTop: 0}, 1200);
 }
 </script>
 

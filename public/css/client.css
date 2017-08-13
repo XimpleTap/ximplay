@@ -27,6 +27,9 @@
 	top: 15% !important;
 	right: 40px !important;
 }
+.up-btn{
+	display: none;
+}
 .card-image .video-card img{
 	width: 100% !important;
 	height: 250px !important;
@@ -154,7 +157,7 @@ audio, #pause{
 .tracklist li .tracklist-duration{
 	text-decoration: none;
 }
-.tracklist li.active .tracklist-duration{
+.tracklist li.active .tracklist-duration,.tracklist li.active .add-to-playlist{
 	color: white;
 }
 .form-control{

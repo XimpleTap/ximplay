@@ -9,10 +9,10 @@
 			<div class="col s6 m6 l4">
               <div class="card small hoverable">
                 <div class="card-image video-card" data-video-attr="{{ json_encode($video) }}">
-                  	<img src="{{ asset(''.$video->poster_path) }}" class="responsive-img">
+                  	<a href="{{ url('/watchvideo?video_id='.$video->id) }}"><img src="{{ asset(''.$video->poster_path) }}" class="responsive-img"></a>
                 </div>
                 <div class="card-content small white">
-                  <h5 class="center-align">{{ $video->title }}</h5>
+                  <a style="text-decoration: none;" href="{{ url('/watchvideo?video_id='.$video->id) }}"><h5 class="center-align">{{ $video->title }}</h5></a>
                 </div>
               </div>
             </div>
