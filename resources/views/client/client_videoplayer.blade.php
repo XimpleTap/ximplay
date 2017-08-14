@@ -7,7 +7,7 @@
 	@if(!empty($video))
 	<div class="video-container">
 		<div class="video-bg">
-			<video controls controlsList="nodownload" poster>
+			<video controls preload="" controlsList="nodownload" poster>
 				<source src="{{ asset(''.$video[0]->video_path) }}" type="video/mp4">
 			</video>
 		</div>

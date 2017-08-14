@@ -13,6 +13,7 @@
                 </div>
                 <div class="card-content small white">
                   <a style="text-decoration: none;" href="{{ url('/watchvideo?video_id='.$video->id) }}"><h5 class="center-align">{{ $video->title }}</h5></a>
+                  <a style="text-decoration: none; color: #b1b1b1;" href="#!" class="tracklist-duration"><h6 class="center-align"><i class="fa fa-clock-o"></i> {{ $video->duration }}</h6></a>
                 </div>
               </div>
             </div>

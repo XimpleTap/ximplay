@@ -197,8 +197,10 @@ audio, #pause{
   object-fit: fill;
 }
 video{
-	border-top: 2px solid grey;
-	box-shadow: 0 0 10px #888888;
+  border-top: 10px solid #dadddd;
+  border-bottom: 10px solid #dadddd;
+  border-left: 10px solid #dadddd;
+  border-right: 10px solid #dadddd;
 }
 video::-internal-media-controls-download-button {
     display:none;
@@ -232,15 +234,19 @@ video::-internal-media-controls-download-button {
 
 	.video-container{
 		margin: 0 auto;
+		overflow: hidden;
 		height: 400px;
 	}
 	.no-match-err p{
 		font-size: 18px;
 	}
+	.video-bg{
+		height: 320px;
+	}
 	video {
 	  width: 100%    !important;
 	  height: 320px   !important;
-	  object-fit: cover !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -396,10 +402,14 @@ video::-internal-media-controls-download-button {
 		height: 580px;
 	}
 
+	.video-bg{
+		height: 420px;
+	}
+
 	video {
 	  width: 100%    !important;
-	  height: 400px   !important;
-	  object-fit: cover !important;
+	  height: 420px   !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 	.audio{
@@ -531,10 +541,13 @@ video::-internal-media-controls-download-button {
 		height: 300px;
 	}
 
+	.video-bg{
+		height: 220px;
+	}
 	video {
 	  width: 100%    !important;
 	  height: 220px   !important;
-	  object-fit: cover !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -684,11 +697,13 @@ video::-internal-media-controls-download-button {
 		margin: 0 auto;
 		height: 300px;
 	}
-
+	.video-bg{
+		height: 220px;
+	}
 	video {
 	  width: 100%    !important;
 	  height: 220px   !important;
-	  object-fit: cover !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -836,13 +851,15 @@ video::-internal-media-controls-download-button {
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 400px;
 	}
-
+	.video-bg{
+		height: 320px;
+	}
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
-	  object-fit: cover !important;
+	  height: 320px   !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -995,11 +1012,13 @@ video::-internal-media-controls-download-button {
 		margin: 0 auto;
 		height: 300px;
 	}
-
+	.video-bg{
+		height: 220px;
+	}
 	video {
 	  width: 100%    !important;
 	  height: 220px   !important;
-	  object-fit: cover !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -1112,11 +1131,13 @@ video::-internal-media-controls-download-button {
 		margin: 0 auto;
 		height: 600px;
 	}
-
+	.video-bg{
+		height: 520px;
+	}
 	video {
 	  width: 100%    !important;
 	  height: 520px   !important;
-	  object-fit: cover !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -1265,13 +1286,16 @@ video::-internal-media-controls-download-button {
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 360px;
 	}
 
+	.video-bg{
+		height: 320px;
+	}
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
-	  object-fit: cover !important;
+	  height: 320px   !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -1420,12 +1444,14 @@ video::-internal-media-controls-download-button {
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 400px;
 	}
-
+	.video-bg{
+		height: 320px;
+	}
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
+	  height: 320px   !important;
 	  object-fit: cover !important;
 	  margin-top: 15px !important;
 	}
@@ -1591,13 +1617,15 @@ video::-internal-media-controls-download-button {
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 400px;
 	}
-
+	.video-bg{
+		height: 320px;
+	}
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
-	  object-fit: cover !important;
+	  height: 320px   !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -1746,13 +1774,16 @@ video::-internal-media-controls-download-button {
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 400px;
 	}
 
+	.video-bg{
+		height: 320px;
+	}
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
-	  object-fit: cover !important;
+	  height: 320px   !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -1904,29 +1935,32 @@ video::-internal-media-controls-download-button {
 		height: 300px;
 	}
 
+	.video-bg{
+		height: 320px;
+	}
 	video {
 	  width: 100%    !important;
-	  height: 220px   !important;
-	  object-fit: cover !important;
+	  height: 320px   !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
 	.music-list-details{
-		width: 249px;
+		width: 269px;
 		text-align: center;
 	}
 
 	.music-list-title{
-		font-size: 12px;
+		font-size: 14px;
 	}
 	.music-list-artist{
-		font-size: 10px;
+		font-size: 12px;
 		margin-top: -10px;
 	}
 
 	.music-album-art img{
 		width: 100% !important;
-		height: 140px !important;
+		height: 160px !important;
 	}
 
 	.audio{
@@ -1982,7 +2016,7 @@ video::-internal-media-controls-download-button {
 	}
 
 	#search{
-		margin-top: -10px;
+		margin-top: 5px;
 		padding: 0 !important;
 	}
 	#search-input, #search .hint {
@@ -2186,7 +2220,7 @@ video::-internal-media-controls-download-button {
 }
 @media screen and (min-width: 1080px){
 }
-@media screen and (min-width: 1280px){
+@media screen and (min-width: 1024px){
 	.movie-nav button{
 		width: 94% !important;
 		margin-left: -27px;
@@ -2194,13 +2228,16 @@ video::-internal-media-controls-download-button {
 
 	.video-container{
 		margin: 0 auto;
-		height: 300px;
+		height: 500px;
+	}
+	.video-bg{
+		height: 420px;
 	}
 
 	video {
 	  width: 100%    !important;
-	  height: 280px   !important;
-	  object-fit: cover !important;
+	  height: 420px   !important;
+	  object-fit: fill !important;
 	  margin-top: 15px !important;
 	}
 
@@ -2210,6 +2247,138 @@ video::-internal-media-controls-download-button {
 	}
 
 
+
+	.music-list-details{
+		width: 289px;
+		text-align: center;
+	}
+
+	.music-list-title{
+		font-size: 18px;
+	}
+	.music-list-artist{
+		font-size: 14px;
+		margin-top: -10px;
+	}
+	.tracklist-title{
+		font-size: 18px;
+		width: 80%;
+	}
+	.tracklist-artist{
+		font-size: 16px;
+		width: 60%;
+	}
+
+	.tracklist-duration{
+		font-size: 16px;
+	}
+
+	.add-to-playlist,.add-to-playlist:hover{
+		font-size: 16px;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 300px !important;
+	}
+
+	.audio{
+		padding-right: 0 !important;
+	}
+
+	.audio-art{
+		padding: 0 !important;
+	}
+	.audio-art img{
+		margin-top: 7px;
+		width: 100% !important;
+		height: 350px;
+		border-radius: 10px;
+	}
+
+	.audio-info{
+		position: relative;
+	}
+
+	.audio-info .audio-title{
+		margin-top: 5px;
+		width: 100%;
+		font-size: 30px;
+	}
+
+	.audio-info .audio-artist{
+		margin-top: -10px;
+		width: 100%;
+		font-size: 20px;
+	}
+
+	.audio-time{
+		font-size: 18px;
+		position: relative;
+		top: 190px;
+	}
+
+	.audio-controls{
+		font-size: 18px;
+		top: 155px;
+		position: relative;
+	}
+
+	#progressbar{
+		top: 155px;
+		position: relative;
+		height: 9px;
+	    width: 100%;
+	    background: transparent url(../images/player-progress.png) repeat-x 0 0 scroll;
+	    border-radius: 4px;
+	    -moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	#search{
+		margin-top: 10px;
+		padding: 0 !important;
+	}
+	#search-input, #search .hint {
+	    padding-left: 43px;
+	    padding-right: 43px;
+	    border-radius: 23px;
+	    text-indent: 50px;
+	    width: 98% !important;
+	    z-index: 5;
+	}
+	#search label {
+	    position: absolute;
+	    left: 37px;
+	    top: 4px;
+	}
+}
+@media screen and (min-width: 1280px){
+	.movie-nav button{
+		width: 94% !important;
+		margin-left: -27px;
+	}
+
+	.video-container{
+		margin: 0 auto;
+		height: 600px;
+	}
+	.video-bg{
+		height: 520px;
+	}
+	video {
+	  width: 100%    !important;
+	  height: 520px   !important;
+	  object-fit: fill !important;
+	  margin-top: 15px !important;
+	}
+
+	.music-album-art img{
+		width: 100% !important;
+		height: 400px !important;
+	}
 
 	.music-list-details{
 		width: 409px;
@@ -2324,17 +2493,22 @@ video::-internal-media-controls-download-button {
 		margin-left: -27px;
 	}
 
+	.no-match-err p{
+		font-size: 38px;
+	}
+
 	.video-container{
 		margin: 0 auto;
 		height: 600px;
 	}
 
-	.no-match-err p{
-		font-size: 38px;
+	.video-bg{
+		height: 560px;
 	}
+
 	video {
 	  width: 100%    !important;
-	  height: 540px   !important;
+	  height: 560px !important;
 	  object-fit: cover !important;
 	  margin-top: 15px !important;
 	}

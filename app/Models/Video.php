@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Mon, 31 Jul 2017 02:31:55 +0000.
+ * Date: Mon, 14 Aug 2017 08:26:34 +0000.
  */
 
 namespace App\Models;
@@ -17,6 +17,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $video_path
  * @property string $poster_path
  * @property string $subtitle_path
+ * @property string $duration
  *
  * @package App\Models
  */
@@ -28,6 +29,7 @@ class Video extends Eloquent
 		'title',
 		'video_path',
 		'poster_path',
-		'subtitle_path'
+		'subtitle_path',
+		'duration'
 	];
 }
