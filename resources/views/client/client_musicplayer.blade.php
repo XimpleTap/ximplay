@@ -2,7 +2,7 @@
 @section('content')
 <div class="marg-top"></div>
 <div class="index-container">
-	<img id="ad-banner" class="ad-promo-hits responsive-img" style="display:none">
+	<img id="ad-banner" class="responsive-img" style="display:none">
 	@if(!empty($music))
 		<div class="row player" data-play-mode="{{ $playmode }}">
 			<div class="audio-art col s4 m4 l4">
@@ -189,14 +189,22 @@ $(document).ready(function(){
 			if(data != ''){
                 var image_path = data[0]['image_path'];
 
-                	$('#ad-banner').attr('src', '../public'+image_path);
+            	$('#ad-banner').attr('src', '../public'+image_path);
 
-                	$('#ad-banner').css('display', 'block');
+            	$('#ad-banner').addClass('ad-promo-hits');
+
+            	$('#ad-banner').css('display', 'block');
+            	
                 }
-            else{
+             else{
 
-            	$('#ad-banner').css('display', 'none');
-            }
+             	$('#ad-banner').attr('src', '../public/images/ximplay_banner.png');
+
+             	$('#ad-banner').removeClass('ad-promo-hits');
+
+             	$('#ad-banner').css('display', 'block');
+
+             }
         }
     });
 

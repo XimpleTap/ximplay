@@ -212,7 +212,7 @@
                 }
             });
 
-            $('.ad-promo-hits').click(function(){
+            $(document).on('click', "img.ad-promo-hits", function() {
                     var dateNow = new Date();
                 
                     var _dateTimeNow = dateNow.getFullYear() + "-" + (dateNow.getMonth() + 1) + "-" + dateNow.getDate() + " " + 
