@@ -71,9 +71,15 @@ $(document).ready(function(){
 	        type: 'POST',
 	        data : {
 	        	music_data : musicData
+	        }, success : function(data){
+	        	var musicID =data[0]['id'];
+				var link = '../public/musicplayer?music_id='+musicID+'&play_mode=2")';
+	        	$('.nav-floaters').children().find('.play-playlist').parent('li').remove();
+        		$('.nav-floaters').prepend('<li><a href="'+link+'" class="play-playlist btn-floating waves-effect waves-light blue"><i class="fa fa-list"></i></a></li>');
 	        }
 		});
 		Materialize.toast(musicData['title']+' has been added to playlist.', 500);
+		
 	});
 
 	$('.play-all').click(function(e){

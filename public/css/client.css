@@ -323,7 +323,7 @@ video::-internal-media-controls-download-button {
 	#search label {
 	    position: absolute;
 	    left: 40px;
-    	top: 205px;
+    	top: 275px;
 	}
 
 	.search-ul{
@@ -462,8 +462,8 @@ video::-internal-media-controls-download-button {
 	}
 	#search label {
 	    position: absolute;
-	    left: 40px;
-    	top: 280px;
+	    left: 45px;
+    	top: 285px;
 	}
 
 	.tracklist-div{
@@ -2445,6 +2445,7 @@ video::-internal-media-controls-download-button {
 	    position: absolute;
 	    left: 37px;
 	    top: 4px;
+	    font-weight: 100;
 	}
 	#ad-banner{
 		height: 150px !important;

@@ -1,5 +1,6 @@
 @extends('client.client_index')
 @section('content')
+<div class="marg-top"></div>
 <div class="index-container">
 	<img id="ad-banner" class="ad-promo-hits responsive-img" style="display:none">
 	@if(!empty($music))
@@ -166,6 +167,7 @@ var repeatMode = 0; // 0 is for normal, 1 is for repeat, 2 is for shuffle
 var shuffleMode = 0;
 var playmode = 1;
 var musiclist = null;
+var toPLaylistOnly = false;
 $(document).ready(function(){
 
 	window.onscroll = function() {scrollFunction()};
@@ -564,9 +566,8 @@ function addToPlaylistSafari(evt){
 	});
 }
 function addToPlaylist(evt){
-
+	toPLaylistOnly = true;
 	var musicData = $(evt).data("music-attr");
-	console.log(musicData);
 	$.ajax({
 		url : "{{ url('addtoplaylist') }}",
 		headers: {
@@ -658,24 +659,27 @@ function playSearchMusic(evt){
 }
 function playThis(evt){
 	
-	$('.tracklist li').siblings().removeClass("active");
-	$(evt).addClass('active');
-	playlistCounter = $(evt).index();
+	if(!toPLaylistOnly==true){
+		$('.tracklist li').siblings().removeClass("active");
+		$(evt).addClass('active');
+		playlistCounter = $(evt).index();
 
-	var musicData = playlist[playlistCounter];
-	console.log(musicData);
-	$('source').attr('src',musicData['audio_path']);
-	audio.pause();
-	initPlayer(musicData);
-	$('#play').hide();
-	$('#play').parent('div').hide();
-	$('#pause').show();
-	$('#pause').parent('div').show();
-	audio.play();
-	showDuration();
+		var musicData = playlist[playlistCounter];
+		$('source').attr('src',musicData['audio_path']);
+		audio.pause();
+		initPlayer(musicData);
+		$('#play').hide();
+		$('#play').parent('div').hide();
+		$('#pause').show();
+		$('#pause').parent('div').show();
+		audio.play();
+		showDuration();
+	}
+	toPLaylistOnly=false;
+	
 }
 function scrollFunction() {
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
         $('.nav-floaters #go-up').show();
     } else {
         $('.nav-floaters #go-up').hide();

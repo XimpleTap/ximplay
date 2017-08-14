@@ -54,7 +54,7 @@ class MusicController extends Controller
     }
     public function searchMusic(Request $request){
     	$searchKeys = $request->input('search_keys');
-		$music = DB::table('audios')->where('title','like',''.$searchKeys.'%' )->get();
+		$music = DB::table('audios')->where('title','like',''.$searchKeys.'%' )->orWhere('artist','like',''.$searchKeys.'%' )->get();
 		$music = sizeof($music)==0 ? [] : $music;
 		return response()->json($music);
     }
