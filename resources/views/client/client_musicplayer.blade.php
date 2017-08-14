@@ -608,6 +608,7 @@ function playSearchMusic(evt){
 				if(element['title']===musicData['title']){
 					$($('.tracklist li').get(index)).addClass('active');
 					playlistCounter = index;
+					$('.tracklist-div').animate({ scrollTop: $('.tracklist li:nth-child('+(playlistCounter+1)+')').position().top - $('.tracklist li:first').position().top}, 1200);
 				}
 			});
 		}else{
@@ -638,6 +639,7 @@ function playSearchMusic(evt){
 					if(element['title']===musicData['title']){
 						$($('.tracklist li').get(index)).addClass('active');
 						playlistCounter = index;
+						$('.tracklist-div').animate({ scrollTop: $('.tracklist li:nth-child('+(playlistCounter+1)+')').position().top - $('.tracklist li:first').position().top}, 1200);
 					}
 				});
 			}else{

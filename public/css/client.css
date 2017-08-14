@@ -196,6 +196,10 @@ audio, #pause{
   margin-bottom: 5px !important;
   object-fit: fill;
 }
+video{
+	border-top: 2px solid grey;
+	box-shadow: 0 0 10px #888888;
+}
 video::-internal-media-controls-download-button {
     display:none;
 }
