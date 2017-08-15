@@ -15,7 +15,7 @@ class AdminMusicController extends Controller
         foreach(Input::file('file') as $file){
             $origFileName = $file->getClientOriginalName();
             $destinationPath = config('app.MUSIC_UPLOAD_DIR');
-            $filename = $this->removeWhiteSpace($origFileName);
+            $filename = $this->filterWhiteSpace($origFileName);
             $getId3 = new \getID3;
             $fileInfo = $getId3->analyze($file->getRealPath());
             $file->move($destinationPath,$filename);  
@@ -27,8 +27,8 @@ class AdminMusicController extends Controller
         return view('music.list',array('data'=>$viewData));
     }
 
-    private function removeWhiteSpace($str){
-        return preg_replace('/\s+/', '', $str);
+    private function filterWhiteSpace($str){
+        return preg_replace('/\s+/', '_', $str);
     }
 
     private function setMetadata($file){
