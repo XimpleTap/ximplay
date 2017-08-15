@@ -25,8 +25,8 @@ class AdminReportsController extends Controller
     public function getAdsReport(){
         $adHitsModelInstance = new AdHits();
         $adHitsReportData = $adHitsModelInstance->getAdHits();
-        //$macAddress = shell_exec("ifconfig wlan0 | grep HWaddr | awk '{ print $5}'");
-        $macAddress = "a1:b2:c3:d4:e5";
+        $macAddress = shell_exec("ifconfig wlan0 | grep HWaddr | awk '{ print $5}'");
+        //$macAddress = "a1:b2:c3:d4:e5";
         $reportHeaders = array('ID', 'Advertisement ID', 'Mac Address', 'Hit Date');
         $this->generateReportFile('ads',$macAddress,$adHitsReportData,$reportHeaders);
     }
