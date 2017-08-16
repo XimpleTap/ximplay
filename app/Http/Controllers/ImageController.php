@@ -28,11 +28,10 @@ class ImageController extends Controller
             try{
                 $validateImage = $this->validateImageUpload($file);
                 if($validateImage){
-                    $imageName = $this->setFilename('ads');
                     $fileExtension = $file->getClientOriginalExtension();
                     $destinationPath = config('app.ADS_UPLOAD_DIR');
-                    $filename = $this->removeWhiteSpace($imageName);
-                    $filename = $filename.".".$fileExtension;
+                    //$filename = $this->removeWhiteSpace($imageName);
+                    $filename = $file->getClientOriginalName();
                     $file->move($destinationPath,$filename);  
                     $adModelInstance = new Ad();
                     $dataToSave = array(
@@ -40,7 +39,7 @@ class ImageController extends Controller
                         'image_path'=>$destinationPath.$filename
                     );
                     $status = $adModelInstance->saveAds($dataToSave);  
-                    array_push($viewData,$imageName);
+                    array_push($viewData,$file->getClientOriginalName());
                 }
             } catch (Exception $e) {
 
@@ -80,11 +79,9 @@ class ImageController extends Controller
             try{
                 $validateImage = $this->validateImageUpload($file);
                 if($validateImage){
-                    $imageName = $this->setFilename('promos');
-                    $fileExtension = $file->getClientOriginalExtension();
                     $destinationPath = config('app.PROMOS_UPLOAD_DIR');
-                    $filename = $this->removeWhiteSpace($imageName);
-                    $filename = $filename.".".$fileExtension;
+                    //$filename = $this->removeWhiteSpace($imageName);
+                    $filename = $file->getClientOriginalName();
                     $file->move($destinationPath,$filename);  
                     $promoModelInstance = new Promo();
                     $dataToSave = array(
@@ -92,7 +89,7 @@ class ImageController extends Controller
                         'image_path'=>$destinationPath.$filename
                     );
                     $status = $promoModelInstance->savePromo($dataToSave);
-                    array_push($viewData,$imageName);
+                    array_push($viewData,$file->getClientOriginalName());
                 }
                 
                 
