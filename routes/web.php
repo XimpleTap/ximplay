@@ -49,7 +49,14 @@ Route::post('/music/list','AdminMusicController@musicList');
 Route::get('adHits', array('uses'=>'ClientController@adHits'));
 Route::get('adPromoHits', array('uses'=>'ClientController@adPromoHits'));
 
-Route::get('reports/promohits','AdminReportsController@getPromosReport');
-Route::get('reports/adhits','AdminReportsController@getAdsReport');
+Route::group(['middleware' => ['auth']], function ($router) {
+    //Route::resource('reports', 'AdminReportsController');
+    //Route::resource('music', 'AdminMusicController');
+});
 
+Route::get('login', [ 'as' => 'login', 'uses' => 'LoginController@login']);
+Route::post('/login/authenticate','LoginController@authenticate');
 
+Route::get('/reports/promohits','AdminReportsController@getPromosReport');
+Route::get('/reports/adhits','AdminReportsController@getAdsReport');
+Route::get('/reports','AdminReportsController@index');

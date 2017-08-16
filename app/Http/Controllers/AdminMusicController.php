@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Input;
 
 class AdminMusicController extends Controller
 {
+    public function __construct(){
+        
+    }
+
     public function musicForm(){
         return view('music.uploadform');
     }

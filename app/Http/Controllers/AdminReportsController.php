@@ -10,14 +10,14 @@ use App\AdHits;
 class AdminReportsController extends Controller
 {
     public function index(){
-
+        return view('reports.index');
     }
     
     public function getPromosReport(){
         $promoModelInstance = new PromoHits();
         $promoReportData = $promoModelInstance->getPromoHits();
-        //$macAddress = shell_exec("ifconfig wlan0 | grep HWaddr | awk '{ print $5}'");
-        $macAddress = "a1:b2:c3:d4:e5";
+        $macAddress = shell_exec("ifconfig wlan0 | grep HWaddr | awk '{ print $5}'");
+        //$macAddress = "a1:b2:c3:d4:e5";
         $reportHeaders = array('ID', 'Advertiser Promo ID', 'Mac Address', 'Hit Date');
         $this->generateReportFile('promos',$macAddress,$promoReportData,$reportHeaders);
     }
@@ -51,4 +51,6 @@ class AdminReportsController extends Controller
         }
         fclose($output); 
     }
+
+    
 }

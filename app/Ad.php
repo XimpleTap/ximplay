@@ -27,4 +27,8 @@ class Ad extends Model
     private function removeWhiteSpace($str){
         return preg_replace('/\s+/', '', $str);
     }
+
+    public function getCurrentCount(){
+        return DB::table('ads')->count();
+    }
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use DB;
 
 class Promo extends Model
 {
@@ -25,6 +26,10 @@ class Promo extends Model
 
     public function fetchPromos(){
         return DB::table('advertiser_promo')->get();
+    }
+
+    public function getCurrentCount(){
+        return DB::table('advertiser_promo')->count();
     }
 }
         

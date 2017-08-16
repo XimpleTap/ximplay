@@ -24,16 +24,10 @@
 <div class="container">
     <div class="row">
         <div class="input-field col s12">
-            <h5>Uploaded Movies</h5>
-            <ul class="collection">
-                <?php 
-                foreach($data as $movie){
-                    echo '<li class="collection-item">';
-                    echo $movie->title;
-                    echo '</li>';
-                }
-                ?>
-            </ul>
+           <a  href="/reports/promohits" class="waves-effect waves-light btn" target="_blank">Export Promo Hits Report</a>
+        </div>
+        <div class="input-field col s12">
+            <a  href="/reports/adhits" class="waves-effect waves-light btn" target="_blank">Export Ad Hits Report</a>
         </div>
     </div>
 </div>

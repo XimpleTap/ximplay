@@ -1,4 +1,5 @@
 {!! Html::script('js/jquery-3.2.1.min.js') !!}
+{!! Html::script('js/materialize.js') !!}
 {!! Html::style('css/materialize.css') !!}
 <nav>
     <div class="nav-wrapper">
@@ -9,12 +10,14 @@
             <li><a href="{{ url('videos/form') }}">Movie Uploader</a></li>
             <li><a href="{{ url('images/adsform') }}">Ads Uploader</a></li>
             <li><a href="{{ url('images/promosform') }}">Promo Uploader</a></li>
+            <li><a href="{{ url('reports') }}">Reports</a></li>
         </ul>
         <ul class="side-nav" id="mobile-demo">
             <li><a href="{{ url('music/form') }}">Music Uploader</a></li>
             <li><a href="{{ url('videos/form') }}">Movie Uploader</a></li>
             <li><a href="{{ url('images/adsform') }}">Ads Uploader</a></li>
             <li><a href="{{ url('images/promosform') }}">Promo Uploader</a></li>
+            <li><a href="{{ url('reports') }}">Reports</a></li>
         </ul>
     </div>
 </nav>
