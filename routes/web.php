@@ -42,9 +42,9 @@ Route::get('checkConnection', array('uses'=>'ClientController@checkConnection'))
 Route::get('insertSurvey', array('uses'=>'ClientController@insertSurvey'));
 
 
-Route::get('music/form','AdminMusicController@musicForm');
-Route::post('music/upload','AdminMusicController@musicUpload');
-Route::post('music/list','AdminMusicController@musicList');
+Route::get('/music/form','AdminMusicController@musicForm');
+Route::post('/music/upload','AdminMusicController@musicUpload');
+Route::post('/music/list','AdminMusicController@musicList');
 
 Route::get('adHits', array('uses'=>'ClientController@adHits'));
 Route::get('adPromoHits', array('uses'=>'ClientController@adPromoHits'));
