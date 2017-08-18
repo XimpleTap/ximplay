@@ -33,10 +33,14 @@
 .up-btn{
 	display: none;
 }
+
+.card-image .video-card{
+	padding: 10px !important;
+}
 .card-image .video-card img{
 	width: 100% !important;
 	height: 250px !important;
-	object-fit: cover;
+	object-fit: fill;
 }
 
 .card-image .music-card img{
