@@ -98,5 +98,6 @@ return [
             'expire' => 60,
         ],
     ],
+    'table' => 'user_admin',
 
 ];
