@@ -20,14 +20,6 @@
 					<p class="audio-title">{{ $music[0]->title }}</p>
 					<p class="audio-artist">{{ $music[0]->artist }}</p>
 				</div>
-				<div class="audio-time">
-					<div class="col s6 l6 m6">
-					<p id="duration" class="left">{{ $music[0]->duration }}</p>
-					</div>
-					<div class="col s6 l6 m6">
-					<p id="elapsed" class="right">-0:00</p>
-					</div>
-				</div>
 				
 				<div id="progressbar">
 					<span id="progress"></span>
@@ -68,7 +60,7 @@
 		</div>
 		<div class="row">
 			<div id="search" class="col s12 m12 l12">
-		        <label for="search-input"><h6><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search Music</span></h6></label>
+		        <label for="search-input"><h6><span class="sr-only">Search Music</span></h6></label>
 		        <input onkeyup="musicSearch(event);" id="search-input" class="form-control input-lg" placeholder="Search Music" autocomplete="off" spellcheck="false" autocorrect="off" tabindex="1">
 		        <ul class="search-ul collection">
 
@@ -90,12 +82,7 @@
 						      <p class="tracklist-artist">
 						        {{ $music['artist'] }}
 						      </p>
-						      <div class="left">
-						      <a href="#!" class="tracklist-duration"><i class="fa fa-clock-o"></i> {{ $music['duration'] }}</a>
-						      </div>
-						      <!-- <div class="right">
-						      	<a class="add-to-playlist"><i class="fa fa-plus-circle"></i> Add to Playlist</a>
-						      </div> -->
+						 
 						    </li>
 					  	@endforeach
 					@endif
@@ -114,9 +101,7 @@
 						      <p class="tracklist-artist">
 						        {{ $music->artist }}
 						      </p>
-						      <div class="left">
-						      <a href="#!" class="tracklist-duration"><i class="fa fa-clock-o"></i> {{ $music->duration }}</a>
-						      </div>
+						     
 						      <div class="right">
 						      	<a onclick="addToPlaylist(this);" data-music-attr="{{ json_encode($music) }}" class="add-to-playlist"><i class="fa fa-plus-circle"></i> Add to Playlist</a>
 						      </div>
@@ -477,9 +462,7 @@ function refreshPlaylist(data){
 		var liString = "<li onclick='playThis(this)' class='tracklist-item collection-item avatar'>"+
 		imgString+
 	   "<p class='tracklist-title'>"+data[i]['title']+"</p>"+
-	   "<p class='tracklist-artist'>"+data[i]['artist']+"</p>"+
-	   "<div class='left'>"+
-	   "<a href='#!' class='tracklist-duration'><i class='fa fa-clock-o'></i>"+ data[i]['duration']+"</a></div>";
+	   "<p class='tracklist-artist'>"+data[i]['artist']+"</p>";
 		tracklistUl.append(liString);
 	}
 }
@@ -514,8 +497,6 @@ function musicSearch(e){
 						imgString+
 					   "<p class='tracklist-title'>"+data[i]['title']+"</p>"+
 					   "<p class='tracklist-artist'>"+data[i]['artist']+"</p>"+
-					   "<div class='left'>"+
-					   "<a href='#!' class='tracklist-duration'><i class='fa fa-clock-o'></i>"+ data[i]['duration']+"</a></div>"+
 					   "<div class='right'>"+
 					   "<a style='cursor:pointer' onClick='' class='add-to-playlist'><i class='fa fa-plus-circle'></i> Add to Playlist</a></div></li>";
 						searchUl.append(liString);

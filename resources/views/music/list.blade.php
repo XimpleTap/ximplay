@@ -29,10 +29,10 @@
             <h5>The following files has successfully been uploaded</h5>
             <ul class="collection">
                 <?php
-                foreach($data as $file){
-                    $origFileName = $file->getClientOriginalName();
+                foreach($data as $message){
+                    //$origFileName = $file->getClientOriginalName();
                     echo '<li class="collection-item">';
-                    echo $origFileName;
+                    echo $message['message'];
                     echo '</li>';
                 }
                 ?>
