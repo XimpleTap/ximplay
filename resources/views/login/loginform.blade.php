@@ -41,12 +41,12 @@
         
         jQuery.ajax({
             type: 'POST',
-            url: '/login/authenticate',
+            url: '/ximplay/public/login/authenticate',
             dataType:'json',
             data: data,
             
             success: function(_data){
-                
+                alert("asdf");
                 if(_data == 'success'){
                     var baseurl = window.location.origin;
                     window.location.replace(baseurl +'/ximplay/public/music/form');
