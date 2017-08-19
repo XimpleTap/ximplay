@@ -8,26 +8,9 @@ use Symfony\Component\Process\PhpProcess;
 
 class ClientController extends Controller
 {
-    //
+    
 	public function index(){
 		return view('client.client_index');
-	}
-
-	public function postConnection(Request $request){
-
-    	$ipAddress = $this->_getUserIp();
-
-	    $connectionDateTime = $request->input('connectionDateTime');
-
-        $pieces = explode(" ", $connectionDateTime);
-        $connectionDate = $pieces[0];
-
-        chdir('js');
-        $macAddress = shell_exec("./findMac.sh ".$ipAddress);
-
-    	DB::table('connections')->insert(
-    		['mac_address' => $macAddress, 'ip_address' => $ipAddress, 'connection_time' => $connectionDateTime]
-		);
 	}
 
 	public function checkConnection(Request $request){
@@ -61,6 +44,15 @@ class ClientController extends Controller
     	$age 			= $request->input('age');
     	$email_mobile 	= $request->input('email_mobile');
     	$answered_date 	= $request->input('answered_date');
+
+        $ipAddress = $this->_getUserIp();
+
+        chdir('js');
+        $macAddress = shell_exec("./findMac.sh ".$ipAddress);
+
+        DB::table('connections')->insert(
+            ['mac_address' => $macAddress, 'ip_address' => $ipAddress, 'connection_time' => $answered_date]
+        );
 
     	DB::table('connection_info')->insert(
     		['name' => $name, 'age' => $age, 'email_mobile' => $email_mobile,'created_on' => $answered_date]

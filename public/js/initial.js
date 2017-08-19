@@ -1,20 +1,23 @@
         $(document).ready(function(){
 
                 $('.modal').modal({
-                    dismissible: false
+                    dismissible: false,
+                    ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                    
+                    var hasScrollBar = $('#policyModal').hasScrollBar();
+                        
+                        if(hasScrollBar == false){
+                            $('#policyModal #close').css('display','inline-block');
+                        }
+                  },
                 });
                 
 //Start Initial Connection Insert
-                    var handling_param =$('#handling_param').val();
+                var handling_param =$('#handling_param').val();
 
-                    if(handling_param == " "){
-                        checkConnection();
-
-                        setTimeout(
-                            function() { 
-                                postConnection();
-                            }, 3000);
-                    }
+                if(handling_param == " "){
+                    checkConnection();
+                }
 
                 });
 
@@ -41,15 +44,6 @@
                     });
                 }
 
-                function postConnection(){
-                    $.ajax({
-                        url : "../public/postConnection",
-                        type: 'GET',
-                        data: {
-                            connectionDateTime  : _dateTimeNow
-                        }
-                    });
-                }
 //End Initial Connection Insert
             
             $('#proceed').click(function(){
@@ -104,6 +98,12 @@
                 $('#policyModal #close').css('display','inline-block');
               }
             });
+
+            (function($) {
+                $.fn.hasScrollBar = function() {
+                    return this.get(0).scrollHeight > this.height();
+                }
+            })(jQuery);
 
             $('#surveyModal #policy').click(function(){
 
