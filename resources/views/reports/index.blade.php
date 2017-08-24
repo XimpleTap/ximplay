@@ -26,10 +26,10 @@
 <div class="container">
     <div class="row">
         <div class="input-field col s12">
-           <a  href="/reports/promohits" class="waves-effect waves-light btn" target="_blank">Export Promo Hits Report</a>
+           <a  href="{{ url('reports/promohits') }}" class="waves-effect waves-light btn" target="_blank">Export Promo Hits Report</a>
         </div>
         <div class="input-field col s12">
-            <a  href="/reports/adhits" class="waves-effect waves-light btn" target="_blank">Export Ad Hits Report</a>
+            <a  href="{{ url('reports/adhits') }}" class="waves-effect waves-light btn" target="_blank">Export Ad Hits Report</a>
         </div>
     </div>
 </div>

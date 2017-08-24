@@ -20,6 +20,7 @@ Route::get('/test/id3','TestController@testId3');
 
 Route::get('/', array('uses'=>'VideoController@getVideos'));
 Route::get('watchvideo', array('uses'=>'VideoController@watchVideo'));
+
 Route::get('audios',array('uses'=>'MusicController@index'));
 Route::get('musicplayer',array('uses'=>'MusicController@playMusic'));
 Route::post('addtoplaylist',array('uses'=>'MusicController@addToPlaylist'));
@@ -28,15 +29,17 @@ Route::post('searchmusic',array('uses'=>'MusicController@searchMusic'));
 Route::get('postConnection', array('uses'=>'ClientController@postConnection'));
 Route::get('checkConnection', array('uses'=>'ClientController@checkConnection'));
 Route::get('insertSurvey', array('uses'=>'ClientController@insertSurvey'));
-
-
-
 Route::get('adHits', array('uses'=>'ClientController@adHits'));
 Route::get('adPromoHits', array('uses'=>'ClientController@adPromoHits'));
 
+Route::get('login', [ 'as' => 'login', 'uses' => 'LoginController@login']);
+Route::post('/login/authenticate','LoginController@authenticate');
+Route::get('logout','LoginController@logout');
+
 Route::group(['middleware' => ['auth']], function ($router) {
-    Route::resource('reports', 'AdminReportsController');
-    //Route::resource('music', 'AdminMusicController');
+    Route::get('reports/promohits', 'AdminReportsController@getPromosReport');
+    Route::get('reports/adhits', 'AdminReportsController@getAdsReport');
+    Route::get('reports','AdminReportsController@index');
     Route::get('videos/form','VideoController@uploadForm');
     Route::post('videos/upload','VideoController@upload');
     Route::get('videos/list','VideoController@listMovie');
@@ -48,13 +51,4 @@ Route::group(['middleware' => ['auth']], function ($router) {
     Route::get('/music/form','AdminMusicController@musicForm');
     Route::post('/music/upload','AdminMusicController@musicUpload');
     Route::post('/music/list','AdminMusicController@musicList');
-
 });
-
-Route::get('login', [ 'as' => 'login', 'uses' => 'LoginController@login']);
-Route::post('/login/authenticate','LoginController@authenticate');
-Route::get('logout','LoginController@logout');
-
-//Route::get('/reports/promohits','AdminReportsController@getPromosReport');
-//Route::get('/reports/adhits','AdminReportsController@getAdsReport');
-//Route::get('/reports','AdminReportsController@index');
