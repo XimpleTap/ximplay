@@ -18,8 +18,15 @@ class AdminReportsController extends Controller
         $promoReportData = $promoModelInstance->getPromoHits();
         $macAddress = shell_exec("ifconfig wlan0 | grep HWaddr | awk '{ print $5}'");
         //$macAddress = "a1:b2:c3:d4:e5";
-        $reportHeaders = array('ID', 'Advertiser Promo ID', 'Mac Address', 'Hit Date');
-        $this->generateReportFile('promos',$macAddress,$promoReportData,$reportHeaders);
+        $reportData = array();
+        foreach($promoReportData as $data){
+            $dArray['advertiser_promo_id'] = $data['advertiser_promo_id'];
+            $dArray['mac_address'] = $data['mac_address'];
+            $dArray['date_hit'] = $data['date_hit'];
+            array_push($reportData,$dArray);
+        }
+        $reportHeaders = array('promo_id', 'client mac address', 'date hit');
+        $this->generateReportFile('promos',$macAddress,$reportData,$reportHeaders);
     }
 
     public function getAdsReport(){
@@ -27,8 +34,15 @@ class AdminReportsController extends Controller
         $adHitsReportData = $adHitsModelInstance->getAdHits();
         $macAddress = shell_exec("ifconfig wlan0 | grep HWaddr | awk '{ print $5}'");
         //$macAddress = "a1:b2:c3:d4:e5";
-        $reportHeaders = array('ID', 'Advertisement ID', 'Mac Address', 'Hit Date');
-        $this->generateReportFile('ads',$macAddress,$adHitsReportData,$reportHeaders);
+        $reportData = array();
+        foreach($adHitsReportData as $data){
+            $dArray['advertiser_promo_id'] = $data['ad_id'];
+            $dArray['mac_address'] = $data['mac_address'];
+            $dArray['date_hit'] = $data['date_hit'];
+            array_push($reportData,$dArray);
+        }
+        $reportHeaders = array('ad_id', 'client mac address', 'date hit');
+        $this->generateReportFile('ads',$macAddress,$reportData,$reportHeaders);
     }
 
     private function generateReportFile($_reportType,$_macAddress,$_dbData, $_reportHeaders){
