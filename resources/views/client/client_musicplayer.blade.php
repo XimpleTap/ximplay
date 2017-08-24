@@ -119,23 +119,17 @@
 			<p>Sorry. Music not found.</p>
 		</div>
 	@endif
-	<div class="fixed-action-btn horizontal click-to-toggle">
-	    <a class="btn-floating waves-effect waves-light blue">
-	      <i class="fa fa-ellipsis-v"></i>
-	    </a>
-	    <ul class="nav-floaters">
-	    	@if(sizeof(Session::get('my_playlist')[0])!=0)
-	    		<li><a href="{{ url('/musicplayer?music_id='.Session::get('my_playlist')[0]['id'].'&play_mode=2') }}" class="play-playlist btn-floating waves-effect waves-light blue"><i class="fa fa-list"></i></a></li>
-	    	@endif
-	    	@if(sizeof($music_list)!=0)
-		      <li><a href="{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}" class="play-all btn-floating waves-effect waves-light blue"><i class="fa fa-play"></i></a></li>
-		      @endif
-	      <li style="display:none;" id="go-up">
-	      <a onclick="topFunction()" class="btn-floating waves-effect waves-light blue">
-              <i class="fa fa-caret-up"></i>
-            </a>
-	      </li>
-	    </ul>
+
+	<div class="nav-bottom">
+		<button id="go-up" onclick="topFunction()" class="right truncate btn waves-effect waves-light blue">
+        <i class="fa fa-caret-up"></i>
+        </button>
+        @if(sizeof(Session::get('my_playlist')[0])!=0)
+		<button onclick="window.location.href='{{ url('/musicplayer?music_id='.Session::get('my_playlist')[0]['id'].'&play_mode=2') }}'" id="to-playlist" class="bottom-btn truncate btn waves-effect waves-light blue right"> Go to Playlist</button>
+		@endif
+	    @if(sizeof($music_list)!=0)
+		<button onclick="window.location.href='{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}'" class="bottom-btn right truncate btn waves-effect waves-light blue"> Play All</button>
+		@endif
 	</div>
 </div>
 
@@ -548,9 +542,9 @@ function addToPlaylistSafari(evt){
 			Materialize.toast(musicData['title']+' has been added to playlist.', 500);
 			
 			var musicID =data[0]['id'];
-			var link = '../public/musicplayer?music_id='+musicID+'&play_mode=2")';
-			$('.nav-floaters').children().find('.play-playlist').parent('li').remove();
-        	$('.nav-floaters').prepend('<li><a href="'+link+'" class="play-playlist btn-floating waves-effect waves-light blue"><i class="fa fa-list"></i></a></li>');
+			var link = "../public/musicplayer?music_id="+musicID+"&play_mode=2";
+	        	$('.nav-bottom').find('#to-playlist').remove();
+        		$('.nav-bottom').append("<button onclick='window.location.href=\""+link+"\"' id='to-playlist' class='bottom-btn truncate btn waves-effect waves-light blue right'> Go to Playlist</button>");
         }
 	});
 }
@@ -572,9 +566,9 @@ function addToPlaylist(evt){
         		refreshPlaylist(data);	
         	}
         	var musicID =data[0]['id'];
-			var link = '../public/musicplayer?music_id='+musicID+'&play_mode=2")';
-			$('.nav-floaters').children().find('.play-playlist').parent('li').remove();
-        	$('.nav-floaters').prepend('<li><a href="'+link+'" class="play-playlist btn-floating waves-effect waves-light blue"><i class="fa fa-list"></i></a></li>');
+			var link = "../public/musicplayer?music_id="+musicID+"&play_mode=2";
+	        	$('.nav-bottom').find('#to-playlist').remove();
+        		$('.nav-bottom').append("<button onclick='window.location.href=\""+link+"\"' id='to-playlist' class='bottom-btn truncate btn waves-effect waves-light blue right'> Go to Playlist</button>");
         	$('.search-ul').css({"display":"none"});
 			$('.search-ul').empty();
 			$('.tracklist-div').css({"opacity":"1"});
@@ -671,9 +665,9 @@ function playThis(evt){
 }
 function scrollFunction() {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        $('.nav-floaters #go-up').show();
+        $('.nav-bottom #go-up').show();
     } else {
-        $('.nav-floaters #go-up').hide();
+        $('.nav-bottom #go-up').hide();
     }
 }
 // When the user clicks on the button, scroll to the top of the document

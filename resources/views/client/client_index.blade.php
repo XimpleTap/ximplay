@@ -129,11 +129,9 @@
             <div id="loader">
             </div>
         </div>
-        <div style="display:none;" id="go-up" class="fixed-action-btn horizontal click-to-toggle">
-            <a onclick="topFunction()" class="btn-floating waves-effect waves-light blue">
-              <i class="fa fa-caret-up"></i>
-            </a>
-        </div>
+        <button id="go-up" onclick="topFunction()" class="right truncate btn waves-effect waves-light blue">
+        <i class="fa fa-caret-up"></i>
+        </button>
         @yield('content')
 
     </body>
@@ -152,10 +150,10 @@
             
         });
         function scrollFunction() {
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                $('#go-up').show();
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                $('.nav-bottom #go-up').show();
             } else {
-                $('#go-up').hide();
+                $('.nav-bottom #go-up').hide();
             }
         }
         // When the user clicks on the button, scroll to the top of the document
