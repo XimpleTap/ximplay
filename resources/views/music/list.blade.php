@@ -26,14 +26,21 @@
 <div class="container">
     <div class="row">
         <div class="input-field col s12">
+           
             <h5>The following files has successfully been uploaded</h5>
+
+            
             <ul class="collection">
                 <?php
+                $i=0;
                 foreach($data as $message){
-                    //$origFileName = $file->getClientOriginalName();
-                    echo '<li class="collection-item">';
-                    echo $message['message'];
-                    echo '</li>';
+                    $i++;
+                    if($i<10){
+                        //$origFileName = $file->getClientOriginalName();
+                        echo '<li class="collection-item">';
+                        echo $message['message'];
+                        echo '</li>';
+                    }
                 }
                 ?>
             </ul>

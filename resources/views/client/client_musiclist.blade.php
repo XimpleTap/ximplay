@@ -28,10 +28,10 @@
 	        <i class="fa fa-caret-up"></i>
 	        </button>
 	        @if(sizeof(Session::get('my_playlist')[0])!=0)
-			<button onclick="window.location.href='{{ url('/musicplayer?music_id='.Session::get('my_playlist')[0]['id'].'&play_mode=2') }}'" id="to-playlist" class="bottom-btn truncate btn waves-effect waves-light blue right"> Go to Playlist</button>
+			<button onclick="window.location.href='{{ url('/musicplayer?music_id='.Session::get('my_playlist')[0]['id'].'&play_mode=2') }}'" id="to-playlist" class="bottom-btn truncate btn waves-effect waves-light blue right">Playlist</button>
 			@endif
 		    @if(sizeof($music_list)!=0)
-			<button onclick="window.location.href='{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}'" class="bottom-btn right truncate btn waves-effect waves-light blue"> Play All</button>
+			<button onclick="window.location.href='{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}'" class="bottom-btn right truncate btn waves-effect waves-light blue">Play All</button>
 			@endif
 		</div>
 
@@ -68,7 +68,7 @@ $(document).ready(function(){
 	        	var musicID =data[0]['id'];
 				var link = "../public/musicplayer?music_id="+musicID+"&play_mode=2";
 	        	$('.nav-bottom').find('#to-playlist').remove();
-        		$('.nav-bottom').append("<button onclick='window.location.href=\""+link+"\"' id='to-playlist' class='bottom-btn truncate btn waves-effect waves-light blue right'> Go to Playlist</button>");
+        		$('.nav-bottom').append("<button onclick='window.location.href=\""+link+"\"' id='to-playlist' class='bottom-btn truncate btn waves-effect waves-light blue right'>Playlist</button>");
 	        }
 		});
 		Materialize.toast(musicData['title']+' has been added to playlist.', 500);	

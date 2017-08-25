@@ -32,15 +32,13 @@
                     echo Form::open(array('url' => '/music/list','files'=>'false','id'=>'uploadform','class'=>''));
                     echo 'Select the file to upload.';
                     echo  '<div class="input-field inline">';
-                    echo Form::file('mp3',array('name'=>'file[]','id'=>'imageFile','multiple'=>'multiple','class'=>'waves-effect waves-light btn','onchange'=>'detectFileChange(this)'));
+                    echo Form::file('mp3',array('name'=>'file[]','id'=>'imageFile','multiple'=>'multiple','class'=>'waves-effect waves-light btn','onchange'=>'detectFileChange(this)','accept'=>'.mp3'));
                     echo '</div>';
                     echo '<br /><br />'; ?>
                         <div class="music-uploads row">
-                            
-                            
                         </div>
                 <?php
-                    echo Form::submit('Upload File',array('class'=>'waves-effect waves-light btn'));
+                    echo Form::submit('Upload File',array('onclick'=>'disableAll(this)','class'=>'waves-effect waves-light btn'));
                     echo Form::close();
                 ?>
 

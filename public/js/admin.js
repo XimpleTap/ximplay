@@ -7,21 +7,23 @@ $(document).ready(function(){
 
 function detectFileChange(e){
 
-	var musicFile = $(e).val();
-	console.log(musicFile);
-    
+	var musicFile = $(e).val();    
   musicUploads.empty();
 	var audio = document.getElementById("audio");
-  console.log(e.files);
-	for(var i=0; i<e.files.length; i++){
-		var tmppath = URL.createObjectURL(e.files[i]);
-		$("#audio").prop("src", tmppath);
-		loadFromFile(e.files[i]);
-	}
+
+  var musicFiles = e.files;
+  if(e.files.length>11){
+    alert("Maximum of 10 mp3 files only. Some files will not be uploaded.");
+  }
+
+  for(var i=0; i<e.files.length; i++){
+    var tmppath = URL.createObjectURL(e.files[i]);
+    $("#audio").prop("src", tmppath);
+    loadFromFile(e.files[i]);
+  }
 }
 
 function readURL(input) {
-    console.log(input);
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -38,10 +40,8 @@ function loadUrl(url, callback, reader) {
     var startDate = new Date().getTime();
     ID3.loadTags(url, function() {
         var endDate = new Date().getTime();
-        if (typeof console !== "undefined") console.log("Time: " + ((endDate-startDate)/1000)+"s");
         var tags = ID3.getAllTags(url);
         var filename = url.substr(0,url.lastIndexOf('.'));
-        console.log(url);
         musicUploads.append('<div class="row music-upload">'+
             '<div class="input-field col s3">'+
               '<img src="" width="100" height="100">'+
@@ -51,7 +51,7 @@ function loadUrl(url, callback, reader) {
               '<br><div class="file-field input-field">'+
               '<div class="btn">'+
                 '<span>File</span>'+
-                '<input onchange="readURL(this)" type="file">'+
+                '<input  accept="image/*" onchange="readURL(this)" type="file">'+
               '</div>'+
               '<div class="file-path-wrapper">'+
                 '<input class="file-path validate" type="text" placeholder="Upload one or more files">'+
@@ -93,7 +93,6 @@ function loadUrl(url, callback, reader) {
         $(".music-uploads .music-title").last().val(tags.title == undefined || tags.title == null ? "" : tags.title);
         $(".music-uploads .music-artist").last().val(tags.artist == undefined || tags.artist == null ? "" : tags.artist);
         $('.music-uploads .music-file').last().val(url);
-
 	if( callback ) 
     { 
         callback(); 
@@ -124,4 +123,8 @@ function load(elem) {
     } else {
         loadFromLink(elem);
     }
+}
+
+function disableAll(e){
+   e.preventDefault();
 }

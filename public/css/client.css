@@ -253,7 +253,10 @@ video::-internal-media-controls-download-button {
 
 	.nav-bottom button{
 		width: 15%;
+		font-size: 12px;
+		padding: 0 1rem !important;
 	}
+
 	.video-container{
 		margin: 0 auto;
 		overflow: hidden;
@@ -474,7 +477,7 @@ video::-internal-media-controls-download-button {
 	}
 
 	#progressbar{
-		top: -10px;
+		top: 20px;
 		position: relative;
 		height: 9px;
 	    width: 100%;
@@ -2834,8 +2837,10 @@ video::-internal-media-controls-download-button {
 	.video-bg{
 		height: 560px;
 	}
-	.nav-bottom .btn{
+	.nav-bottom button{
 		width: 30%;
+		font-size: 14px;
+		padding: 0 1rem !important;
 	}
 
 	video {

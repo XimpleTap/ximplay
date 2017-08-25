@@ -13,7 +13,7 @@
             	@endif
 			</div>
 			<div class="audio col s8 m8 l8">
-				<audio id="audio-player">
+				<audio id="audio-player" autobuffer controls>
 						<source src="{{ asset($music[0]->audio_path) }}" type="audio/mpeg">
 					</audio>
 				<div class="audio-info" data-music-attr="{{ json_encode($music[0]) }}">
@@ -125,10 +125,10 @@
         <i class="fa fa-caret-up"></i>
         </button>
         @if(sizeof(Session::get('my_playlist')[0])!=0)
-		<button onclick="window.location.href='{{ url('/musicplayer?music_id='.Session::get('my_playlist')[0]['id'].'&play_mode=2') }}'" id="to-playlist" class="bottom-btn truncate btn waves-effect waves-light blue right"> Go to Playlist</button>
+		<button onclick="window.location.href='{{ url('/musicplayer?music_id='.Session::get('my_playlist')[0]['id'].'&play_mode=2') }}'" id="to-playlist" class="bottom-btn truncate btn waves-effect waves-light blue right">Playlist</button>
 		@endif
 	    @if(sizeof($music_list)!=0)
-		<button onclick="window.location.href='{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}'" class="bottom-btn right truncate btn waves-effect waves-light blue"> Play All</button>
+		<button onclick="window.location.href='{{ url('/musicplayer?music_id='.$music_list[0]->id.'&play_mode=3') }}'" class="bottom-btn right truncate btn waves-effect waves-light blue">Play All</button>
 		@endif
 	</div>
 </div>
@@ -187,7 +187,8 @@ $(document).ready(function(){
         }
     });
 
-	initPlayer($('.audio-info').data('music-attr'));		
+	initPlayer($('.audio-info').data('music-attr'));
+	$('#audio-controls #play').mousedown();	
 	playlist = $('.tracklist').data('playlist');
 	
 	if(typeof playlist !== "undefined" && playlist !== null){
@@ -203,6 +204,42 @@ $(document).ready(function(){
 		playlistCounter=-1;
 	}
 
+	audio.addEventListener("ended", function(){
+		
+		audio.currentTime = 0;  
+		if(playlist !== null){
+			if(repeatMode==1 && shuffleMode==0){
+				playlistCounter = playlistCounter;
+			}else if(repeatMode==0 && shuffleMode==1){
+				playlistCounter = Math.floor(Math.random() * playlist.length);
+			}else if(repeatMode==1 && shuffleMode==1){
+				playlistCounter = playlistCounter;
+			}else{
+				playlistCounter++;
+			}
+			
+			if(playlistCounter==playlist.length){
+				playlistCounter=0;	
+			}
+			var musicData = playlist[playlistCounter];
+			$($('.tracklist li').get(playlistCounter)).siblings().removeClass("active");
+			$($('.tracklist li').get(playlistCounter)).addClass('active');
+	    	$('source').attr('src',musicData['audio_path']);
+	    	$('#pause').trigger('click');
+	    	//audio.pause();
+	    	initPlayer(musicData);
+	    	$('#play').trigger('click');
+	    	//audio.play();
+
+	    	showDuration();
+			$('#play').hide();
+			$('#play').parent('div').hide();
+			$('#pause').show();
+			$('#pause').parent('div').show();
+		}else{
+			audio.play();
+		}
+	});
 
 	$('#prev').click(function(){
 
@@ -241,8 +278,8 @@ $(document).ready(function(){
 		}
 	});
 	$('#play').click(function(){
+		console.log("PLAYED");
 		audio.play();
-
 		$(this).hide();
 		$(this).parent('div').hide();
 		$('#pause').show();
@@ -250,6 +287,7 @@ $(document).ready(function(){
 		showDuration();
 	});
 	$('#pause').click(function(){
+		console.log("PAUSED");
 		audio.pause();
 		$(this).hide();
 		$(this).parent('div').hide();
@@ -364,46 +402,14 @@ $(document).ready(function(){
 function initPlayer(musicObj){
 	
 	audio = new Audio('../public'+musicObj['audio_path']);
-
 	$('.audio-title').text(musicObj['title']);
 	$('.audio-artist').text(musicObj['artist']);
 	$('.audio-art img').attr('src',musicObj['album_art_path']==null? "{{ asset('images/defaultmusic.jpg') }}" : '../public/'+musicObj['album_art_path']);
+
 	$('#progress').css({"display":"block","width":"0%"});
+	
 	Materialize.toast(musicObj['title']+' now playing.', 800);
-	audio.addEventListener("ended", function(){
-		audio.currentTime = 0;  
-		if(playlist !== null){
-			if(repeatMode==1 && shuffleMode==0){
-				playlistCounter = playlistCounter;
-			}else if(repeatMode==0 && shuffleMode==1){
-				playlistCounter = Math.floor(Math.random() * playlist.length);
-			}else if(repeatMode==1 && shuffleMode==1){
-				playlistCounter = playlistCounter;
-			}else{
-				playlistCounter++;
-			}
-			
-			if(playlistCounter==playlist.length){
-				playlistCounter=0;	
-			}
-			var musicData = playlist[playlistCounter];
-			$($('.tracklist li').get(playlistCounter)).siblings().removeClass("active");
-			$($('.tracklist li').get(playlistCounter)).addClass('active');
-	    	$('source').attr('src',musicData['audio_path']);
-	    	audio.pause();
-	    	initPlayer(musicData);
-	    	audio.play();
-	    	showDuration();
-			$('#play').hide();
-			$('#play').parent('div').hide();
-			$('#pause').show();
-			$('#pause').parent('div').show();
 
-
-		}else{
-			audio.play();
-		}
-	});
 }
 function showDuration(){
 	$(audio).bind('timeupdate',function(){
@@ -544,7 +550,7 @@ function addToPlaylistSafari(evt){
 			var musicID =data[0]['id'];
 			var link = "../public/musicplayer?music_id="+musicID+"&play_mode=2";
 	        	$('.nav-bottom').find('#to-playlist').remove();
-        		$('.nav-bottom').append("<button onclick='window.location.href=\""+link+"\"' id='to-playlist' class='bottom-btn truncate btn waves-effect waves-light blue right'> Go to Playlist</button>");
+        		$('.nav-bottom').append("<button onclick='window.location.href=\""+link+"\"' id='to-playlist' class='bottom-btn truncate btn waves-effect waves-light blue right'>Playlist</button>");
         }
 	});
 }
@@ -568,7 +574,7 @@ function addToPlaylist(evt){
         	var musicID =data[0]['id'];
 			var link = "../public/musicplayer?music_id="+musicID+"&play_mode=2";
 	        	$('.nav-bottom').find('#to-playlist').remove();
-        		$('.nav-bottom').append("<button onclick='window.location.href=\""+link+"\"' id='to-playlist' class='bottom-btn truncate btn waves-effect waves-light blue right'> Go to Playlist</button>");
+        		$('.nav-bottom').append("<button onclick='window.location.href=\""+link+"\"' id='to-playlist' class='bottom-btn truncate btn waves-effect waves-light blue right'>Playlist</button>");
         	$('.search-ul').css({"display":"none"});
 			$('.search-ul').empty();
 			$('.tracklist-div').css({"opacity":"1"});

@@ -46,11 +46,12 @@
             data: data,
             
             success: function(_data){
+
                 if(_data == 'success'){
+                    alert(_data);
                     var baseurl = window.location.origin;
                     window.location.replace(baseurl +'/ximplay/public/music/form');
                     //window.location.replace(baseurl +'/music/form');
-                    
                 }
                 else{
                     jQuery('#login-warning').show();
